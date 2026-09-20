@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where it lives · Cox house</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F1E7; --surface:#FFFFFF; --ink:#242822; --muted:#6E665A; --line:#DFD7C6;
+  --z-U:#6F5AE0; --z-M:#B4790E; --z-G:#4C7A3D; --z-O:#0E8C7C; --z-B:#2E5FA3;
+  --t-U:#EFEBFC; --t-M:#F8EBD3; --t-G:#E8F0E2; --t-O:#DFF2EE; --t-B:#E4EDF8;
+  --hl:#FFDE7A; --focus:#2D6CDF;
+  --shadow:0 1px 0 rgba(36,40,34,.05);
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1C20; --surface:#232529; --ink:#ECE7DC; --muted:#A39C8C; --line:#37393F;
+    --z-U:#9C8CFF; --z-M:#E3A93E; --z-G:#8FC169; --z-O:#3FCBB6; --z-B:#78A3EC;
+    --t-U:#282640; --t-M:#3A2E17; --t-G:#213321; --t-O:#153531; --t-B:#1D2C42;
+    --hl:#6B5A17; --focus:#7FA8FF;
+    --shadow:0 1px 0 rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1C20; --surface:#232529; --ink:#ECE7DC; --muted:#A39C8C; --line:#37393F;
+  --z-U:#9C8CFF; --z-M:#E3A93E; --z-G:#8FC169; --z-O:#3FCBB6; --z-B:#78A3EC;
+  --t-U:#282640; --t-M:#3A2E17; --t-G:#213321; --t-O:#153531; --t-B:#1D2C42;
+  --hl:#6B5A17; --focus:#7FA8FF;
+  --shadow:0 1px 0 rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  background-image:radial-gradient(var(--line) .6px, transparent .6px);
+  background-size:16px 16px; background-attachment:local;}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 72px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Header ---------- */
+header{padding:24px 0 4px}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:11.5px;letter-spacing:.16em;color:var(--muted);margin:0 0 2px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,8vw,2.6rem);line-height:1.05;margin:0;letter-spacing:-.01em}
+.sub{margin:6px 0 0;color:var(--muted);font-size:.98rem}
+
+/* ---------- Search ---------- */
+.finder{position:sticky;top:0;z-index:10;background:var(--paper);padding:16px 0 10px;
+  background-image:radial-gradient(var(--line) .6px, transparent .6px); background-size:16px 16px;}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--ink);border-radius:12px;padding:4px 8px 4px 16px}
+.search:focus-within{border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 20%, transparent)}
+.search svg{flex:0 0 auto;color:var(--muted)}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:1.08rem;padding:11px 0}
+.search input:focus{outline:none}
+.search input::-webkit-search-cancel-button{display:none}
+.clear{border:0;background:var(--paper);border-radius:8px;padding:8px 13px;cursor:pointer;font-weight:600;font-size:.87rem}
+.clear[hidden]{display:none}
+.quick{display:flex;gap:7px;overflow-x:auto;padding:11px 2px 2px;scrollbar-width:none}
+.quick::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 13px;cursor:pointer;font-size:.9rem;font-weight:500}
+
+/* ---------- Section headings ---------- */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 12px}
+.section-h h2{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0;letter-spacing:-.005em}
+.section-h .link{border:0;background:none;color:var(--focus);font-size:.88rem;font-weight:600;cursor:pointer;padding:4px}
+
+/* ---------- Directory (floor-plan style) ---------- */
+.directory{border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--surface)}
+.level{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--line)}
+.level:last-of-type{border-bottom:0}
+.level.split{grid-template-columns:1.55fr 1fr}
+.floor-btn{border:0;cursor:pointer;text-align:left;padding:14px 16px;display:flex;align-items:center;gap:12px;background:var(--surface);position:relative}
+.level.split .floor-btn:first-child{border-right:1px solid var(--line)}
+.floor-btn:active{background:var(--paper)}
+.floor-btn .tab{width:5px;align-self:stretch;border-radius:3px;background:var(--c);flex:0 0 5px}
+.floor-btn .txt{flex:1;min-width:0}
+.floor-btn b{display:block;font-family:var(--display);font-weight:600;font-size:1.02rem;letter-spacing:-.005em}
+.floor-btn small{color:var(--muted);font-size:.82rem}
+.floor-btn .chev{color:var(--muted);font-size:1.1rem;transition:transform .15s}
+.floor-btn[aria-pressed="true"]{background:var(--t)}
+.floor-btn[aria-pressed="true"] .chev{transform:rotate(90deg);color:var(--c)}
+.ground-mark{height:9px;background:repeating-linear-gradient(115deg, var(--line) 0 2px, transparent 2px 9px);border-top:1.5px dashed var(--ink);border-bottom:1.5px dashed var(--ink)}
+
+/* ---------- Code stamp ---------- */
+.code{display:inline-flex;align-items:center;justify-content:center;min-width:2.5em;padding:2px 8px;border-radius:6px;border:1.5px solid var(--c);color:var(--c);font-family:var(--display);font-weight:700;font-size:.92rem;letter-spacing:.02em;background:var(--t)}
+.code.big{font-size:1.35rem;padding:3px 12px;border-radius:8px}
+
+/* ---------- Location cards ---------- */
+.group-h{font-family:var(--display);font-weight:600;font-size:1.05rem;margin:22px 0 9px;display:flex;align-items:center;gap:9px;color:var(--ink)}
+.group-h .tab{width:14px;height:14px;border-radius:4px;background:var(--c);flex:0 0 auto}
+.group-h .count{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.85rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:9px}
+.tile{position:relative;border:0;text-align:left;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px 12px;display:flex;flex-direction:column;gap:7px;box-shadow:var(--shadow)}
+.tile::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.tile:active{background:var(--paper)}
+.tile-top{display:flex;justify-content:space-between;align-items:flex-start;margin-left:4px}
+.tile .emo{font-size:1.55rem;line-height:1}
+.tile b{font-family:var(--body);font-size:.94rem;font-weight:600;line-height:1.22;margin-left:4px}
+.tile small{color:var(--muted);font-size:.78rem;line-height:1.3;margin-left:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- Search results ---------- */
+.results{display:grid;gap:8px;margin-top:4px}
+.result{position:relative;border:0;cursor:pointer;text-align:left;width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)}
+.result::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.result .emo{font-size:1.6rem;line-height:1;margin-left:5px}
+.result b{display:block;font-size:1rem;font-weight:600;line-height:1.25}
+.result .where{color:var(--muted);font-size:.86rem}
+mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 2px}
+.count-note{color:var(--muted);font-size:.9rem;margin:2px 2px 10px;font-weight:500}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center}
+.empty .emo{font-size:2.2rem}
+.empty p{margin:6px 0 0;color:var(--muted)}
+.empty b{color:var(--ink)}
+
+/* ---------- Rules ---------- */
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rule span.lbl{font-weight:600;font-size:.92rem}
+.rule .codes{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.rule button{border:0;background:none;padding:0;cursor:pointer}
+.tip{margin:12px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px;color:var(--muted);font-size:.9rem;line-height:1.5}
+.tip b{color:var(--ink)}
+
+/* ---------- Detail sheet ---------- */
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;margin:0}
+dialog::backdrop{background:rgba(20,20,16,.5)}
+.sheet-wrap{position:fixed;inset:auto 0 0 0;display:flex;justify-content:center}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-width:540px;max-height:86vh;overflow:auto;border-radius:18px 18px 0 0;border:1.5px solid var(--ink);border-bottom:0;padding:10px 20px calc(22px + env(safe-area-inset-bottom));animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(36px);opacity:.4}to{transform:none;opacity:1}}
+.grab{width:40px;height:4px;border-radius:9px;background:var(--line);margin:0 auto 14px}
+.sheet-head{display:flex;align-items:center;gap:14px}
+.sheet-head .emo{font-size:2.3rem;line-height:1}
+.sheet h2{font-family:var(--display);font-weight:600;font-size:1.32rem;line-height:1.15;margin:9px 0 3px;letter-spacing:-.005em}
+.sheet .area{color:var(--muted);margin:0;font-size:.92rem}
+.job{margin:15px 0 6px;padding:9px 13px;border-radius:9px;background:var(--t);border-left:3px solid var(--c);font-weight:600;font-size:.93rem}
+.item-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.item-list li{padding:6px 11px;border-radius:8px;border:1px solid var(--line);font-size:.88rem}
+.item-list li.hit{border-color:var(--c);background:var(--t);font-weight:600}
+.also-h{display:flex;align-items:center;gap:8px;margin:20px 0 2px}
+.also-h span{font-family:var(--display);font-weight:600;font-size:.82rem;color:var(--muted);text-transform:none}
+.also-h .rule{flex:1;height:1px;background:var(--line)}
+.also-list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.also-list li{padding:6px 11px;border-radius:8px;border:1px dashed var(--line);font-size:.88rem;color:var(--muted)}
+.also-list li.hit{border-style:solid;border-color:var(--c);background:var(--t);color:var(--ink);font-weight:600}
+.close{position:sticky;top:0;float:right;border:1px solid var(--line);background:var(--surface);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.15rem;line-height:1}
+@media (min-width:700px){
+  .sheet-wrap{inset:0;align-items:center}
+  .sheet{border-radius:16px;max-height:80vh;border-bottom:1.5px solid var(--ink)}
+  .grab{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  .sheet{animation:none}
+  .floor-btn .chev{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">COX HOUSE · STORAGE DIRECTORY</p>
+    <h1>Where does it live?</h1>
+    <p class="sub">Every spot in the house, and what belongs there.</p>
+  </header>
+
+  <div class="finder">
+    <label class="search">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="sr">Search for an item</span>
+      <input id="q" type="search" placeholder="Search for anything…" autocomplete="off" enterkeyhint="search">
+      <button class="clear" id="clear" type="button" hidden>Clear</button>
+    </label>
+    <div class="quick" id="quick" aria-label="Popular searches"></div>
+  </div>
+
+  <div id="searchView" hidden>
+    <p class="count-note" id="countNote"></p>
+    <div class="results" id="results"></div>
+  </div>
+
+  <div id="browseView">
+    <div class="section-h">
+      <h2>Browse by level</h2>
+      <button class="link" id="showAll" type="button" hidden>Show all</button>
+    </div>
+    <div class="directory" id="directory"></div>
+
+    <div id="tiles"></div>
+
+    <div class="section-h"><h2>New item, no home yet?</h2></div>
+    <p class="tip" style="margin-top:-4px;margin-bottom:10px;border:0;padding:0;background:none">Match it to the job, not the nearest open box.</p>
+    <div class="rules" id="rules"></div>
+    <p class="tip"><b>No junk drawers or misc bins.</b> If a bin mixes different kinds of things, split it and send each piece to its own home. The basement storage room (B1) is only for seasonal, sentimental, and genuinely long-term items.</p>
+  </div>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheetTitle">
+  <div class="sheet-wrap" id="sheetWrap">
+    <div class="sheet" id="sheetBody"></div>
+  </div>
+</dialog>
+
+<script>
+const ZONES = {
+  U:{name:"Upstairs"},
+  M:{name:"Main floor"},
+  G:{name:"Garage"},
+  O:{name:"Outdoor", desc:"Yard, shed, pool & outdoor kitchen"},
+  B:{name:"Basement"}
+};
+const ZONE_ORDER = ["U","M","G","O","B"];
+
+const LOCATIONS = [
+  {code:"B1",emo:"📦",name:"Basement Storage Room",job:"Long-term household storage",
+   items:["Christmas décor","Memories","Photo albums","Kids' keepsakes","Office supplies","Craft supplies","Party supplies","Gift supplies","Long-term electronics","Spare household supplies","Paint overflow","Repair overflow"],
+   maybe:["Halloween & Easter decor","Wrapping paper & gift bags","Wedding keepsakes","Old yearbooks","Baby items being saved","Extra light bulbs & batteries"],
+   kw:"seasonal holiday decorations wrapping paper ornaments lights sentimental"},
+  {code:"B2",emo:"⚙️",name:"Mechanical Room",job:"House mechanical supplies only",
+   items:["HVAC filters","Air filters","Humidifier filters","House-system replacement items"],
+   maybe:["Appliance manuals","Sump pump parts","Water softener salt","Smoke detector batteries"],
+   kw:"furnace water heater softener"},
+  {code:"B3",emo:"🧻",name:"Basement Bathroom",job:"Basement bathroom supplies",
+   items:["Toilet paper","Soap","Cleaning backups","Toiletry backups"],maybe:["Plunger","Extra hand towels","Air freshener","Night light"],
+   kw:""},
+  {code:"B4",emo:"🍲",name:"Basement Kitchen",job:"Specialty kitchen appliances & extra cookware",
+   items:["Stock pot","Fondue pot","Wok","Electric griddle","Panini maker","Roasting pans","Food processor","Slow cookers","Keurig","Shaved-ice machine","Waffle maker","Electric skillet"],
+   maybe:["Turkey fryer","Bread machine","Pasta maker","Ice cream maker","Pressure canner","Holiday baking pans"],
+   kw:"crockpot crock pot coffee maker snow cone appliances"},
+  {code:"B5",emo:"🥡",name:"Basement Kitchen Peninsula",job:"Entertaining & food-storage overflow",
+   items:["Tupperware","Bento boxes","Party trays","Plasticware","Paper bowls","Paper cups","Paper plates","Serving pieces"],
+   maybe:["Coolers","Drink dispenser","Chafing dishes","Disposable cutlery","Punch bowl"],
+   kw:"containers forks spoons plastic utensils platters"},
+  {code:"B6",emo:"🧳",name:"Under-Stairs Storage",job:"Bulky travel & camping storage",
+   items:["Suitcases","Sleeping bags","Cots","Packing cubes","Camping gear","Slackline","Inflatable pump","Travel cooking equipment"],
+   maybe:["Tents","Camp chairs","Hiking backpacks","Sleeping pads","Road-trip games"],
+   kw:"luggage tent air mattress camp stove travel"},
+  {code:"B7",emo:"🔒",name:"Safe",job:"Important documents & valuables",
+   items:["Passports","Important documents","Checkbooks","Records"],
+   maybe:["Jewelry","Backup hard drives","Spare house keys","Will & estate papers"],
+   kw:"birth certificate social security card titles deeds valuables"},
+
+  {code:"M1",emo:"🍳",name:"Main Kitchen",job:"Everyday kitchen & frequently used appliances",
+   items:["KitchenAid (appliance lift)","Everyday cookware","Baking tools","Fridge filters","Everyday food storage"],
+   maybe:["Blender","Toaster","Everyday dishware","Cutting boards","Spice rack"],
+   kw:"mixer pots pans measuring cups water filter"},
+  {code:"M2",emo:"🥫",name:"Pantry",job:"Food & consumables",
+   items:["Pantry staples","Bulk food","Snacks","Paper food products","Food backups"],
+   maybe:["Cereal","Coffee & tea","Cooking oils","Kids' snacks","Canned goods"],
+   kw:"groceries canned goods cereal napkins"},
+  {code:"M3",emo:"🧥",name:"Entry Coat Closet",job:"Things you grab when leaving",
+   items:["Shoes","Gloves","Hats","Scarves","Umbrellas","Coats","Bags"],
+   maybe:["Backpacks","Sunglasses","Reusable shopping bags","Sunscreen","Leashes"],
+   kw:"jackets mittens backpacks"},
+  {code:"M4",emo:"🧼",name:"Main-Floor Bathroom",job:"Guest & main-floor bathroom supplies",
+   items:["Toilet paper","Hand soap","Toiletries","Cleaners"],maybe:["Guest towels","Hand lotion","Extra toilet paper","Air freshener"],
+   kw:"guest bathroom"},
+  {code:"M5",emo:"🧺",name:"Laundry Room",job:"Cleaning, laundry & household refills",
+   items:["Detergent","Dryer sheets","OxiClean","Febreze","Glass cleaner","Shout","Pledge","Upholstery supplies","Handheld vacuum","Rags","Towels","Pool & beach towels"],
+   maybe:["Iron & board","Mop & broom","Lint roller","Stain stick","Trash bags"],
+   kw:"windex stain remover cleaning supplies laundry dust"},
+  {code:"M6",emo:"🎲",name:"Game Room Built-Ins",job:"Games, recreation & family fun",
+   items:["Pokémon cards","Puzzles","Costumes","Dress-up items","Laser tag","Indoor games","Books"],
+   maybe:["Board games","Playing cards","Legos","Art supplies","Remote controls"],
+   kw:"board games card games halloween toys"},
+
+  {code:"G1",emo:"🛠️",name:"Workbench & Tool Cabinets",job:"Tools, hardware & repair supplies",
+   items:["Reciprocating saw","Skill saw","Sander","Levels","Stud finder","Nuts","Bolts","Screws","Anchors","Tape","Caulk","Adhesives","Vacuum parts","Small repair pieces"],
+   maybe:["Drill batteries","Extension cords","Work gloves","Safety glasses","WD-40"],
+   kw:"tools drill hammer glue circular saw sawzall hardware wrench screwdriver"},
+  {code:"G2",emo:"🎣",name:"Tall Utility Cabinet 1",job:"Outdoor & recreation gear",
+   items:["Fishing gear","Tackle","Nets","Waders","Outdoor equipment"],maybe:["Bike helmets","Life jackets","Sports balls","Fishing licenses"],
+   kw:"fishing poles rods lures"},
+  {code:"G3",emo:"🧤",name:"Small Cabinet by Backyard Door",job:"Quick-grab garage supplies",
+   items:["Small repair supplies","Tapes","Cords","Gloves","Everyday garage & backyard items"],
+   maybe:["Bug spray","Sunscreen","Gardening gloves","Water bottles"],
+   kw:"extension cord work gloves"},
+  {code:"G4",emo:"❄️",name:"Garage Fridge & Freezer",job:"Food & drink overflow",
+   items:["Frozen foods","Drinks","Cookout supplies","Overflow fridge items"],maybe:["Bulk meat","Holiday leftovers","Extra milk","Party ice"],
+   kw:"ice cream beer soda pop freezer"},
+  {code:"G5",emo:"🛻",name:"Tall Utility Cabinet 2",job:"Bulky garage gear",
+   items:["Tarps","Covers","Shoulder dolly","Large outdoor items","Car items","Awkward equipment"],
+   maybe:["Snow shovels","Small ladder","Holiday inflatables","Car ramps"],
+   kw:"moving straps car wash jumper cables"},
+
+  {code:"U1",emo:"🧸",name:"West Bedroom Closet",job:"That bedroom's personal storage",
+   items:["Clothing","Shoes","Personal items","Keepsakes (modest)"],maybe:["Off-season clothing","Extra pillows","Hobby supplies","Board games"],
+   kw:"bedroom clothes"},
+  {code:"U2",emo:"🛁",name:"Hall Bathroom Storage",job:"Family bathroom & linen storage",
+   items:["Towels","Spare toiletries","Toilet paper","Bathroom backups"],maybe:["Bath toys","First-aid kit","Extra shampoo","Nail clippers"],
+   kw:"shampoo toothpaste washcloths linen"},
+  {code:"U3",emo:"🔌",name:"Master Bedroom Left Built-In",job:"Personal tech",
+   items:["Charging blocks","USB cords","Headphones","Earbuds","Tablets","Kindle","Laptops","Charging station"],
+   maybe:["Old phones","Camera gear","Game controllers","Spare batteries"],
+   kw:"chargers cables ipad electronics computer"},
+  {code:"U4",emo:"🛏️",name:"Master Bedroom Window Drawers",job:"Master linens & soft goods",
+   items:["Bedding","Blankets","Comforters","Throws","Spare sheets"],maybe:["Mattress pad","Pillow protectors","Extra pillows"],
+   kw:"pillowcases linens"},
+  {code:"U5",emo:"🌙",name:"Master Bedroom Right Built-In",job:"Bedroom comfort & occasional-use items",
+   items:["White-noise machines","Humidifiers","Diffusers","Headlamps"],maybe:["Extra blankets","Sleep mask","Diffuser refills","Night light"],
+   kw:"essential oils flashlight sound machine"},
+  {code:"U6",emo:"🪥",name:"Master Bathroom Vanity",job:"Daily grooming & personal care",
+   items:["Toothbrush items","Grooming tools","Deodorant","Cologne","Mouthwash","Lotion","Hair products","Skin care","Makeup","Q-tips","Nail supplies"],
+   maybe:["First-aid supplies","Contact solution","Hair dryer","Electric razor"],
+   kw:"razor toothpaste floss clippers"},
+  {code:"U7",emo:"👔",name:"Master Closet",job:"Adult clothing & accessories",
+   items:["Seasonal clothing","Ski gear","Chacos","Suits","Ties","Dresses","Army uniforms","Formalwear","Shoes"],
+   maybe:["Handbags","Belts","Jewelry organizer","Out-of-season shoes"],
+   kw:"ocp dress blues clothes sandals"},
+  {code:"U8",emo:"👟",name:"East Bedroom Closet",job:"That bedroom's personal storage",
+   items:["Clothing","Shoes","Personal belongings","Bedroom keepsakes"],maybe:["Off-season clothing","Extra pillows","Hobby supplies","Board games"],
+   kw:"bedroom clothes"},
+
+  {code:"O1",emo:"🌿",name:"Shed",job:"Yard & outdoor equipment",
+   items:["Lawn tools","Outdoor games","Tarps","Outdoor fishing items","Garden gear"],
+   maybe:["Wheelbarrow","Hose","Bike pump","Extension cords"],
+   kw:"rake shovel mower cornhole yard"},
+  {code:"O2",emo:"🌾",name:"Shed Chemical Cabinet",job:"Lawn & garden chemicals",
+   items:["Roundup","Insect killer","Plant food","Grass seed","Yard products"],maybe:["Ice melt","Mosquito spray","Wood stain","Motor oil"],
+   kw:"fertilizer weed killer bug spray"},
+  {code:"O3",emo:"🏊",name:"Pool Storage Enclosure",job:"Pool gear",
+   items:["Pool bags","Pool accessories","Pool nets","Covers","Hot-tub filters","Pool filters","Pool-use equipment"],
+   maybe:["Pool toys","Floaties","Pool towels","Skimmer net"],
+   kw:"floats goggles skimmer hot tub"},
+  {code:"O4",emo:"🧪",name:"Pool Chemical Cabinet",job:"Pool & hot-tub chemicals only",
+   items:["Hot-tub chemicals","Pool chemicals","Testing supplies","Maintenance supplies"],maybe:["Algaecide","pH increaser/decreaser","Test strips"],
+   kw:"chlorine test strips shock"},
+  {code:"O5",emo:"🍽️",name:"Outdoor Kitchen Cabinet",job:"Outdoor entertaining supplies",
+   items:["Outdoor serving pieces","Cups","Plates","Paper goods","Towels","Grilling backup supplies"],maybe:["Tablecloths","Citronella candles","Chair cushions"],
+   kw:"patio"},
+  {code:"O6",emo:"🔥",name:"Outdoor Kitchen Drawers",job:"Grilling tools",
+   items:["Tongs","Spatulas","Thermometers","Skewers","Foil","Grill utensils"],maybe:["Grill brush","Meat thermometer","Grill cover","Charcoal"],
+   kw:"bbq grill"},
+  {code:"O7",emo:"🥤",name:"Outdoor Kitchen Fridge",job:"Outdoor food & drinks",
+   items:["Drinks","Condiments","Cookout food"],maybe:["Extra condiments","Popsicles","Bottled water"],
+   kw:"pop soda beer ketchup"},
+  {code:"O8",emo:"🧊",name:"Outdoor Kitchen Ice Maker",job:"Ice only",items:["Ice"],maybe:[],
+   kw:""}
+];
+
+const QUICK = ["Passports","Christmas décor","Chargers","Toilet paper","Suitcases","Tools","Pool chemicals","Batteries"];
+const RULES = [
+  ["🛠️ Tools & hardware",["G1"]],
+  ["🧺 Cleaning & laundry",["M5"]],
+  ["🍲 Extra kitchen stuff",["B4","B5"]],
+  ["🧳 Camping & luggage",["B6"]],
+  ["🏊 Pool gear & chemicals",["O3","O4"]],
+  ["🌿 Yard gear & chemicals",["O1","O2"]],
+  ["👕 Clothing",["U1","U7","U8"]],
+  ["🎄 Seasonal & sentimental",["B1"]]
+];
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim();
+const stem = w => w.length > 3 ? w.replace(/ies$/,"y").replace(/(es|s)$/,"") : w;
+const toks = s => norm(s).split(" ").filter(Boolean).map(stem);
+const z = code => code[0];
+const zc = code => `--c:var(--z-${z(code)});--t:var(--t-${z(code)})`;
+const byCode = Object.fromEntries(LOCATIONS.map(l=>[l.code,l]));
+const hitWord = (w,q) => { const n = stem(norm(w)); return n && q.some(t => n.startsWith(t) || (t.startsWith(n) && n.length>2)); };
+const matches = (text,q) => { const h = toks(text); return q.every(t => h.some(x => x.startsWith(t) || (t.startsWith(x) && x.length>2))); };
+const highlight = (text,q) => q.length ? text.split(/(\s+|\/|-|\(|\))/).map(w => hitWord(w,q) ? `<mark>${esc(w)}</mark>` : esc(w)).join("") : esc(text);
+
+/* ---------- state ---------- */
+let area = null;
+let query = "";
+
+/* ---------- quick chips ---------- */
+$("#quick").innerHTML = QUICK.map(t=>`<button class="chip" type="button" data-q="${esc(t)}">${esc(t)}</button>`).join("");
+$("#quick").addEventListener("click", e=>{
+  const b = e.target.closest("[data-q]"); if(!b) return;
+  setQuery(b.dataset.q);
+});
+
+/* ---------- directory (floor-plan bands) ---------- */
+function renderDirectory(){
+  const count = k => LOCATIONS.filter(l=>z(l.code)===k).length;
+  const band = (k,wide) => `<button type="button" class="floor-btn" data-area="${k}" aria-pressed="${area===k}" style="--c:var(--z-${k});--t:var(--t-${k})">
+      <span class="tab" aria-hidden="true"></span>
+      <span class="txt"><b>${ZONES[k].name}</b><small>${ZONES[k].desc || count(k)+" spots"}</small></span>
+      <span class="chev" aria-hidden="true">›</span></button>`;
+  $("#directory").innerHTML = `
+    <div class="level">${band("U")}</div>
+    <div class="level split">${band("M")}${band("G")}</div>
+    <div class="level">${band("O")}</div>
+    <div class="ground-mark" aria-hidden="true"></div>
+    <div class="level">${band("B")}</div>`;
+  $("#showAll").hidden = !area;
+}
+$("#directory").addEventListener("click", e=>{
+  const b = e.target.closest("[data-area]"); if(!b) return;
+  area = area===b.dataset.area ? null : b.dataset.area;
+  renderDirectory(); renderTiles();
+  if(area){
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("#tiles").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+  }
+});
+$("#showAll").addEventListener("click", ()=>{ area=null; renderDirectory(); renderTiles(); });
+
+/* ---------- tiles ---------- */
+function tile(l){
+  const preview = l.items.slice(0,3).join(", ") + (l.items.length>3 ? "…" : "");
+  return `<button type="button" class="tile" data-open="${l.code}" style="${zc(l.code)}">
+    <span class="tile-top"><span class="emo" aria-hidden="true">${l.emo}</span><span class="code">${l.code}</span></span>
+    <b>${esc(l.name)}</b><small>${esc(preview)}</small></button>`;
+}
+function renderTiles(){
+  const zones = area ? [area] : ZONE_ORDER;
+  $("#tiles").style.scrollMarginTop = "140px";
+  $("#tiles").innerHTML = zones.map(k=>{
+    const locs = LOCATIONS.filter(l=>z(l.code)===k);
+    return `<h3 class="group-h" style="--c:var(--z-${k})"><span class="tab" aria-hidden="true"></span>${ZONES[k].name}<span class="count">· ${locs.length}</span></h3>
+    <div class="tiles">${locs.map(tile).join("")}</div>`;
+  }).join("");
+}
+
+/* ---------- rules ---------- */
+$("#rules").innerHTML = RULES.map(([label,codes])=>`
+  <div class="rule"><span class="lbl">${label}</span><span class="codes">${codes.map(c=>
+    `<button type="button" data-open="${c}" aria-label="Open ${c}, ${esc(byCode[c].name)}"><span class="code" style="${zc(c)}">${c}</span></button>`).join("")}</span></div>`).join("");
+
+/* ---------- search ---------- */
+function search(){
+  const q = toks(query);
+  const searching = q.length>0;
+  $("#searchView").hidden = !searching;
+  $("#browseView").hidden = searching;
+  $("#clear").hidden = !query;
+  if(!searching) return;
+
+  const results = [];
+  for(const l of LOCATIONS){
+    const itemHits = l.items.filter(i=>matches(i,q));
+    itemHits.forEach(i=>results.push({item:i,loc:l,score:norm(i).startsWith(norm(query))?0:1}));
+    const maybeHits = (l.maybe||[]).filter(i=>matches(i,q));
+    maybeHits.forEach(i=>results.push({item:i,loc:l,score:norm(i).startsWith(norm(query))?1.5:2.5,maybe:true}));
+    if(!itemHits.length && !maybeHits.length && matches(`${l.code} ${l.name} ${l.job} ${l.kw}`,q)) results.push({item:null,loc:l,score:3});
+  }
+  results.sort((a,b)=>a.score-b.score);
+
+  if(!results.length){
+    $("#countNote").textContent = "";
+    $("#results").innerHTML = `<div class="empty"><div class="emo" aria-hidden="true">🤔</div>
+      <b>“${esc(query)}” doesn't have a home yet.</b>
+      <p>Clear the search and check “Where should new stuff go?” to pick one.</p></div>`;
+    return;
+  }
+  const spots = new Set(results.map(r=>r.loc.code)).size;
+  $("#countNote").textContent = spots===1 ? "Found in 1 spot" : `Found in ${spots} spots`;
+  $("#results").innerHTML = results.slice(0,30).map(r=>`
+    <button type="button" class="result" data-open="${r.loc.code}" data-item="${esc(r.item||"")}" style="${zc(r.loc.code)}">
+      <span class="emo" aria-hidden="true">${r.loc.emo}</span>
+      <span><b>${r.item ? highlight(r.item,q) : esc(r.loc.name)}</b>
+      <span class="where">${r.maybe ? "Could go in " : ""}${r.item ? esc(r.loc.name) : esc(r.loc.job)} · ${ZONES[z(r.loc.code)].name}</span></span>
+      <span class="code">${r.loc.code}</span></button>`).join("");
+}
+function setQuery(v){ query=v; $("#q").value=v; search(); }
+$("#q").addEventListener("input", e=>{ query=e.target.value; search(); });
+$("#clear").addEventListener("click", ()=>{ setQuery(""); $("#q").focus(); });
+
+/* ---------- detail sheet ---------- */
+const dlg = $("#sheet");
+function openSheet(code, item){
+  const l = byCode[code];
+  $("#sheetBody").setAttribute("style", zc(code));
+  $("#sheetBody").innerHTML = `
+    <div class="grab" aria-hidden="true"></div>
+    <button class="close" type="button" id="closeSheet" aria-label="Close">✕</button>
+    <div class="sheet-head">
+      <span class="emo" aria-hidden="true">${l.emo}</span>
+      <div><span class="code big">${l.code}</span>
+      <h2 id="sheetTitle">${esc(l.name)}</h2>
+      <p class="area">${ZONES[z(code)].name}</p></div>
+    </div>
+    <p class="job">${esc(l.job)}</p>
+    <ul class="item-list">${l.items.map(i=>`<li class="${i===item?"hit":""}">${esc(i)}</li>`).join("")}</ul>
+    ${l.maybe && l.maybe.length ? `
+    <div class="also-h"><span>Could also go here</span><span class="rule" aria-hidden="true"></span></div>
+    <ul class="also-list">${l.maybe.map(i=>`<li class="${i===item?"hit":""}">${esc(i)}</li>`).join("")}</ul>` : ""}`;
+  dlg.showModal();
+  $("#closeSheet").focus();
+}
+dlg.addEventListener("click", e=>{
+  if(e.target.id==="closeSheet" || !e.target.closest(".sheet")) dlg.close();
+});
+
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-open]");
+  if(b && !dlg.contains(b)) openSheet(b.dataset.open, b.dataset.item || null);
+});
+
+/* ---------- init ---------- */
+renderDirectory(); renderTiles(); search();
+</script>
+</body>
+</html>
