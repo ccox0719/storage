@@ -751,6 +751,7 @@ function openSheet(code, itemId){
     <div class="also-h"><span>Could also go here</span><span class="rule" aria-hidden="true"></span></div>
     <ul class="also-list">${l.maybe.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : ""}`;
   dlg.showModal();
+  syncTabbarVisibility();
   $("#closeSheet").focus();
 }
 dlg.addEventListener("click", e=>{
@@ -777,6 +778,7 @@ function openPicker(id, text, from){
   $("#pickerTitle").textContent = `Move “${text}”`;
   $("#pickerFrom").textContent = `Currently in ${byCode[from].name} (${from})`;
   picker.showModal();
+  syncTabbarVisibility();
   $("#pickerQ").focus();
 }
 function renderPickerList(q){
@@ -821,6 +823,18 @@ function toast(msg){
   toastTimer = setTimeout(()=>{ el.classList.remove("show"); setTimeout(()=>el.hidden=true,200); }, 2400);
 }
 
+/* ---------- keep the tab bar out of the way while any dialog is open ----------
+   Dialog backdrops are semi-transparent and dialogs don't hide position:fixed
+   siblings, so without this the tab bar stays visible behind the sheet and
+   jumps up to sit above the on-screen keyboard when a form field is focused. */
+function syncTabbarVisibility(){
+  const anyOpen = document.querySelectorAll("dialog[open]").length > 0;
+  $(".tabbar").style.display = anyOpen ? "none" : "";
+}
+document.querySelectorAll("dialog").forEach(d=>{
+  d.addEventListener("close", syncTabbarVisibility);
+});
+
 document.addEventListener("click", e=>{
   const mv = e.target.closest("[data-move-id]");
   if(mv){ openPicker(mv.dataset.moveId, mv.dataset.moveText, mv.dataset.moveFrom); return; }
@@ -841,6 +855,16 @@ const Store = {
   write(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); } catch(e){ /* not persisted this session */ } },
   uid(){ return `${Date.now().toString(36)}${Math.random().toString(36).slice(2,8)}`; }
 };
+/* When the app's built-in defaults gain new items (like a new seasonal
+   section) after someone already has saved data, this appends anything
+   with an id they don't already have — without touching their progress
+   on existing items. */
+function mergeNewSeedItems(existing, seed, save){
+  const have = new Set(existing.map(i=>i.id));
+  let added = false;
+  seed.forEach(item=>{ if(!have.has(item.id)){ existing.push(item); added = true; } });
+  if(added) save();
+}
 
 /* ---------- date helpers ---------- */
 function todayISO(){ return new Date().toISOString().slice(0,10); }
@@ -878,6 +902,7 @@ const TASKS_SEED = [
   {id:"t12", title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:""}
 ];
 let tasks = Store.read("wil-tasks", null) || TASKS_SEED;
+mergeNewSeedItems(tasks, TASKS_SEED, saveTasks);
 function saveTasks(){ Store.write("wil-tasks", tasks); }
 
 function taskStatus(t){
@@ -962,7 +987,10 @@ const SEASONAL_SECTIONS = [
    spring:["Bring furniture back out","Wipe down all pieces","Inspect for winter damage","Set up cushions & umbrella"]},
   {key:"landscaping", icon:"leaf", name:"Landscaping",
    fall:["Final mow & fertilize","Aerate & overseed lawn","Cut back perennials","Mulch garden beds","Clean & store garden tools","Drain & store hoses","Winterize sprinkler system","Rake & remove leaves"],
-   spring:["First mow of the season","Fertilize / apply pre-emergent","Mulch beds","Prune shrubs","Turn on sprinkler system","Plant annuals"]}
+   spring:["First mow of the season","Fertilize / apply pre-emergent","Mulch beds","Prune shrubs","Turn on sprinkler system","Plant annuals"]},
+  {key:"hvac", icon:"gear", name:"HVAC / air conditioner",
+   fall:["Call to schedule HVAC cleaning/service","Rinse off the outdoor A/C unit","Clear debris & leaves from around the unit"],
+   spring:[]}
 ];
 function seasonalSeed(){
   const out = [];
@@ -973,6 +1001,7 @@ function seasonalSeed(){
   return out;
 }
 let seasonalItems = Store.read("wil-seasonal", null) || seasonalSeed();
+mergeNewSeedItems(seasonalItems, seasonalSeed(), saveSeasonal);
 function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); }
 const seasonalOpen = new Set();
 
@@ -1081,6 +1110,7 @@ const PLANTS_SEED = [
   {id:"unidentified", name:"Other unidentified plants", location:"", fall_task:"Identify before first frost to determine winter care", spring_task:"Monitor as it emerges and update this entry", notes:"Take a photo to help identify.", treatment_cycle_years:null, last_treated_year:null}
 ];
 let plants = Store.read("wil-plants", null) || PLANTS_SEED;
+mergeNewSeedItems(plants, PLANTS_SEED, savePlants);
 function savePlants(){ Store.write("wil-plants", plants); }
 
 function plantCycleBadge(p){
@@ -1160,6 +1190,7 @@ function openForm(cfg){
     </div>`).join("");
   $("#formDelete").hidden = !cfg.onDelete;
   formDlg.showModal();
+  syncTabbarVisibility();
   const first = $("#formFields [data-field]");
   if(first) first.focus();
 }
