@@ -178,10 +178,78 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
   .sheet{animation:none}
   .floor-btn .chev{transition:none}
 }
+
+/* ---------- Tab bar ---------- */
+.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--surface);border-top:1.5px solid var(--ink);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+.tab-btn{flex:1;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:10px;color:var(--muted);font-size:.72rem;font-weight:600}
+.tab-btn .ti{font-size:1.3rem;line-height:1}
+.tab-btn[aria-current="true"]{color:var(--ink);background:var(--paper)}
+.view[hidden]{display:none}
+
+/* ---------- View headings ---------- */
+.view-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:20px 0 4px}
+.view-h h2{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0;letter-spacing:-.005em}
+.view-h .link{border:0;background:none;color:var(--focus);font-size:.88rem;font-weight:600;cursor:pointer;padding:4px}
+.view-sub{color:var(--muted);font-size:.88rem;margin:0 0 16px}
+
+/* ---------- Task rows ---------- */
+.task-row{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 13px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center}
+.task-main{flex:1;min-width:0;text-align:left;border:0;background:none;cursor:pointer;font:inherit;color:inherit;padding:0}
+.task-main b{display:block;font-size:.96rem;font-weight:600;line-height:1.25}
+.task-main .freq{color:var(--muted);font-size:.8rem}
+.badge{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:6px;font-size:.76rem;font-weight:700}
+.badge.ok{background:var(--t-G);color:var(--z-G)}
+.badge.soon{background:var(--t-M);color:var(--z-M)}
+.badge.overdue{background:var(--t-U);color:#B4394C}
+.badge.never{background:var(--line);color:var(--muted)}
+.mini-btn{flex:0 0 auto;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 12px;font-weight:600;font-size:.82rem;cursor:pointer}
+.mini-btn:active{background:var(--paper)}
+.add-row{width:100%;border:1.5px dashed var(--line);background:none;color:var(--muted);border-radius:10px;padding:11px;font-weight:600;font-size:.88rem;cursor:pointer;margin-top:2px}
+.add-row:active{background:var(--surface)}
+
+/* ---------- Seasonal ---------- */
+.ssn-card{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:8px;overflow:hidden;box-shadow:var(--shadow)}
+.ssn-head{width:100%;border:0;background:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:13px 14px;font:inherit;color:inherit;text-align:left}
+.ssn-head .ti{font-size:1.35rem}
+.ssn-head b{flex:1;font-size:.98rem;font-weight:600}
+.ssn-head small{color:var(--muted);font-size:.78rem}
+.ssn-head .chev{color:var(--muted);transition:transform .15s}
+.ssn-card[data-expanded="true"] .chev{transform:rotate(90deg)}
+.ssn-body{padding:0 14px 14px}
+.ssn-body[hidden]{display:none}
+.ssn-sub{font-family:var(--display);font-weight:600;font-size:.8rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin:12px 0 6px}
+.check-list{list-style:none;margin:0;padding:0}
+.check-row{display:flex;align-items:flex-start;gap:9px;padding:7px 2px;cursor:pointer;font-size:.92rem;line-height:1.35}
+.check-row input{margin-top:3px;width:18px;height:18px;accent-color:var(--c, var(--focus));flex:0 0 auto}
+.check-row span{flex:1}
+.check-row.checked span{color:var(--muted);text-decoration:line-through}
+.ssn-progress{color:var(--muted);font-size:.8rem}
+
+/* ---------- Plant cards ---------- */
+.plant-card{width:100%;text-align:left;border:0;border-top:4px solid var(--z-G);border-radius:10px;background:var(--surface);padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow);cursor:pointer;font:inherit;color:inherit}
+.plant-card b{display:block;font-size:.97rem;font-weight:600}
+.plant-card .loc{color:var(--muted);font-size:.82rem;margin-top:1px}
+.plant-card .loc.unset{font-style:italic}
+.plant-card .tasks{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.plant-card .tasks span{background:var(--t-G);color:var(--z-G);border-radius:6px;padding:2px 8px;font-size:.76rem;font-weight:600}
+
+/* ---------- Generic form sheet ---------- */
+.field{margin-bottom:12px}
+.field label{display:block;font-weight:600;font-size:.85rem;margin-bottom:5px}
+.field input, .field textarea{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:10px 11px;font:inherit;font-size:.95rem;background:var(--paper);color:var(--ink)}
+.field input:focus, .field textarea:focus{outline:none;border-color:var(--focus)}
+.field textarea{resize:vertical;min-height:64px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-actions{display:flex;gap:8px;margin-top:16px}
+.form-actions .save{flex:1;border:0;border-radius:10px;background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:600;font-size:.96rem;padding:12px;cursor:pointer}
+.form-actions .save:active{opacity:.85}
+.form-actions .del{border:1.5px solid #B4394C;color:#B4394C;background:none;border-radius:10px;padding:12px 16px;font-weight:600;font-size:.9rem;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <main id="view-storage" class="view">
   <div class="finder">
     <label class="search">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -211,7 +279,34 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
     <div class="rules" id="rules"></div>
     <p class="tip"><b>No junk drawers or misc bins.</b> If a bin mixes different kinds of things, split it and send each piece to its own home. The basement storage room (B1) is only for seasonal, sentimental, and genuinely long-term items.</p>
   </div>
+  </main>
+
+  <main id="view-tasks" class="view" hidden>
+    <div class="view-h"><h2>Recurring tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
+    <p class="view-sub">Home maintenance on a schedule. Tap a task to edit it.</p>
+    <div id="tasksList"></div>
+  </main>
+
+  <main id="view-seasonal" class="view" hidden>
+    <div class="view-h"><h2>Seasonal outdoor care</h2></div>
+    <p class="view-sub">Fall shutdown and spring startup, by area.</p>
+    <div id="seasonalList"></div>
+  </main>
+
+  <main id="view-plants" class="view" hidden>
+    <div class="view-h"><h2>Plant care</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
+    <p class="view-sub">Location, fall task, spring task, and notes. Tap a plant to edit.</p>
+    <div id="plantsList"></div>
+  </main>
 </div>
+
+<nav class="tabbar" aria-label="Sections">
+  <button class="tab-btn" type="button" data-tab="storage" aria-current="true"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>Storage</button>
+  <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
+  <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
+  <button class="tab-btn" type="button" data-tab="plants"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span>Plants</button>
+</nav>
+
 
 <dialog id="sheet" aria-labelledby="sheetTitle">
   <div class="sheet-wrap" id="sheetWrap">
@@ -238,6 +333,21 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
+<dialog id="formSheet" aria-labelledby="formTitle">
+  <div class="sheet-wrap">
+    <div class="sheet">
+      <div class="grab" aria-hidden="true"></div>
+      <button class="close" type="button" id="formClose" aria-label="Close">✕</button>
+      <h2 id="formTitle" style="font-family:var(--display);font-weight:600;font-size:1.2rem;margin:8px 0 14px"></h2>
+      <div id="formFields"></div>
+      <div class="form-actions">
+        <button type="button" class="del" id="formDelete" hidden>Delete</button>
+        <button type="button" class="save" id="formSave">Save</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
 <script>
 const ZONES = {
   U:{name:"Upstairs"},
@@ -248,130 +358,170 @@ const ZONES = {
 };
 const ZONE_ORDER = ["U","M","G","O","B"];
 
+/* ---------- line-icon set (replaces emoji) ---------- */
+const ICONS = {
+  box: '<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  "toilet-paper": '<rect x="5" y="8" width="14" height="12" rx="2"/><ellipse cx="12" cy="8" rx="7" ry="3"/><ellipse cx="12" cy="8" rx="3" ry="1.3"/>',
+  pot: '<path d="M4 9h16l-1.5 10.5A2 2 0 0 1 16.5 21h-9a2 2 0 0 1-2-1.5L4 9z"/><path d="M2 6h20"/><path d="M8 6V4h8v2"/>',
+  container: '<rect x="4" y="8" width="16" height="12" rx="2"/><path d="M4 8l2-4h12l2 4"/>',
+  suitcase: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
+  lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4"/>',
+  jar: '<path d="M8 3h8"/><path d="M9 3v3l-2 2v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8l-2-2V3"/><path d="M7 12h10"/>',
+  hanger: '<path d="M12 4a2 2 0 1 1 2 2c-.6.6-1 1-1 2"/><path d="M12 8l-9 6h18l-9-6z"/><path d="M3 18h18"/>',
+  droplet: '<path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/>',
+  dice: '<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>',
+  wrench: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.4-2.4z"/>',
+  fish: '<path d="M3 12s3-5 9-5 9 5 9 5-3 5-9 5-9-5-9-5z"/><circle cx="16" cy="11" r="1" fill="currentColor" stroke="none"/><path d="M3 12l-2-3v6l2-3z"/>',
+  glove: '<path d="M8 10V5a1.5 1.5 0 0 1 3 0v4M11 9V4a1.5 1.5 0 0 1 3 0v5M14 9.5V6a1.5 1.5 0 0 1 3 0v7"/><path d="M17 10a2 2 0 0 1 4 0v4a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-3a1.5 1.5 0 0 1 3 0"/>',
+  snowflake: '<path d="M12 2v20M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/>',
+  truck: '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>',
+  plug: '<path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-5 5 5 5 0 0 1-5-5V8z"/><path d="M12 17v5"/>',
+  bed: '<path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"/><path d="M3 15h18"/><path d="M7 11V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/><path d="M3 21v-3M21 21v-3"/>',
+  moon: '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>',
+  toothbrush: '<path d="M4 20l5-5"/><path d="M9 15l8-8a2.8 2.8 0 0 1 4 4l-8 8z"/><path d="M14 6l4 4"/>',
+  leaf: '<path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/>',
+  flask: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M8 14h8"/>',
+  waves: '<path d="M2 8c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>',
+  utensils: '<path d="M6 2v8a2 2 0 0 0 4 0V2M8 10v12M17 2s-3 1-3 5 1 4 1 4v11"/>',
+  flame: '<path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-1 .3-2 1-3 .3 1 1 1.5 1.5 1 .5-2-1-3-1-5.5C8.5 2 12 2 12 2z"/>',
+  cup: '<path d="M5 8h11v7a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V8z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2"/><path d="M8 2v3M12 2v3"/>',
+  "ice-cube": '<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M5 9h14M9 5v14"/>',
+  sprout: '<path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/>',
+  home: '<path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/>',
+  "check-circle": '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/>',
+  broom: '<path d="M19 5l-8 8"/><path d="M11 13l-8 8"/><path d="M3 21l2-6 4 4-6 2z"/>',
+  chair: '<path d="M6 4v9M18 4v9"/><path d="M6 13h12v3a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4v-3z"/><path d="M6 20l-1 2M18 20l1 2"/>',
+  "help-circle": '<circle cx="12" cy="12" r="9"/><path d="M9.3 9.2a2.7 2.7 0 0 1 5.1 1.2c0 1.8-2.2 1.7-2.2 3.6"/><circle cx="12" cy="17.2" r=".6" fill="currentColor" stroke="none"/>'
+};
+function icon(key){
+  return `<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true">${ICONS[key]||ICONS.box}</svg>`;
+}
+
 const RAW_LOCATIONS = [
-  {code:"B1",emo:"📦",name:"Basement Storage Room",job:"Long-term household storage",
+  {code:"B1",icon:"box",name:"Basement Storage Room",job:"Long-term household storage",
    items:["Christmas décor","Memories","Photo albums","Kids' keepsakes","Office supplies","Craft supplies","Party supplies","Gift supplies","Long-term electronics","Spare household supplies","Paint overflow","Repair overflow"],
    maybe:["Halloween & Easter decor","Wrapping paper & gift bags","Wedding keepsakes","Old yearbooks","Baby items being saved","Extra light bulbs & batteries"],
    kw:"christmas halloween easter thanksgiving decorations ornaments wreath lights tinsel garland keepsake memento memorabilia scrapbook yearbook wedding baby book trophy award diploma craft scrapbooking wrapping paper gift bag ribbon greeting card stationery office supply printer paper binder file folder old phone old laptop router spare paint touch up caulk tube lightbulb spare battery spare"},
-  {code:"B2",emo:"⚙️",name:"Mechanical Room",job:"House mechanical supplies only",
+  {code:"B2",icon:"gear",name:"Mechanical Room",job:"House mechanical supplies only",
    items:["HVAC filters","Air filters","Humidifier filters","House-system replacement items"],
    maybe:["Appliance manuals","Sump pump parts","Water softener salt","Smoke detector batteries"],
    kw:"furnace filter air filter hvac filter humidifier filter water filter cartridge water heater sump pump well pump thermostat battery smoke detector battery carbon monoxide detector appliance manual warranty paperwork"},
-  {code:"B3",emo:"🧻",name:"Basement Bathroom",job:"Basement bathroom supplies",
+  {code:"B3",icon:"toilet-paper",name:"Basement Bathroom",job:"Basement bathroom supplies",
    items:["Toilet paper","Soap","Cleaning backups","Toiletry backups"],maybe:["Plunger","Extra hand towels","Air freshener","Night light"],
    kw:"toilet paper soap plunger toilet brush air freshener night light hand towel"},
-  {code:"B4",emo:"🍲",name:"Basement Kitchen",job:"Specialty kitchen appliances & extra cookware",
+  {code:"B4",icon:"pot",name:"Basement Kitchen",job:"Specialty kitchen appliances & extra cookware",
    items:["Stock pot","Fondue pot","Wok","Electric griddle","Panini maker","Roasting pans","Food processor","Slow cookers","Keurig","Shaved-ice machine","Waffle maker","Electric skillet"],
    maybe:["Turkey fryer","Bread machine","Pasta maker","Ice cream maker","Pressure canner","Holiday baking pans"],
    kw:"stock pot fondue wok griddle panini press roasting pan food processor slow cooker crockpot instant pot keurig coffee maker waffle maker deep fryer turkey fryer bread machine pasta maker ice cream maker pressure canner mixer blender specialty appliance"},
-  {code:"B5",emo:"🥡",name:"Basement Kitchen Peninsula",job:"Entertaining & food-storage overflow",
+  {code:"B5",icon:"container",name:"Basement Kitchen Peninsula",job:"Entertaining & food-storage overflow",
    items:["Tupperware","Bento boxes","Party trays","Plasticware","Paper bowls","Paper cups","Paper plates","Serving pieces"],
    maybe:["Coolers","Drink dispenser","Chafing dishes","Disposable cutlery","Punch bowl"],
    kw:"tupperware food container bento box party tray plasticware disposable plate disposable cup paper plate paper bowl serving dish platter cooler drink dispenser chafing dish punch bowl cocktail supply"},
-  {code:"B6",emo:"🧳",name:"Under-Stairs Storage",job:"Bulky travel & camping storage",
+  {code:"B6",icon:"suitcase",name:"Under-Stairs Storage",job:"Bulky travel & camping storage",
    items:["Suitcases","Sleeping bags","Cots","Packing cubes","Camping gear","Slackline","Inflatable pump","Travel cooking equipment"],
    maybe:["Tents","Camp chairs","Hiking backpacks","Sleeping pads","Road-trip games"],
    kw:"suitcase luggage duffel bag sleeping bag tent camp chair camping stove travel cooler packing cube travel pillow hiking backpack sleeping pad road trip"},
-  {code:"B7",emo:"🔒",name:"Safe",job:"Important documents & valuables",
+  {code:"B7",icon:"lock",name:"Safe",job:"Important documents & valuables",
    items:["Passports","Important documents","Checkbooks","Records"],
    maybe:["Jewelry","Backup hard drives","Spare house keys","Will & estate papers"],
    kw:"passport birth certificate social security card will deed title jewelry cash external hard drive backup spare key important document valuables"},
 
-  {code:"M1",emo:"🍳",name:"Main Kitchen",job:"Everyday kitchen & frequently used appliances",
+  {code:"M1",icon:"pot",name:"Main Kitchen",job:"Everyday kitchen & frequently used appliances",
    items:["KitchenAid (appliance lift)","Everyday cookware","Baking tools","Fridge filters","Everyday food storage"],
    maybe:["Blender","Toaster","Everyday dishware","Cutting boards","Spice rack"],
    kw:"blender toaster mixer cutting board dish plate pan pot spice measuring cup kitchenaid fridge filter everyday cookware"},
-  {code:"M2",emo:"🥫",name:"Pantry",job:"Food & consumables",
+  {code:"M2",icon:"jar",name:"Pantry",job:"Food & consumables",
    items:["Pantry staples","Bulk food","Snacks","Paper food products","Food backups"],
    maybe:["Cereal","Coffee & tea","Cooking oils","Kids' snacks","Canned goods"],
    kw:"cereal snack canned food pasta rice coffee tea cooking oil condiment flour sugar pantry staple bulk food"},
-  {code:"M3",emo:"🧥",name:"Entry Coat Closet",job:"Things you grab when leaving",
+  {code:"M3",icon:"hanger",name:"Entry Coat Closet",job:"Things you grab when leaving",
    items:["Shoes","Gloves","Hats","Scarves","Umbrellas","Coats","Bags"],
    maybe:["Backpacks","Sunglasses","Reusable shopping bags","Sunscreen","Leashes"],
    kw:"coat jacket shoe boot glove hat scarf umbrella backpack sunglasses reusable bag mask sunscreen leash keys"},
-  {code:"M4",emo:"🧼",name:"Main-Floor Bathroom",job:"Guest & main-floor bathroom supplies",
+  {code:"M4",icon:"toilet-paper",name:"Main-Floor Bathroom",job:"Guest & main-floor bathroom supplies",
    items:["Toilet paper","Hand soap","Toiletries","Cleaners"],maybe:["Guest towels","Hand lotion","Extra toilet paper","Air freshener"],
    kw:"toilet paper hand soap guest towel air freshener bathroom guest"},
-  {code:"M5",emo:"🧺",name:"Laundry Room",job:"Cleaning, laundry & household refills",
+  {code:"M5",icon:"droplet",name:"Laundry Room",job:"Cleaning, laundry & household refills",
    items:["Detergent","Dryer sheets","OxiClean","Febreze","Glass cleaner","Shout","Pledge","Upholstery supplies","Handheld vacuum","Rags","Towels","Pool & beach towels"],
    maybe:["Iron & board","Mop & broom","Lint roller","Stain stick","Trash bags"],
    kw:"detergent dryer sheet oxiclean febreze glass cleaner windex stain remover iron ironing board mop broom handheld vacuum trash bag dish soap sponge rag upholstery cleaner lint roller laundry cleaning supply"},
-  {code:"M6",emo:"🎲",name:"Game Room Built-Ins",job:"Games, recreation & family fun",
+  {code:"M6",icon:"dice",name:"Game Room Built-Ins",job:"Games, recreation & family fun",
    items:["Pokémon cards","Puzzles","Costumes","Dress-up items","Laser tag","Indoor games","Books"],
    maybe:["Board games","Playing cards","Legos","Art supplies","Remote controls"],
    kw:"board game card game puzzle costume dress up laser tag lego remote control book toy indoor pokemon"},
 
-  {code:"G1",emo:"🛠️",name:"Workbench & Tool Cabinets",job:"Tools, hardware & repair supplies",
+  {code:"G1",icon:"wrench",name:"Workbench & Tool Cabinets",job:"Tools, hardware & repair supplies",
    items:["Reciprocating saw","Skill saw","Sander","Levels","Stud finder","Nuts","Bolts","Screws","Anchors","Tape","Caulk","Adhesives","Vacuum parts","Small repair pieces"],
    maybe:["Drill batteries","Extension cords","Work gloves","Safety glasses","WD-40"],
    kw:"drill saw sander level stud finder screw bolt nut anchor tape measure caulk adhesive glue wrench screwdriver hammer pliers extension cord work glove safety glasses wd40 hardware tool repair glue gun staple gun nail gun heat gun caulk gun"},
-  {code:"G2",emo:"🎣",name:"Tall Utility Cabinet 1",job:"Outdoor & recreation gear",
+  {code:"G2",icon:"fish",name:"Tall Utility Cabinet 1",job:"Outdoor & recreation gear",
    items:["Fishing gear","Tackle","Nets","Waders","Outdoor equipment"],maybe:["Bike helmets","Life jackets","Sports balls","Fishing licenses","Airsoft & BB guns","Nerf blasters","Bow & arrows"],
    kw:"fishing rod tackle net waders bike helmet life jacket sports ball fishing license outdoor recreation gear airsoft bb gun nerf blaster pellet gun bow arrow ammo eye protection safety goggles hunting archery"},
-  {code:"G3",emo:"🧤",name:"Small Cabinet by Backyard Door",job:"Quick-grab garage supplies",
+  {code:"G3",icon:"glove",name:"Small Cabinet by Backyard Door",job:"Quick-grab garage supplies",
    items:["Small repair supplies","Tapes","Cords","Gloves","Everyday garage & backyard items"],
    maybe:["Bug spray","Sunscreen","Gardening gloves","Water bottles"],
    kw:"bug spray sunscreen gardening glove water bottle small extension cord quick grab backyard"},
-  {code:"G4",emo:"❄️",name:"Garage Fridge & Freezer",job:"Food & drink overflow",
+  {code:"G4",icon:"snowflake",name:"Garage Fridge & Freezer",job:"Food & drink overflow",
    items:["Frozen foods","Drinks","Cookout supplies","Overflow fridge items"],maybe:["Bulk meat","Holiday leftovers","Extra milk","Party ice"],
    kw:"frozen food bulk meat extra drink party ice holiday leftovers extra milk freezer overflow"},
-  {code:"G5",emo:"🛻",name:"Tall Utility Cabinet 2",job:"Bulky garage gear",
+  {code:"G5",icon:"truck",name:"Tall Utility Cabinet 2",job:"Bulky garage gear",
    items:["Tarps","Covers","Shoulder dolly","Large outdoor items","Car items","Awkward equipment"],
    maybe:["Snow shovels","Small ladder","Holiday inflatables","Car ramps"],
    kw:"tarp cover shoulder dolly snow shovel small ladder car ramp holiday inflatable bulky"},
 
-  {code:"U1",emo:"🧸",name:"West Bedroom Closet",job:"That bedroom's personal storage",
+  {code:"U1",icon:"hanger",name:"West Bedroom Closet",job:"That bedroom's personal storage",
    items:["Clothing","Shoes","Personal items","Keepsakes (modest)"],maybe:["Off-season clothing","Extra pillows","Hobby supplies","Board games"],
    kw:"clothing shoes personal item hobby supply extra pillow off season clothing bedroom closet"},
-  {code:"U2",emo:"🛁",name:"Hall Bathroom Storage",job:"Family bathroom & linen storage",
+  {code:"U2",icon:"toilet-paper",name:"Hall Bathroom Storage",job:"Family bathroom & linen storage",
    items:["Towels","Spare toiletries","Toilet paper","Bathroom backups"],maybe:["Bath toys","First-aid kit","Extra shampoo","Nail clippers"],
    kw:"towel shampoo bath toy first aid nail clipper hall bathroom linen"},
-  {code:"U3",emo:"🔌",name:"Master Bedroom Left Built-In",job:"Personal tech",
+  {code:"U3",icon:"plug",name:"Master Bedroom Left Built-In",job:"Personal tech",
    items:["Charging blocks","USB cords","Headphones","Earbuds","Tablets","Kindle","Laptops","Charging station"],
    maybe:["Old phones","Camera gear","Game controllers","Spare batteries"],
    kw:"charger cable headphone earbud tablet kindle laptop old phone camera game controller spare battery personal tech"},
-  {code:"U4",emo:"🛏️",name:"Master Bedroom Window Drawers",job:"Master linens & soft goods",
+  {code:"U4",icon:"bed",name:"Master Bedroom Window Drawers",job:"Master linens & soft goods",
    items:["Bedding","Blankets","Comforters","Throws","Spare sheets"],maybe:["Mattress pad","Pillow protectors","Extra pillows"],
    kw:"bedding blanket comforter throw sheet mattress pad pillow protector linens"},
-  {code:"U5",emo:"🌙",name:"Master Bedroom Right Built-In",job:"Bedroom comfort & occasional-use items",
+  {code:"U5",icon:"moon",name:"Master Bedroom Right Built-In",job:"Bedroom comfort & occasional-use items",
    items:["White-noise machines","Humidifiers","Diffusers","Headlamps"],maybe:["Extra blankets","Sleep mask","Diffuser refills","Night light"],
    kw:"white noise machine humidifier diffuser headlamp sleep mask night light bedroom comfort"},
-  {code:"U6",emo:"🪥",name:"Master Bathroom Vanity",job:"Daily grooming & personal care",
+  {code:"U6",icon:"toothbrush",name:"Master Bathroom Vanity",job:"Daily grooming & personal care",
    items:["Toothbrush items","Grooming tools","Deodorant","Cologne","Mouthwash","Lotion","Hair products","Skin care","Makeup","Q-tips","Nail supplies"],
    maybe:["First-aid supplies","Contact solution","Hair dryer","Electric razor"],
    kw:"toothbrush deodorant cologne perfume mouthwash lotion hair product makeup qtip nail supply razor first aid contact lens hair dryer grooming"},
-  {code:"U7",emo:"👔",name:"Master Closet",job:"Adult clothing & accessories",
+  {code:"U7",icon:"hanger",name:"Master Closet",job:"Adult clothing & accessories",
    items:["Seasonal clothing","Ski gear","Chacos","Suits","Ties","Dresses","Army uniforms","Formalwear","Shoes"],
    maybe:["Handbags","Belts","Jewelry organizer","Out-of-season shoes"],
    kw:"suit tie dress formalwear uniform ski gear chacos handbag belt jewelry out of season shoe adult clothing"},
-  {code:"U8",emo:"👟",name:"East Bedroom Closet",job:"That bedroom's personal storage",
+  {code:"U8",icon:"hanger",name:"East Bedroom Closet",job:"That bedroom's personal storage",
    items:["Clothing","Shoes","Personal belongings","Bedroom keepsakes"],maybe:["Off-season clothing","Extra pillows","Hobby supplies","Board games"],
    kw:"clothing shoes personal item hobby supply extra pillow off season clothing bedroom closet"},
 
-  {code:"O1",emo:"🌿",name:"Shed",job:"Yard & outdoor equipment",
+  {code:"O1",icon:"leaf",name:"Shed",job:"Yard & outdoor equipment",
    items:["Lawn tools","Outdoor games","Tarps","Outdoor fishing items","Garden gear"],
    maybe:["Wheelbarrow","Hose","Bike pump","Extension cords"],
    kw:"lawn tool rake shovel mower wheelbarrow hose bike pump garden tool outdoor game extension cord yard"},
-  {code:"O2",emo:"🌾",name:"Shed Chemical Cabinet",job:"Lawn & garden chemicals",
+  {code:"O2",icon:"flask",name:"Shed Chemical Cabinet",job:"Lawn & garden chemicals",
    items:["Roundup","Insect killer","Plant food","Grass seed","Yard products"],maybe:["Ice melt","Mosquito spray","Wood stain","Motor oil"],
    kw:"roundup weed killer insect killer fertilizer grass seed ice melt mosquito spray wood stain motor oil chemical"},
-  {code:"O3",emo:"🏊",name:"Pool Storage Enclosure",job:"Pool gear",
+  {code:"O3",icon:"waves",name:"Pool Storage Enclosure",job:"Pool gear",
    items:["Pool bags","Pool accessories","Pool nets","Covers","Hot-tub filters","Pool filters","Pool-use equipment"],
    maybe:["Pool toys","Floaties","Pool towels","Skimmer net"],
    kw:"pool toy floatie pool towel skimmer net pool vacuum hot tub cover pool bag"},
-  {code:"O4",emo:"🧪",name:"Pool Chemical Cabinet",job:"Pool & hot-tub chemicals only",
+  {code:"O4",icon:"flask",name:"Pool Chemical Cabinet",job:"Pool & hot-tub chemicals only",
    items:["Hot-tub chemicals","Pool chemicals","Testing supplies","Maintenance supplies"],maybe:["Algaecide","pH increaser/decreaser","Test strips"],
    kw:"chlorine algaecide ph increaser ph decreaser pool shock test strip chemical"},
-  {code:"O5",emo:"🍽️",name:"Outdoor Kitchen Cabinet",job:"Outdoor entertaining supplies",
+  {code:"O5",icon:"utensils",name:"Outdoor Kitchen Cabinet",job:"Outdoor entertaining supplies",
    items:["Outdoor serving pieces","Cups","Plates","Paper goods","Towels","Grilling backup supplies"],maybe:["Tablecloths","Citronella candles","Chair cushions"],
    kw:"tablecloth citronella candle outdoor cup outdoor plate chair cushion entertaining"},
-  {code:"O6",emo:"🔥",name:"Outdoor Kitchen Drawers",job:"Grilling tools",
+  {code:"O6",icon:"flame",name:"Outdoor Kitchen Drawers",job:"Grilling tools",
    items:["Tongs","Spatulas","Thermometers","Skewers","Foil","Grill utensils"],maybe:["Grill brush","Meat thermometer","Grill cover","Charcoal"],
    kw:"grill brush meat thermometer grill cover charcoal tongs spatula skewer grilling"},
-  {code:"O7",emo:"🥤",name:"Outdoor Kitchen Fridge",job:"Outdoor food & drinks",
+  {code:"O7",icon:"cup",name:"Outdoor Kitchen Fridge",job:"Outdoor food & drinks",
    items:["Drinks","Condiments","Cookout food"],maybe:["Extra condiments","Popsicles","Bottled water"],
    kw:"condiment popsicle bottled water outdoor drink"},
-  {code:"O8",emo:"🧊",name:"Outdoor Kitchen Ice Maker",job:"Ice only",items:["Ice"],maybe:[],
+  {code:"O8",icon:"ice-cube",name:"Outdoor Kitchen Ice Maker",job:"Ice only",items:["Ice"],maybe:[],
    kw:"ice"}
 ];
 
@@ -404,7 +554,7 @@ let LOCATIONS = [];
 let byCode = {};
 function rebuild(){
   const map = {};
-  RAW_LOCATIONS.forEach(loc=>{ map[loc.code] = {code:loc.code, emo:loc.emo, name:loc.name, job:loc.job, kw:loc.kw, maybe:loc.maybe, items:[]}; });
+  RAW_LOCATIONS.forEach(loc=>{ map[loc.code] = {code:loc.code, icon:loc.icon, name:loc.name, job:loc.job, kw:loc.kw, maybe:loc.maybe, items:[]}; });
   itemsById = {};
   [...RAW_LOCATIONS.flatMap(loc=>loc.items), ...customItems].forEach(it=>{
     itemsById[it.id] = it;
@@ -418,14 +568,14 @@ rebuild();
 
 const QUICK = ["Passports","Christmas décor","Chargers","Toilet paper","Suitcases","Tools","Pool chemicals","Batteries"];
 const RULES = [
-  ["🛠️ Tools & hardware",["G1"]],
-  ["🧺 Cleaning & laundry",["M5"]],
-  ["🍲 Extra kitchen stuff",["B4","B5"]],
-  ["🧳 Camping & luggage",["B6"]],
-  ["🏊 Pool gear & chemicals",["O3","O4"]],
-  ["🌿 Yard gear & chemicals",["O1","O2"]],
-  ["👕 Clothing",["U1","U7","U8"]],
-  ["🎄 Seasonal & sentimental",["B1"]]
+  ["wrench","Tools & hardware",["G1"]],
+  ["droplet","Cleaning & laundry",["M5"]],
+  ["pot","Extra kitchen stuff",["B4","B5"]],
+  ["suitcase","Camping & luggage",["B6"]],
+  ["waves","Pool gear & chemicals",["O3","O4"]],
+  ["leaf","Yard gear & chemicals",["O1","O2"]],
+  ["hanger","Clothing",["U1","U7","U8"]],
+  ["box","Seasonal & sentimental",["B1"]]
 ];
 
 /* ---------- helpers ---------- */
@@ -493,7 +643,7 @@ $("#showAll").addEventListener("click", ()=>{ area=null; renderDirectory(); rend
 function tile(l){
   const preview = l.items.slice(0,3).map(i=>i.text).join(", ") + (l.items.length>3 ? "…" : "");
   return `<button type="button" class="tile" data-open="${l.code}" style="${zc(l.code)}">
-    <span class="tile-top"><span class="emo" aria-hidden="true">${l.emo}</span><span class="code">${l.code}</span></span>
+    <span class="tile-top"><span class="emo">${icon(l.icon)}</span><span class="code">${l.code}</span></span>
     <b>${esc(l.name)}</b><small>${esc(preview)}</small></button>`;
 }
 function renderTiles(){
@@ -507,8 +657,8 @@ function renderTiles(){
 }
 
 /* ---------- rules ---------- */
-$("#rules").innerHTML = RULES.map(([label,codes])=>`
-  <div class="rule"><span class="lbl">${label}</span><span class="codes">${codes.map(c=>
+$("#rules").innerHTML = RULES.map(([ic,label,codes])=>`
+  <div class="rule"><span class="lbl">${icon(ic)} ${label}</span><span class="codes">${codes.map(c=>
     `<button type="button" data-open="${c}" aria-label="Open ${c}, ${esc(byCode[c].name)}"><span class="code" style="${zc(c)}">${c}</span></button>`).join("")}</span></div>`).join("");
 
 /* ---------- search ---------- */
@@ -548,11 +698,11 @@ function search(){
           <span class="where">${esc(l.job)} · ${ZONES[z(l.code)].name}</span></span>
           <span class="code">${l.code}</span></button>`).join("");
     } else {
-      $("#results").innerHTML = `<div class="empty"><div class="emo" aria-hidden="true">🤔</div>
+      $("#results").innerHTML = `<div class="empty"><div class="emo" style="font-size:2.2rem">${icon("help-circle")}</div>
         <b>Nothing matches “${esc(query)}” yet.</b>
         <p>Pick the closest general category and we'll file it there.</p></div>
-        <div class="rules" style="margin-top:10px">${RULES.map(([label,codes])=>`
-          <div class="rule"><span class="lbl">${label}</span><span class="codes">${codes.map(c=>
+        <div class="rules" style="margin-top:10px">${RULES.map(([ic,label,codes])=>`
+          <div class="rule"><span class="lbl">${icon(ic)} ${label}</span><span class="codes">${codes.map(c=>
             `<button type="button" data-open="${c}" data-guess="${esc(query)}" aria-label="File under ${esc(byCode[c].name)}"><span class="code" style="${zc(c)}">${c}</span></button>`).join("")}</span></div>`).join("")}</div>`;
     }
     return;
@@ -561,7 +711,7 @@ function search(){
   $("#countNote").textContent = spots===1 ? "Found in 1 spot" : `Found in ${spots} spots`;
   $("#results").innerHTML = results.slice(0,30).map(r=>`
     <button type="button" class="result" data-open="${r.loc.code}" data-item-id="${r.item && r.item.id ? r.item.id : ""}" style="${zc(r.loc.code)}">
-      <span class="emo" aria-hidden="true">${r.loc.emo}</span>
+      <span class="emo">${icon(r.loc.icon)}</span>
       <span><b>${r.item ? highlight(r.item.text,q) : esc(r.loc.name)}</b>
       <span class="where">${r.maybe ? "Could go in " : ""}${r.item ? esc(r.loc.name) : esc(r.loc.job)} · ${ZONES[z(r.loc.code)].name}</span></span>
       <span class="code">${r.loc.code}</span></button>`).join("");
@@ -582,7 +732,7 @@ function openSheet(code, itemId){
     <div class="grab" aria-hidden="true"></div>
     <button class="close" type="button" id="closeSheet" aria-label="Close">✕</button>
     <div class="sheet-head">
-      <span class="emo" aria-hidden="true">${l.emo}</span>
+      <span class="emo">${icon(l.icon)}</span>
       <div><span class="code big">${l.code}</span>
       <h2 id="sheetTitle">${esc(l.name)}</h2>
       <p class="area">${ZONES[z(code)].name}</p></div>
@@ -634,7 +784,7 @@ function renderPickerList(q){
   const rows = LOCATIONS.filter(l=>l.code!==pending.from).filter(l=>!toksQ.length || matches(`${l.code} ${l.name} ${l.job}`,toksQ));
   $("#pickerList").innerHTML = rows.length ? rows.map(l=>`
     <button type="button" class="pick-row" data-dest="${l.code}" style="${zc(l.code)}">
-      <span class="emo" aria-hidden="true">${l.emo}</span>
+      <span class="emo">${icon(l.icon)}</span>
       <span><b>${esc(l.name)}</b><small>${ZONES[z(l.code)].name}</small></span>
       <span class="code">${l.code}</span></button>`).join("")
     : `<p class="hint" style="padding:14px 4px">No matching spots.</p>`;
@@ -681,8 +831,376 @@ document.addEventListener("click", e=>{
   }
 });
 
+/* ==================================================================
+   Tasks · Seasonal · Plants — shared local persistence layer
+   Field names use snake_case to map directly onto future Supabase
+   tables/columns (id, created_at, etc.) with no reshaping needed.
+   ================================================================== */
+const Store = {
+  read(key, fallback){ try{ const v = localStorage.getItem(key); return v===null ? fallback : JSON.parse(v); } catch(e){ return fallback; } },
+  write(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); } catch(e){ /* not persisted this session */ } },
+  uid(){ return `${Date.now().toString(36)}${Math.random().toString(36).slice(2,8)}`; }
+};
+
+/* ---------- date helpers ---------- */
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function addMonthsISO(iso, months){
+  const d = new Date(iso+"T00:00:00");
+  d.setMonth(d.getMonth()+Number(months||0));
+  return d.toISOString().slice(0,10);
+}
+function daysUntil(iso){
+  const d = new Date(iso+"T00:00:00");
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.round((d-now)/86400000);
+}
+function fmtDate(iso){
+  if(!iso) return "";
+  const d = new Date(iso+"T00:00:00");
+  return d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+}
+
+/* ==================================================================
+   TASKS
+   ================================================================== */
+const TASKS_SEED = [
+  {id:"t1", title:"Change HVAC filter", frequency_months:2, last_done:null, notes:"Filters are stored in the Mechanical Room (B2)."},
+  {id:"t2", title:"Test smoke & CO detectors", frequency_months:6, last_done:null, notes:""},
+  {id:"t3", title:"Flush water heater", frequency_months:12, last_done:null, notes:""},
+  {id:"t4", title:"Clean dryer vent", frequency_months:12, last_done:null, notes:""},
+  {id:"t5", title:"Clean gutters", frequency_months:6, last_done:null, notes:"Spring and fall."},
+  {id:"t6", title:"Replace fridge water filter", frequency_months:6, last_done:null, notes:""},
+  {id:"t7", title:"Check water softener salt", frequency_months:1, last_done:null, notes:""},
+  {id:"t8", title:"Service furnace & AC (professional)", frequency_months:12, last_done:null, notes:""},
+  {id:"t9", title:"Test garage door auto-reverse safety", frequency_months:12, last_done:null, notes:""},
+  {id:"t10", title:"Check fire extinguishers", frequency_months:12, last_done:null, notes:""},
+  {id:"t11", title:"Deep clean garbage disposal", frequency_months:3, last_done:null, notes:""},
+  {id:"t12", title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:""}
+];
+let tasks = Store.read("wil-tasks", null) || TASKS_SEED;
+function saveTasks(){ Store.write("wil-tasks", tasks); }
+
+function taskStatus(t){
+  if(!t.last_done) return {label:"Never done", cls:"never", sortKey:-999999};
+  const nextISO = addMonthsISO(t.last_done, t.frequency_months);
+  const days = daysUntil(nextISO);
+  let cls = "ok";
+  if(days<0) cls = "overdue"; else if(days<=7) cls="soon";
+  const label = days===0 ? "Due today" : days<0 ? `${Math.abs(days)}d overdue` : `Due in ${days}d`;
+  return {label, cls, sortKey:days};
+}
+function renderTasks(){
+  const rows = [...tasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+  $("#tasksList").innerHTML = rows.map(t=>{
+    const st = taskStatus(t);
+    return `<div class="task-row">
+      <button type="button" class="task-main" data-edit-task="${t.id}">
+        <b>${esc(t.title)}</b>
+        <span class="freq">Every ${t.frequency_months} month${t.frequency_months==1?"":"s"}${t.last_done?` · last done ${fmtDate(t.last_done)}`:""}</span><br>
+        <span class="badge ${st.cls}">${st.label}</span>
+      </button>
+      <button type="button" class="mini-btn" data-done-task="${t.id}">Mark done</button>
+    </div>`;
+  }).join("") + `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`;
+}
+$("#view-tasks").addEventListener("click", e=>{
+  const done = e.target.closest("[data-done-task]");
+  if(done){
+    const t = tasks.find(x=>x.id===done.dataset.doneTask);
+    t.last_done = todayISO();
+    saveTasks(); renderTasks();
+    toast(`Marked “${t.title}” done today`);
+    return;
+  }
+  const edit = e.target.closest("[data-edit-task]");
+  if(edit){ openTaskForm(tasks.find(x=>x.id===edit.dataset.editTask)); return; }
+  if(e.target.id==="addTaskBtn2"){ openTaskForm(null); }
+});
+$("#addTaskBtn").addEventListener("click", ()=>openTaskForm(null));
+
+function openTaskForm(t){
+  openForm({
+    title: t ? "Edit task" : "Add task",
+    fields: [
+      {key:"title", label:"Task", type:"text", value:t?t.title:""},
+      {key:"frequency_months", label:"Repeat every (months)", type:"number", value:t?t.frequency_months:3},
+      {key:"notes", label:"Notes", type:"textarea", value:t?t.notes:""}
+    ],
+    onSave(v){
+      if(!v.title.trim()) return;
+      if(t){ t.title=v.title.trim(); t.frequency_months=Math.max(1,Number(v.frequency_months)||1); t.notes=v.notes.trim(); }
+      else { tasks.push({id:Store.uid(), title:v.title.trim(), frequency_months:Math.max(1,Number(v.frequency_months)||1), last_done:null, notes:v.notes.trim()}); }
+      saveTasks(); renderTasks();
+      toast(t ? "Task updated" : "Task added");
+    },
+    onDelete: t ? ()=>{
+      tasks = tasks.filter(x=>x.id!==t.id);
+      saveTasks(); renderTasks();
+      toast("Task deleted");
+    } : null
+  });
+}
+
+/* ==================================================================
+   SEASONAL OUTDOOR CARE
+   ================================================================== */
+const SEASONAL_SECTIONS = [
+  {key:"pool", icon:"waves", name:"Pool winterization",
+   fall:["Balance water chemistry before closing","Lower water level below skimmer","Blow out & drain plumbing lines","Add pool antifreeze to lines","Remove & store ladders/rails","Clean & store pool toys/floats","Install winter cover"],
+   spring:["Remove & clean winter cover","Reconnect pump & filter","Refill to normal level","Shock treat & rebalance chemistry","Inspect liner & equipment for damage","Reinstall ladders/rails"]},
+  {key:"kitchen", icon:"utensils", name:"Outdoor kitchen shutdown",
+   fall:["Deep clean grill & grates","Disconnect propane/gas line","Empty & clean mini-fridge","Drain any water lines","Cover grill & appliances","Store cushions & electronics"],
+   spring:["Uncover & inspect appliances","Reconnect gas & water lines","Test burners & ice maker","Clean all surfaces","Restock supplies"]},
+  {key:"fountain", icon:"droplet", name:"Fountain care",
+   fall:["Drain fountain completely","Clean basin & pump","Remove pump & store indoors","Cover or store fountain","Disconnect power"],
+   spring:["Clean basin","Reinstall pump","Refill with water","Test operation","Check for winter cracks or damage"]},
+  {key:"deck", icon:"broom", name:"Deck & patio cleanup",
+   fall:["Sweep & clear debris","Power wash if needed","Inspect for damage or rot","Apply sealant/stain if due","Clean furniture before storing"],
+   spring:["Power wash","Inspect boards & railings","Re-stain or seal if needed","Set up furniture"]},
+  {key:"furniture", icon:"chair", name:"Furniture storage",
+   fall:["Clean outdoor furniture","Dry fully before storing","Cover or move to shed/garage","Store cushions indoors","Store umbrella"],
+   spring:["Bring furniture back out","Wipe down all pieces","Inspect for winter damage","Set up cushions & umbrella"]},
+  {key:"landscaping", icon:"leaf", name:"Landscaping",
+   fall:["Final mow & fertilize","Aerate & overseed lawn","Cut back perennials","Mulch garden beds","Clean & store garden tools","Drain & store hoses","Winterize sprinkler system","Rake & remove leaves"],
+   spring:["First mow of the season","Fertilize / apply pre-emergent","Mulch beds","Prune shrubs","Turn on sprinkler system","Plant annuals"]}
+];
+function seasonalSeed(){
+  const out = [];
+  SEASONAL_SECTIONS.forEach(sec=>{
+    sec.fall.forEach((title,idx)=>out.push({id:`${sec.key}-fall-${idx}`, section:sec.key, season:"fall", title, done_year:null}));
+    sec.spring.forEach((title,idx)=>out.push({id:`${sec.key}-spring-${idx}`, section:sec.key, season:"spring", title, done_year:null}));
+  });
+  return out;
+}
+let seasonalItems = Store.read("wil-seasonal", null) || seasonalSeed();
+function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); }
+const seasonalOpen = new Set();
+
+function renderSeasonal(){
+  const year = new Date().getFullYear();
+  $("#seasonalList").innerHTML = SEASONAL_SECTIONS.map(sec=>{
+    const items = seasonalItems.filter(i=>i.section===sec.key);
+    const done = items.filter(i=>i.done_year===year).length;
+    const open = seasonalOpen.has(sec.key);
+    const group = (season,label)=>{
+      const list = items.filter(i=>i.season===season);
+      return `<p class="ssn-sub">${label}</p><ul class="check-list">${list.map(i=>`
+        <li><label class="check-row ${i.done_year===year?"checked":""}">
+          <input type="checkbox" data-ssn-id="${i.id}" ${i.done_year===year?"checked":""}>
+          <span data-ssn-edit="${i.id}">${esc(i.title)}</span>
+        </label></li>`).join("")}</ul>
+        <button type="button" class="add-row" style="margin-top:4px" data-ssn-add="${sec.key}|${season}">+ Add task</button>`;
+    };
+    return `<div class="ssn-card" data-expanded="${open}" data-sec="${sec.key}">
+      <button type="button" class="ssn-head" data-ssn-toggle="${sec.key}">
+        <span class="ti">${icon(sec.icon)}</span>
+        <b>${sec.name}</b>
+        <span class="ssn-progress">${done}/${items.length}</span>
+        <span class="chev" aria-hidden="true">›</span>
+      </button>
+      <div class="ssn-body" ${open?"":"hidden"}>
+        ${group("fall","Fall shutdown")}
+        ${group("spring","Spring startup")}
+      </div>
+    </div>`;
+  }).join("");
+}
+$("#view-seasonal").addEventListener("click", e=>{
+  const toggle = e.target.closest("[data-ssn-toggle]");
+  if(toggle){
+    const key = toggle.dataset.ssnToggle;
+    seasonalOpen.has(key) ? seasonalOpen.delete(key) : seasonalOpen.add(key);
+    renderSeasonal();
+    return;
+  }
+  const editSpan = e.target.closest("[data-ssn-edit]");
+  if(editSpan){ openSeasonalItemForm(seasonalItems.find(i=>i.id===editSpan.dataset.ssnEdit)); return; }
+  const add = e.target.closest("[data-ssn-add]");
+  if(add){
+    const [section,season] = add.dataset.ssnAdd.split("|");
+    openSeasonalAddForm(section, season);
+  }
+});
+$("#view-seasonal").addEventListener("change", e=>{
+  const cb = e.target.closest("[data-ssn-id]");
+  if(!cb) return;
+  const item = seasonalItems.find(i=>i.id===cb.dataset.ssnId);
+  const year = new Date().getFullYear();
+  item.done_year = cb.checked ? year : null;
+  saveSeasonal(); renderSeasonal();
+});
+function openSeasonalItemForm(item){
+  openForm({
+    title: "Edit task",
+    fields: [{key:"title", label:"Task", type:"text", value:item.title}],
+    onSave(v){
+      if(!v.title.trim()) return;
+      item.title = v.title.trim();
+      saveSeasonal(); renderSeasonal();
+      toast("Task updated");
+    },
+    onDelete(){
+      seasonalItems = seasonalItems.filter(i=>i.id!==item.id);
+      saveSeasonal(); renderSeasonal();
+      toast("Task deleted");
+    }
+  });
+}
+function openSeasonalAddForm(section, season){
+  openForm({
+    title: `Add ${season} task`,
+    fields: [{key:"title", label:"Task", type:"text", value:""}],
+    onSave(v){
+      if(!v.title.trim()) return;
+      seasonalItems.push({id:Store.uid(), section, season, title:v.title.trim(), done_year:null});
+      saveSeasonal();
+      seasonalOpen.add(section);
+      renderSeasonal();
+      toast("Task added");
+    },
+    onDelete: null
+  });
+}
+
+/* ==================================================================
+   PLANTS
+   ================================================================== */
+const PLANTS_SEED = [
+  {id:"ash-tree", name:"Ash tree", location:"", fall_task:"Apply emerald ash borer treatment if due (2-year cycle)", spring_task:"Inspect for borer damage; water deeply if dry", notes:"Treated 2025 — retreat every 2 years.", treatment_cycle_years:2, last_treated_year:2025},
+  {id:"rose-shrub", name:"Rose shrub", location:"", fall_task:"Cut back after first frost; mound mulch around base", spring_task:"Prune dead/damaged canes; fertilize as new growth starts", notes:"Watch for black spot and aphids in summer.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"hostas", name:"Hostas", location:"", fall_task:"Cut back foliage after first frost", spring_task:"Remove winter mulch as shoots emerge; divide if crowded", notes:"Shade-loving; watch for slug damage.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"daylilies", name:"Daylilies", location:"", fall_task:"Cut back foliage after it yellows", spring_task:"Remove old foliage; divide crowded clumps", notes:"Low-maintenance perennial.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"cannas", name:"Cannas", location:"", fall_task:"After first frost, cut back & dig up rhizomes for winter storage", spring_task:"Replant rhizomes after last frost", notes:"Not reliably hardy in Iowa winters — store rhizomes cool & dry.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"hanging-fern", name:"Hanging fern", location:"", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Set back outside after last frost; keep soil consistently moist", notes:"Not cold-hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"mandevilla", name:"Mandevilla", location:"", fall_task:"Bring indoors before first frost or take cuttings; cut back if overwintering", spring_task:"Move back outside after last frost; provide a trellis", notes:"Tropical vine — not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"cordyline", name:"Cordyline / Ti plant", location:"", fall_task:"Bring indoors before first frost", spring_task:"Move back outside after last frost", notes:"Not cold hardy in Iowa; overwinter indoors.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"asparagus-fern", name:"Asparagus fern", location:"", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Move back outside after last frost", notes:"Not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"variegated-trailing", name:"Variegated trailing plant", location:"", fall_task:"Bring indoors before first frost if tender", spring_task:"Move back outside after last frost", notes:"Confirm exact variety to fine-tune care.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"coral-bells", name:"Coral bells", location:"", fall_task:"Cut back damaged foliage after frost; mulch lightly", spring_task:"Remove winter mulch; divide if crowded", notes:"Semi-evergreen; generally hardy in Iowa.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"flowering-annuals", name:"Flowering annuals", location:"", fall_task:"Pull and compost after first frost", spring_task:"Plant new annuals after last frost date", notes:"Replace each year.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"unidentified", name:"Other unidentified plants", location:"", fall_task:"Identify before first frost to determine winter care", spring_task:"Monitor as it emerges and update this entry", notes:"Take a photo to help identify.", treatment_cycle_years:null, last_treated_year:null}
+];
+let plants = Store.read("wil-plants", null) || PLANTS_SEED;
+function savePlants(){ Store.write("wil-plants", plants); }
+
+function plantCycleBadge(p){
+  if(!p.treatment_cycle_years || !p.last_treated_year) return "";
+  const year = new Date().getFullYear();
+  const due = p.last_treated_year + p.treatment_cycle_years;
+  let cls = "ok", label = `Next: ${due}`;
+  if(year > due){ cls="overdue"; label=`Overdue (was ${due})`; }
+  else if(year === due){ cls="soon"; label=`Due this year (${due})`; }
+  return `<span class="badge ${cls}" style="margin-top:6px;display:inline-block">${label}</span>`;
+}
+function renderPlants(){
+  $("#plantsList").innerHTML = plants.map(p=>`
+    <button type="button" class="plant-card" data-edit-plant="${p.id}">
+      <b>${esc(p.name)}</b>
+      <div class="loc ${p.location?"":"unset"}">${p.location ? esc(p.location) : "Tap to set location"}</div>
+      <div class="tasks">
+        ${p.fall_task ? `<span>${icon("leaf")} ${esc(p.fall_task)}</span>` : ""}
+        ${p.spring_task ? `<span>${icon("sprout")} ${esc(p.spring_task)}</span>` : ""}
+      </div>
+      ${plantCycleBadge(p)}
+    </button>`).join("");
+}
+$("#view-plants").addEventListener("click", e=>{
+  const card = e.target.closest("[data-edit-plant]");
+  if(card) openPlantForm(plants.find(p=>p.id===card.dataset.editPlant));
+});
+$("#addPlantBtn").addEventListener("click", ()=>openPlantForm(null));
+
+function openPlantForm(p){
+  openForm({
+    title: p ? "Edit plant" : "Add plant",
+    fields: [
+      {key:"name", label:"Name", type:"text", value:p?p.name:""},
+      {key:"location", label:"Location", type:"text", value:p?p.location:""},
+      {key:"fall_task", label:"Fall task", type:"textarea", value:p?p.fall_task:""},
+      {key:"spring_task", label:"Spring task", type:"textarea", value:p?p.spring_task:""},
+      {key:"notes", label:"Notes", type:"textarea", value:p?p.notes:""},
+      {key:"treatment_cycle_years", label:"Treatment cycle (years, optional)", type:"number", value:p&&p.treatment_cycle_years?p.treatment_cycle_years:""},
+      {key:"last_treated_year", label:"Last treated (year, optional)", type:"number", value:p&&p.last_treated_year?p.last_treated_year:""}
+    ],
+    onSave(v){
+      if(!v.name.trim()) return;
+      const rec = {
+        name:v.name.trim(), location:v.location.trim(), fall_task:v.fall_task.trim(),
+        spring_task:v.spring_task.trim(), notes:v.notes.trim(),
+        treatment_cycle_years: v.treatment_cycle_years ? Number(v.treatment_cycle_years) : null,
+        last_treated_year: v.last_treated_year ? Number(v.last_treated_year) : null
+      };
+      if(p) Object.assign(p, rec);
+      else plants.push({id:Store.uid(), ...rec});
+      savePlants(); renderPlants();
+      toast(p ? "Plant updated" : "Plant added");
+    },
+    onDelete: p ? ()=>{
+      plants = plants.filter(x=>x.id!==p.id);
+      savePlants(); renderPlants();
+      toast("Plant deleted");
+    } : null
+  });
+}
+
+/* ==================================================================
+   Generic form sheet (used by Tasks, Seasonal, Plants)
+   ================================================================== */
+const formDlg = $("#formSheet");
+let formCtx = null;
+function openForm(cfg){
+  formCtx = cfg;
+  $("#formTitle").textContent = cfg.title;
+  $("#formFields").innerHTML = cfg.fields.map(f=>`
+    <div class="field">
+      <label for="f-${f.key}">${esc(f.label)}</label>
+      ${f.type==="textarea"
+        ? `<textarea id="f-${f.key}" data-field="${f.key}">${esc(f.value||"")}</textarea>`
+        : `<input id="f-${f.key}" data-field="${f.key}" type="${f.type}" value="${esc(String(f.value ?? ""))}">`}
+    </div>`).join("");
+  $("#formDelete").hidden = !cfg.onDelete;
+  formDlg.showModal();
+  const first = $("#formFields [data-field]");
+  if(first) first.focus();
+}
+$("#formSave").addEventListener("click", ()=>{
+  if(!formCtx) return;
+  const values = {};
+  formCtx.fields.forEach(f=>{ values[f.key] = $(`#formFields [data-field="${f.key}"]`).value; });
+  formCtx.onSave(values);
+  formDlg.close();
+  formCtx = null;
+});
+$("#formDelete").addEventListener("click", ()=>{
+  if(!formCtx || !formCtx.onDelete) return;
+  formCtx.onDelete();
+  formDlg.close();
+  formCtx = null;
+});
+$("#formClose").addEventListener("click", ()=>{ formDlg.close(); formCtx=null; });
+formDlg.addEventListener("click", e=>{
+  if(!e.target.closest(".sheet")){ formDlg.close(); formCtx=null; }
+});
+
+/* ==================================================================
+   Tab navigation
+   ================================================================== */
+const TABS = ["storage","tasks","seasonal","plants"];
+function switchTab(name){
+  TABS.forEach(t=>{
+    $(`#view-${t}`).hidden = t!==name;
+  });
+  document.querySelectorAll(".tab-btn").forEach(b=>{
+    b.setAttribute("aria-current", b.dataset.tab===name ? "true" : "false");
+  });
+}
+document.querySelectorAll(".tab-btn").forEach(b=>{
+  b.addEventListener("click", ()=>switchTab(b.dataset.tab));
+});
+
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search();
+renderTasks(); renderSeasonal(); renderPlants();
 </script>
 </body>
 </html>
