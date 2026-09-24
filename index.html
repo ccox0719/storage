@@ -693,7 +693,7 @@ function search(){
       $("#results").innerHTML = `<p class="hint" style="margin:0 2px 10px">${lead} “${esc(query)}” probably belongs. Tap one to file it there.</p>` +
         guesses.map(({l})=>`
         <button type="button" class="result guess" data-open="${l.code}" data-guess="${esc(query)}" style="${zc(l.code)}">
-          <span class="emo" aria-hidden="true">${l.emo}</span>
+          <span class="emo" aria-hidden="true">${icon(l.icon)}</span>
           <span><b>${esc(l.name)}</b>
           <span class="where">${esc(l.job)} · ${ZONES[z(l.code)].name}</span></span>
           <span class="code">${l.code}</span></button>`).join("");
