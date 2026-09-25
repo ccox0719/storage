@@ -268,7 +268,7 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 <div id="authGate" class="auth-gate" hidden>
   <div class="auth-card">
     <h1>Family sign in</h1>
-    <p>Sign in with the same Supabase account you use for the family apps. House data will sync across devices.</p>
+    <p>Use the same email and password as your budget app. House data will sync across devices.</p>
     <form id="authForm">
       <label for="authEmail">Email</label>
       <input id="authEmail" type="email" autocomplete="email" required>
@@ -388,9 +388,9 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 /* ==================================================================
    SUPABASE FAMILY SYNC
    ================================================================== */
-const SUPABASE_URL = "https://sggxzlhpdkqjlepbwdqf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnZ3h6bGhwZGtxamxlcGJ3ZHFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI3NTUwMzMsImV4cCI6MjA1ODMzMTAzM30.qJ3KaJbiV7MAD_wHQhix3EJCJPWAEMYktAyqVocthwI";
-const HOME_HOUSEHOLD = "cox-family";
+const SUPABASE_URL = "https://svaozzitkajgqzacldur.supabase.co";
+const SUPABASE_KEY = "sb_publishable_scbeO9M_PR8Zvkh-1nbheA_lZLwl31b";
+let homeHouseholdId = null;
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let cloudReady = false;
 let cloudLoading = false;
@@ -432,9 +432,17 @@ async function startCloud(session){
   showSignedInApp();
   setCloudState("connecting…");
   try{
+    const {data:membership,error:membershipError} = await db.from("household_members")
+      .select("household_id")
+      .eq("user_id",session.user.id)
+      .maybeSingle();
+    if(membershipError) throw membershipError;
+    if(!membership?.household_id) throw new Error("No family household is linked to this login.");
+    homeHouseholdId = membership.household_id;
+
     const {count,error} = await db.from("home_locations")
       .select("id",{count:"exact",head:true})
-      .eq("household_code",HOME_HOUSEHOLD);
+      .eq("household_id",homeHouseholdId);
     if(error) throw error;
 
     if(!count){
@@ -456,7 +464,7 @@ async function startCloud(session){
 }
 
 async function cloudReplace(table, rows){
-  const del = await db.from(table).delete().eq("household_code",HOME_HOUSEHOLD);
+  const del = await db.from(table).delete().eq("household_id",homeHouseholdId);
   if(del.error) throw del.error;
   if(rows.length){
     const ins = await db.from(table).insert(rows);
@@ -466,31 +474,31 @@ async function cloudReplace(table, rows){
 
 function cloudRowsLocations(){
   return RAW_LOCATIONS.map(l=>({
-    household_code:HOME_HOUSEHOLD, code:l.code, zone:z(l.code), name:l.name,
+    household_id:homeHouseholdId, code:l.code, zone:z(l.code), name:l.name,
     job:l.job || "", icon:l.icon || "box", keywords:l.kw || "", maybe:l.maybe || []
   }));
 }
 function cloudRowsItems(){
   return [...RAW_LOCATIONS.flatMap(l=>l.items), ...customItems].map(it=>({
-    household_code:HOME_HOUSEHOLD, item_key:it.id, name:it.text, origin_code:it.origin,
+    household_id:homeHouseholdId, item_key:it.id, name:it.text, origin_code:it.origin,
     location_code:moves[it.id] || it.origin, status:"placed", notes:""
   }));
 }
 function cloudRowsTasks(){
   return tasks.map(t=>({
-    household_code:HOME_HOUSEHOLD, external_id:t.id, title:t.title,
+    household_id:homeHouseholdId, external_id:t.id, title:t.title,
     frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || ""
   }));
 }
 function cloudRowsSeasonal(){
   return seasonalItems.map(i=>({
-    household_code:HOME_HOUSEHOLD, external_id:i.id, section:i.section,
+    household_id:homeHouseholdId, external_id:i.id, section:i.section,
     season:i.season, title:i.title, done_year:i.done_year || null
   }));
 }
 function cloudRowsPlants(){
   return plants.map(p=>({
-    household_code:HOME_HOUSEHOLD, external_id:p.id, name:p.name,
+    household_id:homeHouseholdId, external_id:p.id, name:p.name,
     location:p.location || "", fall_task:p.fall_task || "", spring_task:p.spring_task || "",
     notes:p.notes || "", treatment_cycle_years:p.treatment_cycle_years || null,
     last_treated_year:p.last_treated_year || null
@@ -537,10 +545,10 @@ function cloudSyncPlantsSoon(){ cloudSyncSoon("plants"); }
 
 async function cloudPull(){
   const [ir,tr,sr,pr] = await Promise.all([
-    db.from("home_items").select("*").eq("household_code",HOME_HOUSEHOLD),
-    db.from("home_tasks").select("*").eq("household_code",HOME_HOUSEHOLD),
-    db.from("home_seasonal_tasks").select("*").eq("household_code",HOME_HOUSEHOLD),
-    db.from("home_plants").select("*").eq("household_code",HOME_HOUSEHOLD)
+    db.from("home_items").select("*").eq("household_id",homeHouseholdId),
+    db.from("home_tasks").select("*").eq("household_id",homeHouseholdId),
+    db.from("home_seasonal_tasks").select("*").eq("household_id",homeHouseholdId),
+    db.from("home_plants").select("*").eq("household_id",homeHouseholdId)
   ]);
   for(const r of [ir,tr,sr,pr]) if(r.error) throw r.error;
 
@@ -608,6 +616,7 @@ document.getElementById("magicLinkBtn").addEventListener("click", async ()=>{
 document.getElementById("cloudSignOut").addEventListener("click", async ()=>{
   await db.auth.signOut();
   cloudReady=false;
+  homeHouseholdId=null;
   showAuth();
 });
 
