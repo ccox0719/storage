@@ -245,10 +245,44 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 .form-actions .save{flex:1;border:0;border-radius:10px;background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:600;font-size:.96rem;padding:12px;cursor:pointer}
 .form-actions .save:active{opacity:.85}
 .form-actions .del{border:1.5px solid #B4394C;color:#B4394C;background:none;border-radius:10px;padding:12px 16px;font-weight:600;font-size:.9rem;cursor:pointer}
+
+/* ---------- Supabase family sync ---------- */
+.cloud-state{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:.8rem;color:var(--muted)}
+.cloud-state b{color:var(--ink);font-weight:600}
+.cloud-state button{border:0;background:none;color:var(--focus);font-weight:600;cursor:pointer;padding:3px}
+.auth-gate{position:fixed;inset:0;z-index:100;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:24px}
+.auth-gate[hidden]{display:none}
+.auth-card{width:min(440px,100%);background:var(--surface);border:1.5px solid var(--ink);border-radius:16px;padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.12)}
+.auth-card h1{font-family:var(--display);font-size:1.4rem;margin:0 0 6px}
+.auth-card p{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.auth-card label{display:block;font-size:.82rem;font-weight:600;margin:10px 0 5px}
+.auth-card input{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:11px;font:inherit;background:var(--paper);color:var(--ink)}
+.auth-card .primary{width:100%;border:0;border-radius:10px;background:var(--ink);color:var(--paper);font-weight:700;padding:12px;margin-top:14px;cursor:pointer}
+.auth-card .secondary{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:600;padding:11px;margin-top:8px;cursor:pointer}
+.auth-msg{min-height:1.3em;margin-top:10px!important;font-size:.82rem!important}
+
 </style>
 </head>
 <body>
+
+<div id="authGate" class="auth-gate" hidden>
+  <div class="auth-card">
+    <h1>Family sign in</h1>
+    <p>Sign in with the same Supabase account you use for the family apps. House data will sync across devices.</p>
+    <form id="authForm">
+      <label for="authEmail">Email</label>
+      <input id="authEmail" type="email" autocomplete="email" required>
+      <label for="authPassword">Password</label>
+      <input id="authPassword" type="password" autocomplete="current-password">
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+    <button class="secondary" id="magicLinkBtn" type="button">Email me a sign-in link</button>
+    <p class="auth-msg" id="authMsg"></p>
+  </div>
+</div>
+
 <div class="wrap">
+  <div id="cloudState" class="cloud-state" hidden><span id="cloudStateText"><b>Cloud</b> · connecting…</span><button id="cloudSignOut" type="button">Sign out</button></div>
   <main id="view-storage" class="view">
   <div class="finder">
     <label class="search">
@@ -348,7 +382,236 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
   </div>
 </dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js"></script>
 <script>
+
+/* ==================================================================
+   SUPABASE FAMILY SYNC
+   ================================================================== */
+const SUPABASE_URL = "https://sggxzlhpdkqjlepbwdqf.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnZ3h6bGhwZGtxamxlcGJ3ZHFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI3NTUwMzMsImV4cCI6MjA1ODMzMTAzM30.qJ3KaJbiV7MAD_wHQhix3EJCJPWAEMYktAyqVocthwI";
+const HOME_HOUSEHOLD = "cox-family";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let cloudReady = false;
+let cloudLoading = false;
+const cloudTimers = {};
+
+function setCloudState(message, isError=false){
+  const box = $("#cloudState");
+  if(!box) return;
+  box.hidden = false;
+  $("#cloudStateText").innerHTML = `<b>Cloud</b> · ${esc(message)}`;
+  box.style.borderColor = isError ? "#B4394C" : "";
+}
+
+function showAuth(){
+  $("#authGate").hidden = false;
+  $(".wrap").style.display = "none";
+  $(".tabbar").style.display = "none";
+}
+
+function showSignedInApp(){
+  $("#authGate").hidden = true;
+  $(".wrap").style.display = "";
+  $(".tabbar").style.display = "";
+}
+
+async function initCloud(){
+  const {data:{session}} = await db.auth.getSession();
+  if(session) await startCloud(session);
+  else showAuth();
+
+  db.auth.onAuthStateChange(async (_event, session)=>{
+    if(session && !cloudReady && !cloudLoading) await startCloud(session);
+    if(!session){ cloudReady=false; showAuth(); }
+  });
+}
+
+async function startCloud(session){
+  cloudLoading = true;
+  showSignedInApp();
+  setCloudState("connecting…");
+  try{
+    const {count,error} = await db.from("home_locations")
+      .select("id",{count:"exact",head:true})
+      .eq("household_code",HOME_HOUSEHOLD);
+    if(error) throw error;
+
+    if(!count){
+      cloudReady = true;
+      setCloudState("setting up house data…");
+      await cloudSyncAll(true);
+    }else{
+      await cloudPull();
+      cloudReady = true;
+      await cloudSyncAll(true); // also adds any new built-in defaults
+    }
+    setCloudState("synced");
+  }catch(err){
+    console.error(err);
+    setCloudState(err.message || "sync error", true);
+  }finally{
+    cloudLoading = false;
+  }
+}
+
+async function cloudReplace(table, rows){
+  const del = await db.from(table).delete().eq("household_code",HOME_HOUSEHOLD);
+  if(del.error) throw del.error;
+  if(rows.length){
+    const ins = await db.from(table).insert(rows);
+    if(ins.error) throw ins.error;
+  }
+}
+
+function cloudRowsLocations(){
+  return RAW_LOCATIONS.map(l=>({
+    household_code:HOME_HOUSEHOLD, code:l.code, zone:z(l.code), name:l.name,
+    job:l.job || "", icon:l.icon || "box", keywords:l.kw || "", maybe:l.maybe || []
+  }));
+}
+function cloudRowsItems(){
+  return [...RAW_LOCATIONS.flatMap(l=>l.items), ...customItems].map(it=>({
+    household_code:HOME_HOUSEHOLD, item_key:it.id, name:it.text, origin_code:it.origin,
+    location_code:moves[it.id] || it.origin, status:"placed", notes:""
+  }));
+}
+function cloudRowsTasks(){
+  return tasks.map(t=>({
+    household_code:HOME_HOUSEHOLD, external_id:t.id, title:t.title,
+    frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || ""
+  }));
+}
+function cloudRowsSeasonal(){
+  return seasonalItems.map(i=>({
+    household_code:HOME_HOUSEHOLD, external_id:i.id, section:i.section,
+    season:i.season, title:i.title, done_year:i.done_year || null
+  }));
+}
+function cloudRowsPlants(){
+  return plants.map(p=>({
+    household_code:HOME_HOUSEHOLD, external_id:p.id, name:p.name,
+    location:p.location || "", fall_task:p.fall_task || "", spring_task:p.spring_task || "",
+    notes:p.notes || "", treatment_cycle_years:p.treatment_cycle_years || null,
+    last_treated_year:p.last_treated_year || null
+  }));
+}
+
+async function cloudSyncAll(force=false){
+  if(!cloudReady && !force) return;
+  try{
+    setCloudState("saving…");
+    await cloudReplace("home_locations", cloudRowsLocations());
+    await cloudReplace("home_items", cloudRowsItems());
+    await cloudReplace("home_tasks", cloudRowsTasks());
+    await cloudReplace("home_seasonal_tasks", cloudRowsSeasonal());
+    await cloudReplace("home_plants", cloudRowsPlants());
+    setCloudState("synced");
+  }catch(err){
+    console.error(err);
+    setCloudState(err.message || "save failed", true);
+  }
+}
+
+function cloudSyncSoon(kind){
+  if(!cloudReady || cloudLoading) return;
+  clearTimeout(cloudTimers[kind]);
+  cloudTimers[kind] = setTimeout(async ()=>{
+    try{
+      setCloudState("saving…");
+      if(kind==="items") await cloudReplace("home_items", cloudRowsItems());
+      if(kind==="tasks") await cloudReplace("home_tasks", cloudRowsTasks());
+      if(kind==="seasonal") await cloudReplace("home_seasonal_tasks", cloudRowsSeasonal());
+      if(kind==="plants") await cloudReplace("home_plants", cloudRowsPlants());
+      setCloudState("synced");
+    }catch(err){
+      console.error(err);
+      setCloudState(err.message || "save failed", true);
+    }
+  }, 350);
+}
+function cloudSyncItemsSoon(){ cloudSyncSoon("items"); }
+function cloudSyncTasksSoon(){ cloudSyncSoon("tasks"); }
+function cloudSyncSeasonalSoon(){ cloudSyncSoon("seasonal"); }
+function cloudSyncPlantsSoon(){ cloudSyncSoon("plants"); }
+
+async function cloudPull(){
+  const [ir,tr,sr,pr] = await Promise.all([
+    db.from("home_items").select("*").eq("household_code",HOME_HOUSEHOLD),
+    db.from("home_tasks").select("*").eq("household_code",HOME_HOUSEHOLD),
+    db.from("home_seasonal_tasks").select("*").eq("household_code",HOME_HOUSEHOLD),
+    db.from("home_plants").select("*").eq("household_code",HOME_HOUSEHOLD)
+  ]);
+  for(const r of [ir,tr,sr,pr]) if(r.error) throw r.error;
+
+  if(ir.data.length){
+    const seedIds = new Set(RAW_LOCATIONS.flatMap(l=>l.items).map(i=>i.id));
+    moves = {};
+    customItems = [];
+    ir.data.forEach(r=>{
+      if(seedIds.has(r.item_key)){
+        if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
+      }else{
+        customItems.push({id:r.item_key,text:r.name,origin:r.origin_code});
+        if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
+      }
+    });
+    saveJSON("wil-moves",moves);
+    saveJSON("wil-custom",customItems);
+    rebuild();
+  }
+
+  if(tr.data.length){
+    tasks = tr.data.map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||""}));
+    mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
+    Store.write("wil-tasks",tasks);
+  }
+  if(sr.data.length){
+    seasonalItems = sr.data.map(r=>({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year}));
+    mergeNewSeedItems(seasonalItems,seasonalSeed(),()=>{});
+    Store.write("wil-seasonal",seasonalItems);
+  }
+  if(pr.data.length){
+    plants = pr.data.map(r=>({
+      id:r.external_id,name:r.name,location:r.location||"",fall_task:r.fall_task||"",
+      spring_task:r.spring_task||"",notes:r.notes||"",treatment_cycle_years:r.treatment_cycle_years,
+      last_treated_year:r.last_treated_year
+    }));
+    mergeNewSeedItems(plants,PLANTS_SEED,()=>{});
+    Store.write("wil-plants",plants);
+  }
+
+  renderDirectory(); renderTiles(); search();
+  renderTasks(); renderSeasonal(); renderPlants();
+initCloud();
+}
+
+$("#authForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const email=$("#authEmail").value.trim();
+  const password=$("#authPassword").value;
+  $("#authMsg").textContent="Signing in…";
+  const {error}=await db.auth.signInWithPassword({email,password});
+  $("#authMsg").textContent=error ? error.message : "Signed in.";
+});
+
+$("#magicLinkBtn").addEventListener("click", async ()=>{
+  const email=$("#authEmail").value.trim();
+  if(!email){ $("#authMsg").textContent="Enter your email first."; return; }
+  $("#authMsg").textContent="Sending sign-in link…";
+  const {error}=await db.auth.signInWithOtp({
+    email,
+    options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}
+  });
+  $("#authMsg").textContent=error ? error.message : "Check your email for the sign-in link.";
+});
+
+$("#cloudSignOut").addEventListener("click", async ()=>{
+  await db.auth.signOut();
+  cloudReady=false;
+  showAuth();
+});
+
 const ZONES = {
   U:{name:"Upstairs"},
   M:{name:"Main floor"},
@@ -541,8 +804,8 @@ function saveJSON(key, val){
 }
 let moves = loadJSON("wil-moves", {});
 let customItems = loadJSON("wil-custom", []); // [{id,text,origin}]
-function saveMoves(){ saveJSON("wil-moves", moves); }
-function saveCustom(){ saveJSON("wil-custom", customItems); }
+function saveMoves(){ saveJSON("wil-moves", moves); cloudSyncItemsSoon(); }
+function saveCustom(){ saveJSON("wil-custom", customItems); cloudSyncItemsSoon(); }
 function addCustomItem(text, code){
   const id = `custom__${Date.now()}${Math.random().toString(36).slice(2,6)}`;
   customItems.push({id, text, origin:code});
@@ -903,7 +1166,7 @@ const TASKS_SEED = [
 ];
 let tasks = Store.read("wil-tasks", null) || TASKS_SEED;
 mergeNewSeedItems(tasks, TASKS_SEED, saveTasks);
-function saveTasks(){ Store.write("wil-tasks", tasks); }
+function saveTasks(){ Store.write("wil-tasks", tasks); cloudSyncTasksSoon(); }
 
 function taskStatus(t){
   if(!t.last_done) return {label:"Never done", cls:"never", sortKey:-999999};
@@ -1002,7 +1265,7 @@ function seasonalSeed(){
 }
 let seasonalItems = Store.read("wil-seasonal", null) || seasonalSeed();
 mergeNewSeedItems(seasonalItems, seasonalSeed(), saveSeasonal);
-function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); }
+function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); }
 const seasonalOpen = new Set();
 
 function renderSeasonal(){
@@ -1111,7 +1374,7 @@ const PLANTS_SEED = [
 ];
 let plants = Store.read("wil-plants", null) || PLANTS_SEED;
 mergeNewSeedItems(plants, PLANTS_SEED, savePlants);
-function savePlants(){ Store.write("wil-plants", plants); }
+function savePlants(){ Store.write("wil-plants", plants); cloudSyncPlantsSoon(); }
 
 function plantCycleBadge(p){
   if(!p.treatment_cycle_years || !p.last_treated_year) return "";
