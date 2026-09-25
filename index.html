@@ -583,7 +583,6 @@ async function cloudPull(){
 
   renderDirectory(); renderTiles(); search();
   renderTasks(); renderSeasonal(); renderPlants();
-initCloud();
 }
 
 document.getElementById("authForm").addEventListener("submit", async e=>{
@@ -1495,6 +1494,7 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search();
 renderTasks(); renderSeasonal(); renderPlants();
+initCloud();
 </script>
 </body>
 </html>
