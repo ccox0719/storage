@@ -432,11 +432,12 @@ async function startCloud(session){
   showSignedInApp();
   setCloudState("connecting…");
   try{
-    const {data:membership,error:membershipError} = await db.from("household_members")
+    const {data:memberships,error:membershipError} = await db.from("household_members")
       .select("household_id")
       .eq("user_id",session.user.id)
-      .maybeSingle();
+      .limit(1);
     if(membershipError) throw membershipError;
+    const membership = memberships && memberships[0];
     if(!membership?.household_id) throw new Error("No family household is linked to this login.");
     homeHouseholdId = membership.household_id;
 
