@@ -247,9 +247,10 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 .form-actions .del{border:1.5px solid #B4394C;color:#B4394C;background:none;border-radius:10px;padding:12px 16px;font-weight:600;font-size:.9rem;cursor:pointer}
 
 /* ---------- Supabase family sync ---------- */
-.cloud-state{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:.8rem;color:var(--muted)}
-.cloud-state b{color:var(--ink);font-weight:600}
-.cloud-state button{border:0;background:none;color:var(--focus);font-weight:600;cursor:pointer;padding:3px}
+.cloud-bottom-bar{position:fixed;left:0;right:0;bottom:74px;z-index:45;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:.8rem;color:var(--muted)}
+.cloud-bottom-bar b{color:var(--ink);font-weight:600}
+.cloud-bottom-bar button{border:0;background:none;color:var(--focus);font-weight:600;cursor:pointer;padding:4px 2px}
+body{padding-bottom:42px}
 .auth-gate{position:fixed;inset:0;z-index:100;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:24px}
 .auth-gate[hidden]{display:none}
 .auth-card{width:min(440px,100%);background:var(--surface);border:1.5px solid var(--ink);border-radius:16px;padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.12)}
@@ -282,7 +283,6 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 </div>
 
 <div class="wrap">
-  <div id="cloudState" class="cloud-state" hidden><span id="cloudStateText"><b>Cloud</b> · connecting…</span><button id="cloudSignOut" type="button">Sign out</button></div>
   <main id="view-storage" class="view">
   <div class="finder">
     <label class="search">
@@ -332,6 +332,11 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
     <p class="view-sub">Location, fall task, spring task, and notes. Tap a plant to edit.</p>
     <div id="plantsList"></div>
   </main>
+</div>
+
+<div id="cloudBottomBar" class="cloud-bottom-bar" hidden>
+  <span id="cloudStateText"><b>Cloud</b> · connecting…</span>
+  <button id="cloudSignOut" type="button">Sign out</button>
 </div>
 
 <nav class="tabbar" aria-label="Sections">
@@ -397,7 +402,7 @@ let cloudLoading = false;
 const cloudTimers = {};
 
 function setCloudState(message, isError=false){
-  const box = $("#cloudState");
+  const box = $("#cloudBottomBar");
   if(!box) return;
   box.hidden = false;
   $("#cloudStateText").innerHTML = `<b>Cloud</b> · ${esc(message)}`;
