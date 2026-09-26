@@ -130,6 +130,17 @@ mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 2px}
 .tip{margin:12px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px;color:var(--muted);font-size:.9rem;line-height:1.5}
 .tip b{color:var(--ink)}
 
+/* ---------- Sublocations ---------- */
+.sub-h{display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 8px;font-family:var(--display);font-weight:600}
+.sub-h small{font-family:var(--body);font-weight:400;color:var(--muted)}
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:7px;margin-bottom:14px}
+.sub-card{border:1px solid var(--line);border-radius:9px;background:var(--paper);padding:9px 10px}
+.sub-card b{display:block;font-size:.86rem}
+.sub-card small{display:block;color:var(--muted);font-size:.74rem;line-height:1.3;margin-top:2px}
+.sub-count{display:inline-block;margin-top:5px;font-size:.7rem;color:var(--muted)}
+.sub-badge{display:block;color:var(--focus);font-size:.72rem;margin-top:2px}
+.pick-section{padding:6px 4px 3px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+
 /* ---------- Detail sheet ---------- */
 dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;margin:0}
 dialog::backdrop{background:rgba(20,20,16,.5)}
@@ -483,10 +494,16 @@ function cloudRowsLocations(){
     job:l.job || "", icon:l.icon || "box", keywords:l.kw || "", maybe:l.maybe || []
   }));
 }
+function cloudRowsSubLocations(){
+  return SUBLOCATIONS.map((sub,idx)=>({
+    household_id:homeHouseholdId, location_code:sub.location, sub_code:sub.code,
+    name:sub.name, sort_order:idx, notes:sub.notes || ""
+  }));
+}
 function cloudRowsItems(){
   return [...RAW_LOCATIONS.flatMap(l=>l.items), ...customItems].map(it=>({
     household_id:homeHouseholdId, item_key:it.id, name:it.text, origin_code:it.origin,
-    location_code:moves[it.id] || it.origin, status:"placed", notes:""
+    location_code:moves[it.id] || it.origin, sublocation_code:subMoves[it.id] || null, status:"placed", notes:""
   }));
 }
 function cloudRowsTasks(){
@@ -515,6 +532,7 @@ async function cloudSyncAll(force=false){
   try{
     setCloudState("saving…");
     await cloudReplace("home_locations", cloudRowsLocations());
+    await cloudReplace("home_sub_locations", cloudRowsSubLocations());
     await cloudReplace("home_items", cloudRowsItems());
     await cloudReplace("home_tasks", cloudRowsTasks());
     await cloudReplace("home_seasonal_tasks", cloudRowsSeasonal());
@@ -560,16 +578,20 @@ async function cloudPull(){
   if(ir.data.length){
     const seedIds = new Set(RAW_LOCATIONS.flatMap(l=>l.items).map(i=>i.id));
     moves = {};
+    subMoves = {};
     customItems = [];
     ir.data.forEach(r=>{
       if(seedIds.has(r.item_key)){
         if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
+        if(r.sublocation_code) subMoves[r.item_key]=r.sublocation_code;
       }else{
         customItems.push({id:r.item_key,text:r.name,origin:r.origin_code});
         if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
+        if(r.sublocation_code) subMoves[r.item_key]=r.sublocation_code;
       }
     });
     saveJSON("wil-moves",moves);
+    saveJSON("wil-submoves",subMoves);
     saveJSON("wil-custom",customItems);
     rebuild();
   }
@@ -801,6 +823,108 @@ const RAW_LOCATIONS = [
    kw:"ice"}
 ];
 
+
+const SUBLOCATIONS = [
+  {code:"B1-A",location:"B1",name:"Shelves A · 1–8",notes:"Seasonal décor and holiday bins"},
+  {code:"B1-B",location:"B1",name:"Shelves B · 9–16",notes:"Keepsakes, photos, kids memories"},
+  {code:"B1-C",location:"B1",name:"Shelves C · 17–24",notes:"Office, craft, party, gift and household backups"},
+  {code:"B1-D",location:"B1",name:"Network / security overhead",notes:"Router, NVR and house-system equipment only"},
+  {code:"B3-A",location:"B3",name:"Vanity",notes:"Basement bathroom supplies"},
+  {code:"B4-A",location:"B4",name:"Upper cabinets",notes:"Lighter specialty kitchen items"},
+  {code:"B4-B",location:"B4",name:"Base cabinets",notes:"Large specialty appliances and cookware"},
+  {code:"B4-C",location:"B4",name:"Drawers",notes:"Smaller kitchen tools and accessories"},
+  {code:"B4-D",location:"B4",name:"Pull-outs",notes:"Accessible specialty kitchen storage"},
+  {code:"B5-A",location:"B5",name:"Peninsula cabinets",notes:"Entertaining and serving overflow"},
+  {code:"B5-B",location:"B5",name:"Peninsula drawers",notes:"Food-storage and party accessories"},
+  {code:"M1-A",location:"M1",name:"Appliance lift",notes:"KitchenAid"},
+  {code:"M1-B",location:"M1",name:"Cooktop drawers",notes:"Cooking tools and utensils"},
+  {code:"M1-C",location:"M1",name:"Cooktop base cabinets",notes:"Everyday pots and pans"},
+  {code:"M1-D",location:"M1",name:"Sink base",notes:"Dish and sink supplies"},
+  {code:"M1-E",location:"M1",name:"Island drawers",notes:"Everyday utensils and prep tools"},
+  {code:"M1-F",location:"M1",name:"Island deep cabinets",notes:"Frequently used cookware"},
+  {code:"M1-G",location:"M1",name:"Vertical dividers",notes:"Cutting boards and sheet pans"},
+  {code:"M1-H",location:"M1",name:"Oven / baking area",notes:"Baking pans and baking tools"},
+  {code:"M1-I",location:"M1",name:"Upper cabinets",notes:"Dishware and lighter kitchen items"},
+  {code:"M1-J",location:"M1",name:"High cabinets",notes:"Rarely used kitchen items"},
+  {code:"M1-K",location:"M1",name:"Fridge-side storage",notes:"Fridge filters and food-related backups"},
+  {code:"M2-A",location:"M2",name:"Shallow shelves",notes:"Everyday food and easy-to-see pantry staples"},
+  {code:"M2-B",location:"M2",name:"Deep shelves",notes:"Bulk food and backstock in labeled bins"},
+  {code:"M2-C",location:"M2",name:"Lower / floor area",notes:"Drinks and large pantry items"},
+  {code:"M3-A",location:"M3",name:"Hanging rail",notes:"Coats and jackets"},
+  {code:"M3-B",location:"M3",name:"Shelf stack",notes:"Hats, gloves, scarves and grab-and-go items"},
+  {code:"M3-C",location:"M3",name:"Floor / shoe area",notes:"Shoes and boots"},
+  {code:"M4-A",location:"M4",name:"Vanity",notes:"Guest and main-floor bathroom supplies"},
+  {code:"M5-A",location:"M5",name:"Tall cabinet · shelves",notes:"Spa/pool supplies whose labels permit conditioned indoor storage"},
+  {code:"M5-B",location:"M5",name:"Tall cabinet · drawers",notes:"Pool/spa testing gear and accessories"},
+  {code:"M5-C",location:"M5",name:"Above washer / dryer",notes:"Rarely used lightweight backups only"},
+  {code:"M5-D",location:"M5",name:"Upper left of sink",notes:"Cleaning supplies"},
+  {code:"M5-E",location:"M5",name:"Upper right of sink",notes:"Household backups and utility supplies"},
+  {code:"M5-F",location:"M5",name:"Left sink drawers",notes:"Cleaning tools and rags"},
+  {code:"M5-G",location:"M5",name:"Right sink drawers",notes:"Laundry and garment care"},
+  {code:"M5-H",location:"M5",name:"Under sink",notes:"Sink-related cleaning only; keep sparse"},
+  {code:"M5-I",location:"M5",name:"Lower cabinets",notes:"Pool towels, cleaning towels and bulky cleaning gear"},
+  {code:"M6-A",location:"M6",name:"Left built-in bank",notes:"Board games and family games"},
+  {code:"M6-B",location:"M6",name:"Right built-in bank",notes:"Books and recreation"},
+  {code:"M6-C",location:"M6",name:"Lower storage",notes:"Kids games, costumes and laser tag"},
+  {code:"G1-A",location:"G1",name:"Pegboard / worktop",notes:"Frequently used hand tools and active projects"},
+  {code:"G1-B",location:"G1",name:"Upper cabinets",notes:"Lightweight repair supplies and less-used tools"},
+  {code:"G1-C",location:"G1",name:"Drawer 1",notes:"Small hand tools"},
+  {code:"G1-D",location:"G1",name:"Drawer 2",notes:"Measuring, bits and blades"},
+  {code:"G1-E",location:"G1",name:"Drawer 3",notes:"Hardware and repair pieces"},
+  {code:"G1-F",location:"G1",name:"Drawer 4",notes:"Tool accessories and overflow"},
+  {code:"G1-G",location:"G1",name:"Left lower cabinet",notes:"Power tools and larger cases"},
+  {code:"G1-H",location:"G1",name:"Right lower cabinet",notes:"Larger repair and tool gear"},
+  {code:"G2-A",location:"G2",name:"Upper shelf",notes:"Smaller outdoor/recreation gear"},
+  {code:"G2-B",location:"G2",name:"Open center",notes:"Tall or awkward recreation gear"},
+  {code:"G2-C",location:"G2",name:"Lower shelf",notes:"Heavier outdoor/recreation gear"},
+  {code:"G3-A",location:"G3",name:"Upper shelf",notes:"Quick-grab garage supplies"},
+  {code:"G3-B",location:"G3",name:"Lower shelf",notes:"Heavier quick-grab supplies"},
+  {code:"G4-A",location:"G4",name:"Refrigerator",notes:"Drinks and refrigerated overflow"},
+  {code:"G4-B",location:"G4",name:"Freezer",notes:"Frozen food and bulk meat"},
+  {code:"G5-A",location:"G5",name:"Upper shelf",notes:"Lighter bulky-garage accessories"},
+  {code:"G5-B",location:"G5",name:"Open center",notes:"Awkward or tall garage gear"},
+  {code:"G5-C",location:"G5",name:"Lower shelf",notes:"Heavy bulky garage gear"},
+  {code:"U1-A",location:"U1",name:"Shelves",notes:"Folded clothes and personal storage"},
+  {code:"U1-B",location:"U1",name:"Hanging section",notes:"Hanging clothes"},
+  {code:"U1-C",location:"U1",name:"Floor area",notes:"Shoes and bulky bedroom items"},
+  {code:"U2-A",location:"U2",name:"Tall cabinet",notes:"Towels and bathroom backups"},
+  {code:"U2-B",location:"U2",name:"Vanity drawers / cabinets",notes:"Daily family bathroom items"},
+  {code:"U2-C",location:"U2",name:"Under sink",notes:"Bathroom cleaning supplies"},
+  {code:"U3-A",location:"U3",name:"Shelves",notes:"Personal tech and charging station"},
+  {code:"U3-B",location:"U3",name:"Drawers",notes:"Cords, chargers, headphones and small tech"},
+  {code:"U4-A",location:"U4",name:"Left window drawer",notes:"Sheets"},
+  {code:"U4-B",location:"U4",name:"Center window drawer",notes:"Blankets and throws"},
+  {code:"U4-C",location:"U4",name:"Right window drawer",notes:"Comforters and bulky soft goods"},
+  {code:"U5-A",location:"U5",name:"Shelves",notes:"Sleep and comfort devices"},
+  {code:"U5-B",location:"U5",name:"Drawers",notes:"Bedroom comfort accessories and backups"},
+  {code:"U6-A",location:"U6",name:"Left vanity",notes:"Daily grooming"},
+  {code:"U6-B",location:"U6",name:"Center drawers",notes:"Hair and skincare"},
+  {code:"U6-C",location:"U6",name:"Right vanity",notes:"Daily personal care"},
+  {code:"U6-D",location:"U6",name:"Under-sink storage",notes:"Bathroom backups"},
+  {code:"U7-A",location:"U7",name:"Hanging sections",notes:"Everyday clothes, formalwear and uniforms"},
+  {code:"U7-B",location:"U7",name:"Left drawer bank",notes:"Folded clothes"},
+  {code:"U7-C",location:"U7",name:"Right drawer bank",notes:"Folded clothes"},
+  {code:"U7-D",location:"U7",name:"Corner shelf tower",notes:"Shoes and accessories"},
+  {code:"U7-E",location:"U7",name:"Above washer / dryer",notes:"Lightweight laundry backups"},
+  {code:"U7-F",location:"U7",name:"Sink cabinets",notes:"Clothing care and laundry supplies"},
+  {code:"U8-A",location:"U8",name:"Shelves",notes:"Folded clothes and personal storage"},
+  {code:"U8-B",location:"U8",name:"Hanging section",notes:"Hanging clothes"},
+  {code:"U8-C",location:"U8",name:"Floor area",notes:"Shoes and bulky bedroom items"},
+  {code:"O1-A",location:"O1",name:"Long FastTrack rail",notes:"Frequently used yard tools"},
+  {code:"O1-B",location:"O1",name:"Short FastTrack rail",notes:"Smaller hanging outdoor gear"},
+  {code:"O1-C",location:"O1",name:"Workbench",notes:"Outdoor projects and tool staging"},
+  {code:"O1-D",location:"O1",name:"Wall cabinet",notes:"Small outdoor supplies"},
+  {code:"O1-E",location:"O1",name:"Floor / bulk area",notes:"Large yard and outdoor equipment"},
+  {code:"O3-A",location:"O3",name:"Open bulk area",notes:"Pool gear, covers, toys and bulky accessories"},
+  {code:"O3-B",location:"O3",name:"Filter / equipment area",notes:"Pool and hot-tub filters and equipment"},
+  {code:"O5-A",location:"O5",name:"Tall cabinet shelves",notes:"Outdoor serving and entertaining supplies"},
+  {code:"O6-A",location:"O6",name:"Drawer 1",notes:"Grill tools"},
+  {code:"O6-B",location:"O6",name:"Drawer 2",notes:"Thermometers, skewers and small accessories"},
+  {code:"O6-C",location:"O6",name:"Drawer 3",notes:"Foil and grilling backups"}
+];
+const sublocByCode = Object.fromEntries(SUBLOCATIONS.map(x=>[x.code,x]));
+function sublocationsFor(locationCode){ return SUBLOCATIONS.filter(x=>x.location===locationCode); }
+
 /* ---------- item ids + relocation + custom filings ---------- */
 RAW_LOCATIONS.forEach(loc=>{
   loc.items = loc.items.map((text,idx)=>({id:`${loc.code}__${idx}`, text, origin:loc.code}));
@@ -816,8 +940,9 @@ function saveJSON(key, val){
   try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){ /* not persisted this session */ }
 }
 let moves = loadJSON("wil-moves", {});
+let subMoves = loadJSON("wil-submoves", {});
 let customItems = loadJSON("wil-custom", []); // [{id,text,origin}]
-function saveMoves(){ saveJSON("wil-moves", moves); cloudSyncItemsSoon(); }
+function saveMoves(){ saveJSON("wil-moves", moves); saveJSON("wil-submoves", subMoves); cloudSyncItemsSoon(); }
 function saveCustom(){ saveJSON("wil-custom", customItems); cloudSyncItemsSoon(); }
 function addCustomItem(text, code){
   const id = `custom__${Date.now()}${Math.random().toString(36).slice(2,6)}`;
@@ -1003,6 +1128,7 @@ let currentSheetCode = null;
 function openSheet(code, itemId){
   currentSheetCode = code;
   const l = byCode[code];
+  const subs = sublocationsFor(code);
   $("#sheetBody").setAttribute("style", zc(code));
   $("#sheetBody").innerHTML = `
     <div class="grab" aria-hidden="true"></div>
@@ -1015,11 +1141,18 @@ function openSheet(code, itemId){
     </div>
     ${pendingFile ? `<button type="button" class="file-cta" id="fileHereBtn">File “${esc(pendingFile)}” here</button>` : ""}
     <p class="job">${esc(l.job)}</p>
+    ${subs.length ? `
+      <div class="sub-h"><span>Inside this spot</span><small>${subs.length} sublocations</small></div>
+      <div class="sub-grid">${subs.map(sub=>{
+        const count = l.items.filter(it=>subMoves[it.id]===sub.code).length;
+        return `<div class="sub-card"><b>${esc(sub.name)}</b><small>${esc(sub.notes)}</small><span class="sub-count">${count} item${count===1?"":"s"} assigned</span></div>`;
+      }).join("")}</div>` : ""}
     <ul class="item-list">${l.items.map(it=>{
       const moved = originOf(it.id) !== code;
       return `<li>
         <button type="button" class="item-btn ${it.id===itemId?"hit":""}" data-move-id="${it.id}" data-move-text="${esc(it.text)}" data-move-from="${code}">
           ${moved ? `<span class="pin" title="Moved from ${esc(byCode[originOf(it.id)] ? byCode[originOf(it.id)].name : originOf(it.id))}" aria-hidden="true">↪</span>` : ""}${esc(it.text)}
+          ${subMoves[it.id] && sublocByCode[subMoves[it.id]] ? `<span class="sub-badge">${esc(sublocByCode[subMoves[it.id]].name)}</span>` : ""}
         </button></li>`;
     }).join("")}</ul>
     <p class="hint">Tap an item to move it somewhere else.</p>
@@ -1059,25 +1192,39 @@ function openPicker(id, text, from){
 }
 function renderPickerList(q){
   const toksQ = toks(q);
+  const sameLocSubs = sublocationsFor(pending.from).filter(sub=>!toksQ.length || matches(`${sub.code} ${sub.name} ${sub.notes}`,toksQ));
   const rows = LOCATIONS.filter(l=>l.code!==pending.from).filter(l=>!toksQ.length || matches(`${l.code} ${l.name} ${l.job}`,toksQ));
-  $("#pickerList").innerHTML = rows.length ? rows.map(l=>`
-    <button type="button" class="pick-row" data-dest="${l.code}" style="${zc(l.code)}">
-      <span class="emo">${icon(l.icon)}</span>
-      <span><b>${esc(l.name)}</b><small>${ZONES[z(l.code)].name}</small></span>
-      <span class="code">${l.code}</span></button>`).join("")
-    : `<p class="hint" style="padding:14px 4px">No matching spots.</p>`;
+  let html = "";
+  if(sameLocSubs.length){
+    html += `<div class="pick-section">Inside ${esc(byCode[pending.from].name)}</div>` +
+      sameLocSubs.map(sub=>`
+        <button type="button" class="pick-row" data-dest="${pending.from}" data-subdest="${sub.code}" style="${zc(pending.from)}">
+          <span class="emo">${icon("archive")}</span>
+          <span><b>${esc(sub.name)}</b><small>${esc(sub.notes)}</small></span>
+          <span class="code">${sub.code}</span></button>`).join("");
+  }
+  if(rows.length){
+    html += `<div class="pick-section">Other storage locations</div>` + rows.map(l=>`
+      <button type="button" class="pick-row" data-dest="${l.code}" style="${zc(l.code)}">
+        <span class="emo">${icon(l.icon)}</span>
+        <span><b>${esc(l.name)}</b><small>${ZONES[z(l.code)].name}</small></span>
+        <span class="code">${l.code}</span></button>`).join("");
+  }
+  $("#pickerList").innerHTML = html || `<p class="hint" style="padding:14px 4px">No matching spots.</p>`;
 }
 $("#pickerQ").addEventListener("input", e=>renderPickerList(e.target.value));
 $("#pickerClose").addEventListener("click", ()=>picker.close());
 picker.addEventListener("click", e=>{
   if(!e.target.closest(".sheet") && !e.target.closest(".pick-row")) picker.close();
   const row = e.target.closest("[data-dest]");
-  if(row) commitMove(pending.id, row.dataset.dest);
+  if(row) commitMove(pending.id, row.dataset.dest, row.dataset.subdest || null);
 });
 
-function commitMove(id, destCode){
+function commitMove(id, destCode, subCode=null){
   const orig = originOf(id);
   if(destCode === orig) delete moves[id]; else moves[id] = destCode;
+  if(subCode) subMoves[id] = subCode;
+  else delete subMoves[id];
   saveMoves();
   const destName = byCode[destCode].name;
   rebuild();
@@ -1085,7 +1232,8 @@ function commitMove(id, destCode){
   dlg.close();
   renderTiles();
   if(query) search();
-  toast(`Moved “${pending.text}” to ${destName} (${destCode})`);
+  const subName = subCode && sublocByCode[subCode] ? ` · ${sublocByCode[subCode].name}` : "";
+  toast(`Moved “${pending.text}” to ${destName}${subName}`);
   pending = null;
 }
 
