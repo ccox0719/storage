@@ -1557,6 +1557,7 @@ function addCustomItem(text, code){
   customItems.push({id, text, origin:code});
   saveCustom();
   rebuild();
+  if(typeof renderHomeStats==="function") renderHomeStats();
 }
 
 let LOCATIONS = [];
@@ -1572,7 +1573,6 @@ function rebuild(){
   });
   byCode = map;
   LOCATIONS = RAW_LOCATIONS.map(loc=>map[loc.code]);
-  if(typeof renderHomeStats==="function" && typeof tasks!=="undefined") renderHomeStats();
 }
 rebuild();
 
