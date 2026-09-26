@@ -807,9 +807,9 @@ const RAW_LOCATIONS = [
    items:["Pool bags","Pool accessories","Pool nets","Covers","Hot-tub filters","Pool filters","Pool-use equipment"],
    maybe:["Pool toys","Floaties","Pool towels","Skimmer net"],
    kw:"pool toy floatie pool towel skimmer net pool vacuum hot tub cover pool bag"},
-  {code:"O4",icon:"flask",name:"Pool Chemical Cabinet",job:"Pool & hot-tub chemicals only",
-   items:["Hot-tub chemicals","Pool chemicals","Testing supplies","Maintenance supplies"],maybe:["Algaecide","pH increaser/decreaser","Test strips"],
-   kw:"chlorine algaecide ph increaser ph decreaser pool shock test strip chemical"},
+  {code:"O4",icon:"container",name:"Pool Equipment / Seasonal Cabinet",job:"Outdoor pool accessories and label-approved seasonal supplies",
+   items:["Pool testing accessories","Maintenance accessories","Small pool equipment"],maybe:["Skimmer parts","Hose fittings","Seasonal pool accessories"],
+   kw:"pool equipment skimmer hose fitting testing accessory maintenance accessory seasonal pool"},
   {code:"O5",icon:"utensils",name:"Outdoor Kitchen Cabinet",job:"Outdoor entertaining supplies",
    items:["Outdoor serving pieces","Cups","Plates","Paper goods","Towels","Grilling backup supplies"],maybe:["Tablecloths","Citronella candles","Chair cushions"],
    kw:"tablecloth citronella candle outdoor cup outdoor plate chair cushion entertaining"},
@@ -1114,7 +1114,7 @@ function search(){
     <button type="button" class="result" data-open="${r.loc.code}" data-item-id="${r.item && r.item.id ? r.item.id : ""}" style="${zc(r.loc.code)}">
       <span class="emo">${icon(r.loc.icon)}</span>
       <span><b>${r.item ? highlight(r.item.text,q) : esc(r.loc.name)}</b>
-      <span class="where">${r.maybe ? "Could go in " : ""}${r.item ? esc(r.loc.name) : esc(r.loc.job)} · ${ZONES[z(r.loc.code)].name}</span></span>
+      <span class="where">${r.maybe ? "Could go in " : ""}${r.item ? esc(r.loc.name) : esc(r.loc.job)}${r.item && r.item.id && subMoves[r.item.id] && sublocByCode[subMoves[r.item.id]] ? " · " + esc(sublocByCode[subMoves[r.item.id]].name) : ""} · ${ZONES[z(r.loc.code)].name}</span></span>
       <span class="code">${r.loc.code}</span></button>`).join("");
 }
 function setQuery(v){ query=v; $("#q").value=v; search(); }
@@ -1155,7 +1155,7 @@ function openSheet(code, itemId){
           ${subMoves[it.id] && sublocByCode[subMoves[it.id]] ? `<span class="sub-badge">${esc(sublocByCode[subMoves[it.id]].name)}</span>` : ""}
         </button></li>`;
     }).join("")}</ul>
-    <p class="hint">Tap an item to move it somewhere else.</p>
+    <p class="hint">Tap an item to assign its exact shelf, cabinet, or drawer, or move it to another storage area.</p>
     ${l.maybe && l.maybe.length ? `
     <div class="also-h"><span>Could also go here</span><span class="rule" aria-hidden="true"></span></div>
     <ul class="also-list">${l.maybe.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : ""}`;
