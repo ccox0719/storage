@@ -52,6 +52,60 @@ button{font:inherit;color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 72px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+/* ---------- Dashboard stats ---------- */
+.home-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin:0 0 12px;
+}
+.home-stat{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:11px 10px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--surface);
+  box-shadow:0 5px 18px rgba(40,55,88,.045);
+}
+.home-stat-icon{
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  color:var(--focus);
+  background:color-mix(in srgb,var(--focus) 9%,var(--surface));
+  font-size:.95rem;
+}
+.home-stat b{
+  display:block;
+  font-family:var(--display);
+  font-size:1.05rem;
+  line-height:1;
+  letter-spacing:-.025em;
+}
+.home-stat small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:.65rem;
+  line-height:1.15;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.home-stat.attention{
+  border-color:color-mix(in srgb,#B4394C 38%,var(--line));
+}
+.home-stat.attention .home-stat-icon{
+  color:#B4394C;
+  background:color-mix(in srgb,#B4394C 9%,var(--surface));
+}
+
 /* ---------- Moving Mode ---------- */
 .moving-mode{margin:14px 0 4px;border:1.5px solid var(--ink);border-radius:14px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
 .moving-toggle{width:100%;border:0;background:var(--surface);display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;text-align:left;padding:13px 14px;cursor:pointer}
@@ -501,6 +555,22 @@ body{
 }
 .tile b{font-size:.96rem;letter-spacing:-.015em}
 .tile small{font-size:.76rem}
+.tile-meta{
+  margin-top:auto;
+  padding-top:8px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  color:var(--muted);
+  font-size:.66rem;
+  line-height:1.15;
+}
+.tile-meta span:last-child{
+  text-align:right;
+  color:color-mix(in srgb,var(--muted) 85%,var(--focus));
+}
 .code{
   border:0;
   border-radius:999px;
@@ -635,6 +705,11 @@ body{
 .auth-card .primary,.auth-card .secondary{border-radius:12px}
 @media (max-width:520px){
   .wrap{padding-left:14px;padding-right:14px}
+  .home-stats{gap:6px}
+  .home-stat{padding:9px 8px;gap:7px}
+  .home-stat-icon{width:27px;height:27px;flex-basis:27px;font-size:.86rem}
+  .home-stat b{font-size:.98rem}
+  .home-stat small{font-size:.61rem}
   .app-hero{padding-top:22px}
   .app-hero h1{font-size:1.8rem}
   .summary-grid{grid-template-columns:1fr 1fr 1fr}
@@ -671,6 +746,11 @@ body{
     </div>
     <span class="hero-mark" aria-hidden="true"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>
   </header>
+  <section id="homeStats" class="home-stats" aria-label="Home organization overview">
+    <div class="home-stat"><span class="home-stat-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span><span><b id="statSpots">0</b><small>storage spots</small></span></div>
+    <div class="home-stat"><span class="home-stat-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></span><span><b id="statItems">0</b><small>tracked items</small></span></div>
+    <div class="home-stat" id="statTasksCard"><span class="home-stat-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span><span><b id="statTasks">0</b><small>tasks now</small></span></div>
+  </section>
   <section id="movingMode" class="moving-mode" aria-labelledby="movingModeTitle">
     <button type="button" class="moving-toggle" id="movingToggle" aria-expanded="false">
       <span class="moving-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
@@ -1492,6 +1572,7 @@ function rebuild(){
   });
   byCode = map;
   LOCATIONS = RAW_LOCATIONS.map(loc=>map[loc.code]);
+  if(typeof renderHomeStats==="function" && typeof tasks!=="undefined") renderHomeStats();
 }
 rebuild();
 
@@ -1571,9 +1652,15 @@ $("#showAll").addEventListener("click", ()=>{ area=null; renderDirectory(); rend
 /* ---------- tiles ---------- */
 function tile(l){
   const preview = l.items.slice(0,3).map(i=>i.text).join(", ") + (l.items.length>3 ? "…" : "");
+  const subs = sublocationsFor(l.code);
+  const itemLabel = `${l.items.length} item${l.items.length===1?"":"s"}`;
+  const mapLabel = subs.length ? `${subs.length} sublocation${subs.length===1?"":"s"}` : "Room-level";
   return `<button type="button" class="tile" data-open="${l.code}" style="${zc(l.code)}">
     <span class="tile-top"><span class="emo">${icon(l.icon)}</span><span class="code">${l.code}</span></span>
-    <b>${esc(l.name)}</b><small>${esc(preview)}</small></button>`;
+    <b>${esc(l.name)}</b>
+    <small>${esc(preview)}</small>
+    <span class="tile-meta"><span>${itemLabel}</span><span>${mapLabel}</span></span>
+  </button>`;
 }
 function renderTiles(){
   const zones = area ? [area] : ZONE_ORDER;
@@ -1872,6 +1959,14 @@ function taskStatus(t){
   const label = days===0 ? "Due today" : days<0 ? `${Math.abs(days)}d overdue` : `Due in ${days}d`;
   return {label, cls, sortKey:days, bucket};
 }
+function renderHomeStats(){
+  const itemCount = LOCATIONS.reduce((sum,l)=>sum+l.items.length,0);
+  const dueNow = tasks.filter(t=>taskStatus(t).bucket==="now").length;
+  $("#statSpots").textContent = LOCATIONS.length;
+  $("#statItems").textContent = itemCount;
+  $("#statTasks").textContent = dueNow;
+  $("#statTasksCard").classList.toggle("attention", dueNow>0);
+}
 function taskRow(t){
   const st = taskStatus(t);
   const loc = t.location_code && byCode[t.location_code] ? byCode[t.location_code] : null;
@@ -1893,6 +1988,7 @@ function taskRow(t){
   </div>`;
 }
 function renderTasks(){
+  renderHomeStats();
   const rows = [...tasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const now = rows.filter(t=>taskStatus(t).bucket==="now");
   const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
@@ -2268,7 +2364,7 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search(); renderMoving();
-renderTasks(); renderSeasonal(); renderPlants();
+renderTasks(); renderSeasonal(); renderPlants(); renderHomeStats();
 initCloud();
 </script>
 </body>
