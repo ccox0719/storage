@@ -52,6 +52,38 @@ button{font:inherit;color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 72px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+/* ---------- Moving Mode ---------- */
+.moving-mode{margin:14px 0 4px;border:1.5px solid var(--ink);border-radius:14px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.moving-toggle{width:100%;border:0;background:var(--surface);display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;text-align:left;padding:13px 14px;cursor:pointer}
+.moving-toggle:active{background:var(--paper)}
+.moving-icon{font-size:1.45rem;line-height:1;color:var(--focus)}
+.moving-toggle b{display:block;font-family:var(--display);font-size:1.03rem}
+.moving-toggle small{display:block;color:var(--muted);font-size:.78rem;margin-top:1px}
+.moving-chev{font-size:1.35rem;color:var(--muted);transform:rotate(90deg);transition:transform .15s}
+.moving-toggle[aria-expanded="false"] .moving-chev{transform:rotate(0)}
+#movingBody{border-top:1px solid var(--line);padding:12px}
+.moving-next{border:1px solid var(--focus);border-radius:11px;padding:12px;background:color-mix(in srgb,var(--focus) 7%,var(--surface));margin-bottom:10px}
+.moving-next .eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;font-weight:800;color:var(--focus)}
+.moving-next h3{font-family:var(--display);font-size:1.08rem;margin:3px 0 4px}
+.moving-next p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.45}
+.moving-progress{height:6px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:10px}
+.moving-progress span{display:block;height:100%;background:var(--focus);border-radius:4px}
+.move-step{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-top:8px;overflow:hidden}
+.move-step.done{opacity:.68}
+.move-step-head{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:11px 12px}
+.move-step-check{width:21px;height:21px;margin-top:1px;accent-color:var(--focus)}
+.move-step-title b{display:block;font-size:.91rem}
+.move-step-title small{display:block;color:var(--muted);font-size:.75rem;margin-top:2px;line-height:1.35}
+.move-step-num{font-family:var(--display);font-size:.74rem;color:var(--muted);padding-top:2px}
+.move-step-body{border-top:1px solid var(--line);padding:9px 12px 11px}
+.sticky-list{display:grid;gap:5px;margin:0;padding:0;list-style:none}
+.sticky-list li{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:start;font-size:.78rem;line-height:1.35}
+.sticky-code{font-family:var(--display);font-weight:700;color:var(--focus);white-space:nowrap}
+.move-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.move-open{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:5px 9px;font-size:.75rem;font-weight:650;cursor:pointer}
+.move-open:active{background:var(--line)}
+.moving-done{text-align:center;padding:9px 4px 2px;color:var(--muted);font-size:.84rem}
+
 /* ---------- Search ---------- */
 .finder{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--paper);padding:14px 0 10px;
   background-image:radial-gradient(var(--line) .6px, transparent .6px); background-size:16px 16px;}
@@ -294,6 +326,18 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 
 <div class="wrap">
   <main id="view-storage" class="view">
+  <section id="movingMode" class="moving-mode" aria-labelledby="movingModeTitle">
+    <button type="button" class="moving-toggle" id="movingToggle" aria-expanded="true">
+      <span class="moving-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
+      <span><b id="movingModeTitle">Moving Mode</b><small>Exactly what to set up next</small></span>
+      <span class="moving-chev">›</span>
+    </button>
+    <div id="movingBody">
+      <div id="movingNext"></div>
+      <div id="movingSteps"></div>
+    </div>
+  </section>
+
   <div class="finder">
     <label class="search">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -518,6 +562,11 @@ function cloudRowsSeasonal(){
     season:i.season, title:i.title, done_year:i.done_year || null
   }));
 }
+function cloudRowsMoving(){
+  return MOVING_STEPS.map(step=>({
+    household_id:homeHouseholdId, step_id:step.id, completed:!!movingProgress[step.id]
+  }));
+}
 function cloudRowsPlants(){
   return plants.map(p=>({
     household_id:homeHouseholdId, external_id:p.id, name:p.name,
@@ -537,6 +586,7 @@ async function cloudSyncAll(force=false){
     await cloudReplace("home_tasks", cloudRowsTasks());
     await cloudReplace("home_seasonal_tasks", cloudRowsSeasonal());
     await cloudReplace("home_plants", cloudRowsPlants());
+    await cloudReplace("home_moving_progress", cloudRowsMoving());
     setCloudState("synced");
   }catch(err){
     console.error(err);
@@ -554,6 +604,7 @@ function cloudSyncSoon(kind){
       if(kind==="tasks") await cloudReplace("home_tasks", cloudRowsTasks());
       if(kind==="seasonal") await cloudReplace("home_seasonal_tasks", cloudRowsSeasonal());
       if(kind==="plants") await cloudReplace("home_plants", cloudRowsPlants());
+      if(kind==="moving") await cloudReplace("home_moving_progress", cloudRowsMoving());
       setCloudState("synced");
     }catch(err){
       console.error(err);
@@ -565,15 +616,17 @@ function cloudSyncItemsSoon(){ cloudSyncSoon("items"); }
 function cloudSyncTasksSoon(){ cloudSyncSoon("tasks"); }
 function cloudSyncSeasonalSoon(){ cloudSyncSoon("seasonal"); }
 function cloudSyncPlantsSoon(){ cloudSyncSoon("plants"); }
+function cloudSyncMovingSoon(){ cloudSyncSoon("moving"); }
 
 async function cloudPull(){
-  const [ir,tr,sr,pr] = await Promise.all([
+  const [ir,tr,sr,pr,mr] = await Promise.all([
     db.from("home_items").select("*").eq("household_id",homeHouseholdId),
     db.from("home_tasks").select("*").eq("household_id",homeHouseholdId),
     db.from("home_seasonal_tasks").select("*").eq("household_id",homeHouseholdId),
-    db.from("home_plants").select("*").eq("household_id",homeHouseholdId)
+    db.from("home_plants").select("*").eq("household_id",homeHouseholdId),
+    db.from("home_moving_progress").select("*").eq("household_id",homeHouseholdId)
   ]);
-  for(const r of [ir,tr,sr,pr]) if(r.error) throw r.error;
+  for(const r of [ir,tr,sr,pr,mr]) if(r.error) throw r.error;
 
   if(ir.data.length){
     const seedIds = new Set(RAW_LOCATIONS.flatMap(l=>l.items).map(i=>i.id));
@@ -606,6 +659,12 @@ async function cloudPull(){
     mergeNewSeedItems(seasonalItems,seasonalSeed(),()=>{});
     Store.write("wil-seasonal",seasonalItems);
   }
+  if(mr.data.length){
+    movingProgress = {};
+    mr.data.forEach(r=>{ movingProgress[r.step_id] = !!r.completed; });
+    saveJSON("wil-moving-progress", movingProgress);
+  }
+
   if(pr.data.length){
     plants = pr.data.map(r=>({
       id:r.external_id,name:r.name,location:r.location||"",fall_task:r.fall_task||"",
@@ -616,7 +675,7 @@ async function cloudPull(){
     Store.write("wil-plants",plants);
   }
 
-  renderDirectory(); renderTiles(); search();
+  renderDirectory(); renderTiles(); search(); renderMoving();
   renderTasks(); renderSeasonal(); renderPlants();
 }
 
@@ -924,6 +983,96 @@ const SUBLOCATIONS = [
 ];
 const sublocByCode = Object.fromEntries(SUBLOCATIONS.map(x=>[x.code,x]));
 function sublocationsFor(locationCode){ return SUBLOCATIONS.filter(x=>x.location===locationCode); }
+
+
+const MOVING_STEPS = [
+  {id:"mv-kitchen",title:"Kitchen & pantry",why:"Start here. These are the highest-use spaces on day one.",codes:["M1","M2"]},
+  {id:"mv-laundry",title:"Laundry room",why:"Set the cleaning and laundry homes before random supplies spread through the house.",codes:["M5"]},
+  {id:"mv-baths",title:"Bathrooms",why:"Make every bathroom functional before unpacking decorative or long-term items.",codes:["M4","U2","U6","B3"]},
+  {id:"mv-bedrooms",title:"Bedrooms & master closet",why:"Give clothes, linens, tech, and sleep items a home early.",codes:["U1","U3","U4","U5","U7","U8"]},
+  {id:"mv-entry",title:"Entry coat closet",why:"Create one landing zone for shoes, coats, bags, hats, gloves, and umbrellas.",codes:["M3"]},
+  {id:"mv-garage",title:"Garage",why:"Keep the workbench as staging until categories are visible, then place tools and bulky gear.",codes:["G1","G2","G3","G5"]},
+  {id:"mv-basement-kitchen",title:"Basement kitchen & peninsula",why:"Move specialty appliances and entertaining overflow out of the main kitchen.",codes:["B4","B5"]},
+  {id:"mv-bulk",title:"Under-stairs & basement storage",why:"Do bulky, seasonal, sentimental, and long-term storage after daily-use rooms are settled.",codes:["B6","B1","B2","B7"]},
+  {id:"mv-game",title:"Game room",why:"Finish recreation storage once the practical rooms are working.",codes:["M6"]},
+  {id:"mv-outdoor",title:"Shed, pool & outdoor kitchen",why:"Last pass: outdoor gear, pool equipment, grilling, and yard supplies.",codes:["O1","O2","O3","O4","O5","O6","O7","O8"]}
+];
+let movingProgress = loadJSON("wil-moving-progress", {});
+let movingExpanded = true;
+
+function saveMovingProgress(){
+  saveJSON("wil-moving-progress", movingProgress);
+  cloudSyncMovingSoon();
+}
+
+function movingStickyRows(step){
+  const rows = [];
+  step.codes.forEach(code=>{
+    const loc = byCode[code] || RAW_LOCATIONS.find(l=>l.code===code);
+    const subs = sublocationsFor(code);
+    if(subs.length){
+      subs.forEach(sub=>rows.push({code:sub.code,label:sub.name,what:sub.notes}));
+    }else if(loc){
+      rows.push({code,label:loc.name,what:loc.job});
+    }
+  });
+  return rows;
+}
+
+function renderMoving(){
+  const body = $("#movingBody");
+  if(!body) return;
+  body.hidden = !movingExpanded;
+  $("#movingToggle").setAttribute("aria-expanded", movingExpanded ? "true" : "false");
+
+  const doneCount = MOVING_STEPS.filter(s=>movingProgress[s.id]).length;
+  const next = MOVING_STEPS.find(s=>!movingProgress[s.id]);
+  const pct = Math.round(doneCount / MOVING_STEPS.length * 100);
+
+  $("#movingNext").innerHTML = next ? `
+    <div class="moving-next">
+      <div class="eyebrow">Start here · Step ${MOVING_STEPS.indexOf(next)+1}</div>
+      <h3>${esc(next.title)}</h3>
+      <p>${esc(next.why)}</p>
+      <div class="moving-progress" aria-label="${pct}% complete"><span style="width:${pct}%"></span></div>
+    </div>` :
+    `<div class="moving-next"><div class="eyebrow">Moving setup complete</div><h3>Every zone has a starting plan.</h3><p>Now use Search whenever you are holding something and want its exact home.</p><div class="moving-progress"><span style="width:100%"></span></div></div>`;
+
+  $("#movingSteps").innerHTML = MOVING_STEPS.map((step,idx)=>{
+    const done = !!movingProgress[step.id];
+    const rows = movingStickyRows(step);
+    return `
+      <div class="move-step ${done?"done":""}">
+        <div class="move-step-head">
+          <input class="move-step-check" type="checkbox" data-moving-check="${step.id}" ${done?"checked":""} aria-label="Mark ${esc(step.title)} complete">
+          <div class="move-step-title"><b>${esc(step.title)}</b><small>${esc(step.why)}</small></div>
+          <span class="move-step-num">${idx+1}/${MOVING_STEPS.length}</span>
+        </div>
+        <div class="move-step-body">
+          <ul class="sticky-list">${rows.map(r=>`<li><span class="sticky-code">${esc(r.code)}</span><span><b>${esc(r.label)}</b> → ${esc(r.what)}</span></li>`).join("")}</ul>
+          <div class="move-actions">${step.codes.map(code=>`<button type="button" class="move-open" data-moving-open="${code}">Open ${code}</button>`).join("")}</div>
+        </div>
+      </div>`;
+  }).join("") + (next ? "" : `<div class="moving-done">Nice. Moving Mode can stay here as your permanent setup history.</div>`);
+}
+
+$("#movingToggle").addEventListener("click", ()=>{
+  movingExpanded = !movingExpanded;
+  renderMoving();
+});
+$("#movingMode").addEventListener("change", e=>{
+  const cb = e.target.closest("[data-moving-check]");
+  if(!cb) return;
+  movingProgress[cb.dataset.movingCheck] = cb.checked;
+  saveMovingProgress();
+  renderMoving();
+});
+$("#movingMode").addEventListener("click", e=>{
+  const b = e.target.closest("[data-moving-open]");
+  if(!b) return;
+  openSheet(b.dataset.movingOpen);
+});
+
 
 /* ---------- item ids + relocation + custom filings ---------- */
 RAW_LOCATIONS.forEach(loc=>{
@@ -1654,7 +1803,7 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 });
 
 /* ---------- init ---------- */
-renderDirectory(); renderTiles(); search();
+renderDirectory(); renderTiles(); search(); renderMoving();
 renderTasks(); renderSeasonal(); renderPlants();
 initCloud();
 </script>
