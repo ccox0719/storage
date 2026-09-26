@@ -677,12 +677,27 @@ async function cloudPull(){
 
   if(tr.data.length){
     tasks = tr.data.map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
+    tasks.forEach(t=>{
+      const seed = TASKS_SEED.find(x=>x.id===t.id);
+      if(!seed) return;
+      if(!t.category || t.category==="General") t.category = seed.category;
+      if(!t.location_code) t.location_code = seed.location_code;
+      if(!t.notes && seed.notes) t.notes = seed.notes;
+    });
     mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
     Store.write("wil-tasks",tasks);
   }
   if(sr.data.length){
-    seasonalItems = sr.data.map(r=>({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year}));
-    mergeNewSeedItems(seasonalItems,seasonalSeed(),()=>{});
+    const seedNow = seasonalSeed();
+    const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
+    const builtInPattern = /^(pool|kitchen|fountain|deck|furniture|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
+    seasonalItems = seedNow.map(seed=>{
+      const old = cloudById[seed.id];
+      return {...seed, done_year:old ? old.done_year : null};
+    });
+    sr.data.filter(r=>!builtInPattern.test(r.external_id)).forEach(r=>{
+      seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year});
+    });
     Store.write("wil-seasonal",seasonalItems);
   }
   if(mr.data.length){
@@ -697,6 +712,12 @@ async function cloudPull(){
       spring_task:r.spring_task||"",notes:r.notes||"",treatment_cycle_years:r.treatment_cycle_years,
       last_treated_year:r.last_treated_year
     }));
+    plants.forEach(p=>{
+      const seed = PLANTS_SEED.find(x=>x.id===p.id);
+      if(!seed) return;
+      if(!p.location && seed.location) p.location = seed.location;
+      if(p.id==="rose-shrub" && /Cut back after first frost/i.test(p.fall_task||"")) p.fall_task = seed.fall_task;
+    });
     mergeNewSeedItems(plants,PLANTS_SEED,()=>{});
     Store.write("wil-plants",plants);
   }
