@@ -236,6 +236,28 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
 .view-h .link{border:0;background:none;color:var(--focus);font-size:.88rem;font-weight:600;cursor:pointer;padding:4px}
 .view-sub{color:var(--muted);font-size:.88rem;margin:0 0 16px}
 
+/* ---------- Smarter tabs ---------- */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:8px 0 14px}
+.summary-card{border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:10px}
+.summary-card b{display:block;font-family:var(--display);font-size:1.15rem;line-height:1}
+.summary-card span{display:block;color:var(--muted);font-size:.72rem;margin-top:4px}
+.summary-card.hot{border-color:#B4394C}
+.summary-card.soon{border-color:var(--z-M)}
+.task-section-h{font-family:var(--display);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:16px 2px 7px}
+.task-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.meta-chip{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:.69rem;color:var(--muted);background:var(--paper)}
+.task-actions{display:flex;flex-direction:column;gap:5px}
+.task-actions .mini-btn{white-space:nowrap}
+.mini-btn.secondary{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.season-now{border:1.5px solid var(--ink);border-radius:12px;background:var(--surface);padding:12px 13px;margin:8px 0 14px}
+.season-now .eyebrow{text-transform:uppercase;letter-spacing:.07em;font-size:.68rem;font-weight:800;color:var(--focus)}
+.season-now h3{font-family:var(--display);margin:3px 0 4px;font-size:1.08rem}
+.season-now p{margin:0;color:var(--muted);font-size:.82rem}
+.plant-group-h{font-family:var(--display);font-size:.95rem;margin:18px 2px 8px}
+.plant-next{display:block;margin-top:6px;font-size:.76rem;font-weight:650;color:var(--focus)}
+.plant-summary{border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:10px 12px;margin:8px 0 14px;font-size:.82rem;color:var(--muted)}
+.plant-summary b{color:var(--ink)}
+
 /* ---------- Task rows ---------- */
 .task-row{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 13px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center}
 .task-main{flex:1;min-width:0;text-align:left;border:0;background:none;cursor:pointer;font:inherit;color:inherit;padding:0}
@@ -370,20 +392,23 @@ dialog::backdrop{background:rgba(20,20,16,.5)}
   </main>
 
   <main id="view-tasks" class="view" hidden>
-    <div class="view-h"><h2>Recurring tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Home maintenance on a schedule. Tap a task to edit it.</p>
+    <div class="view-h"><h2>Home today</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
+    <p class="view-sub">What needs attention now, what is coming up, and where the supplies live.</p>
+    <div id="tasksSummary"></div>
     <div id="tasksList"></div>
   </main>
 
   <main id="view-seasonal" class="view" hidden>
-    <div class="view-h"><h2>Seasonal outdoor care</h2></div>
-    <p class="view-sub">Fall shutdown and spring startup, by area.</p>
+    <div class="view-h"><h2>Seasonal mission board</h2></div>
+    <p class="view-sub">What the house needs this season, by actual area and system.</p>
+    <div id="seasonalNow"></div>
     <div id="seasonalList"></div>
   </main>
 
   <main id="view-plants" class="view" hidden>
-    <div class="view-h"><h2>Plant care</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Location, fall task, spring task, and notes. Tap a plant to edit.</p>
+    <div class="view-h"><h2>Plants & yard</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
+    <p class="view-sub">Grouped by where you see them, with the next thing each plant needs.</p>
+    <div id="plantsSummary"></div>
     <div id="plantsList"></div>
   </main>
   <div id="cloudBottomBar" class="cloud-bottom-bar" hidden>
@@ -553,7 +578,8 @@ function cloudRowsItems(){
 function cloudRowsTasks(){
   return tasks.map(t=>({
     household_id:homeHouseholdId, external_id:t.id, title:t.title,
-    frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || ""
+    frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || "",
+    category:t.category || "General", location_code:t.location_code || null, snoozed_until:t.snoozed_until || null
   }));
 }
 function cloudRowsSeasonal(){
@@ -650,7 +676,7 @@ async function cloudPull(){
   }
 
   if(tr.data.length){
-    tasks = tr.data.map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||""}));
+    tasks = tr.data.map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
     mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
     Store.write("wil-tasks",tasks);
   }
@@ -1461,55 +1487,88 @@ function fmtDate(iso){
    TASKS
    ================================================================== */
 const TASKS_SEED = [
-  {id:"t1", title:"Change HVAC filter", frequency_months:2, last_done:null, notes:"Filters are stored in the Mechanical Room (B2)."},
-  {id:"t2", title:"Test smoke & CO detectors", frequency_months:6, last_done:null, notes:""},
-  {id:"t3", title:"Flush water heater", frequency_months:12, last_done:null, notes:""},
-  {id:"t4", title:"Clean dryer vent", frequency_months:12, last_done:null, notes:""},
-  {id:"t5", title:"Clean gutters", frequency_months:6, last_done:null, notes:"Spring and fall."},
-  {id:"t6", title:"Replace fridge water filter", frequency_months:6, last_done:null, notes:""},
-  {id:"t7", title:"Check water softener salt", frequency_months:1, last_done:null, notes:""},
-  {id:"t8", title:"Service furnace & AC (professional)", frequency_months:12, last_done:null, notes:""},
-  {id:"t9", title:"Test garage door auto-reverse safety", frequency_months:12, last_done:null, notes:""},
-  {id:"t10", title:"Check fire extinguishers", frequency_months:12, last_done:null, notes:""},
-  {id:"t11", title:"Deep clean garbage disposal", frequency_months:3, last_done:null, notes:""},
-  {id:"t12", title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:""}
-];
+  {id:"t1", title:"Change HVAC filter", frequency_months:2, last_done:null, notes:"Filters are stored in the Mechanical Room.", category:"HVAC", location_code:"B2", snoozed_until:null},
+  {id:"t2", title:"Test smoke & CO detectors", frequency_months:6, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
+  {id:"t3", title:"Flush water heater", frequency_months:12, last_done:null, notes:"Mechanical Room.", category:"Plumbing", location_code:"B2", snoozed_until:null},
+  {id:"t4", title:"Clean dryer vent", frequency_months:12, last_done:null, notes:"Check both laundry areas.", category:"Laundry", location_code:"M5", snoozed_until:null},
+  {id:"t5", title:"Clean gutters", frequency_months:6, last_done:null, notes:"Spring and fall.", category:"Exterior", location_code:null, snoozed_until:null},
+  {id:"t6", title:"Replace fridge water filter", frequency_months:6, last_done:null, notes:"Backup filters belong in the main kitchen.", category:"Kitchen", location_code:"M1", snoozed_until:null},
+  {id:"t7", title:"Check water softener salt", frequency_months:1, last_done:null, notes:"", category:"Plumbing", location_code:"B2", snoozed_until:null},
+  {id:"t8", title:"Service furnace & AC (professional)", frequency_months:12, last_done:null, notes:"Schedule seasonal HVAC service.", category:"HVAC", location_code:"B2", snoozed_until:null},
+  {id:"t9", title:"Test garage door auto-reverse safety", frequency_months:12, last_done:null, notes:"", category:"Garage", location_code:"G1", snoozed_until:null},
+  {id:"t10", title:"Check fire extinguishers", frequency_months:12, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
+  {id:"t11", title:"Deep clean garbage disposal", frequency_months:3, last_done:null, notes:"", category:"Kitchen", location_code:"M1", snoozed_until:null},
+  {id:"t12", title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:"", category:"Bedrooms", location_code:"U4", snoozed_until:null}
+]
 let tasks = Store.read("wil-tasks", null) || TASKS_SEED;
 mergeNewSeedItems(tasks, TASKS_SEED, saveTasks);
 function saveTasks(){ Store.write("wil-tasks", tasks); cloudSyncTasksSoon(); }
 
 function taskStatus(t){
-  if(!t.last_done) return {label:"Never done", cls:"never", sortKey:-999999};
+  const today = todayISO();
+  if(t.snoozed_until && t.snoozed_until > today){
+    return {label:`Snoozed until ${fmtDate(t.snoozed_until)}`, cls:"ok", sortKey:999998, bucket:"later"};
+  }
+  if(!t.last_done) return {label:"Never done", cls:"overdue", sortKey:-999999, bucket:"now"};
   const nextISO = addMonthsISO(t.last_done, t.frequency_months);
   const days = daysUntil(nextISO);
-  let cls = "ok";
-  if(days<0) cls = "overdue"; else if(days<=7) cls="soon";
+  let cls = "ok", bucket = "later";
+  if(days<0){ cls="overdue"; bucket="now"; }
+  else if(days<=7){ cls="soon"; bucket="now"; }
+  else if(days<=30){ cls="soon"; bucket="soon"; }
   const label = days===0 ? "Due today" : days<0 ? `${Math.abs(days)}d overdue` : `Due in ${days}d`;
-  return {label, cls, sortKey:days};
+  return {label, cls, sortKey:days, bucket};
+}
+function taskRow(t){
+  const st = taskStatus(t);
+  const loc = t.location_code && byCode[t.location_code] ? byCode[t.location_code] : null;
+  return `<div class="task-row">
+    <button type="button" class="task-main" data-edit-task="${t.id}">
+      <b>${esc(t.title)}</b>
+      <span class="freq">Every ${t.frequency_months} month${t.frequency_months==1?"":"s"}${t.last_done?` · last done ${fmtDate(t.last_done)}`:""}</span><br>
+      <span class="badge ${st.cls}">${st.label}</span>
+      <span class="task-meta">
+        <span class="meta-chip">${esc(t.category||"General")}</span>
+        ${loc?`<span class="meta-chip">${esc(t.location_code)} · ${esc(loc.name)}</span>`:""}
+      </span>
+    </button>
+    <span class="task-actions">
+      <button type="button" class="mini-btn" data-done-task="${t.id}">Done</button>
+      <button type="button" class="mini-btn secondary" data-snooze-task="${t.id}">+7d</button>
+      ${loc?`<button type="button" class="mini-btn secondary" data-task-open="${t.location_code}">Open</button>`:""}
+    </span>
+  </div>`;
 }
 function renderTasks(){
   const rows = [...tasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
-  $("#tasksList").innerHTML = rows.map(t=>{
-    const st = taskStatus(t);
-    return `<div class="task-row">
-      <button type="button" class="task-main" data-edit-task="${t.id}">
-        <b>${esc(t.title)}</b>
-        <span class="freq">Every ${t.frequency_months} month${t.frequency_months==1?"":"s"}${t.last_done?` · last done ${fmtDate(t.last_done)}`:""}</span><br>
-        <span class="badge ${st.cls}">${st.label}</span>
-      </button>
-      <button type="button" class="mini-btn" data-done-task="${t.id}">Mark done</button>
+  const now = rows.filter(t=>taskStatus(t).bucket==="now");
+  const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
+  const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
+  $("#tasksSummary").innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-card hot"><b>${now.length}</b><span>Need attention</span></div>
+      <div class="summary-card soon"><b>${soon.length}</b><span>Next 30 days</span></div>
+      <div class="summary-card"><b>${later.length}</b><span>All good</span></div>
     </div>`;
-  }).join("") + `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`;
+  const section = (label,list)=> list.length ? `<div class="task-section-h">${label}</div>${list.map(taskRow).join("")}` : "";
+  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+section("All good",later)+`<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`;
 }
 $("#view-tasks").addEventListener("click", e=>{
   const done = e.target.closest("[data-done-task]");
   if(done){
     const t = tasks.find(x=>x.id===done.dataset.doneTask);
-    t.last_done = todayISO();
-    saveTasks(); renderTasks();
-    toast(`Marked “${t.title}” done today`);
-    return;
+    t.last_done = todayISO(); t.snoozed_until = null;
+    saveTasks(); renderTasks(); toast(`Marked “${t.title}” done today`); return;
   }
+  const snooze = e.target.closest("[data-snooze-task]");
+  if(snooze){
+    const t = tasks.find(x=>x.id===snooze.dataset.snoozeTask);
+    const d = new Date(); d.setDate(d.getDate()+7);
+    t.snoozed_until = d.toISOString().slice(0,10);
+    saveTasks(); renderTasks(); toast(`Snoozed “${t.title}” for 7 days`); return;
+  }
+  const open = e.target.closest("[data-task-open]");
+  if(open){ openSheet(open.dataset.taskOpen); return; }
   const edit = e.target.closest("[data-edit-task]");
   if(edit){ openTaskForm(tasks.find(x=>x.id===edit.dataset.editTask)); return; }
   if(e.target.id==="addTaskBtn2"){ openTaskForm(null); }
@@ -1522,12 +1581,14 @@ function openTaskForm(t){
     fields: [
       {key:"title", label:"Task", type:"text", value:t?t.title:""},
       {key:"frequency_months", label:"Repeat every (months)", type:"number", value:t?t.frequency_months:3},
+      {key:"category", label:"Category", type:"text", value:t?(t.category||"General"):"General"},
+      {key:"location_code", label:"Storage / system code (optional)", type:"text", value:t?(t.location_code||""):""},
       {key:"notes", label:"Notes", type:"textarea", value:t?t.notes:""}
     ],
     onSave(v){
       if(!v.title.trim()) return;
-      if(t){ t.title=v.title.trim(); t.frequency_months=Math.max(1,Number(v.frequency_months)||1); t.notes=v.notes.trim(); }
-      else { tasks.push({id:Store.uid(), title:v.title.trim(), frequency_months:Math.max(1,Number(v.frequency_months)||1), last_done:null, notes:v.notes.trim()}); }
+      if(t){ t.title=v.title.trim(); t.frequency_months=Math.max(1,Number(v.frequency_months)||1); t.category=v.category.trim()||"General"; t.location_code=v.location_code.trim().toUpperCase()||null; t.notes=v.notes.trim(); }
+      else { tasks.push({id:Store.uid(), title:v.title.trim(), frequency_months:Math.max(1,Number(v.frequency_months)||1), last_done:null, notes:v.notes.trim(), category:v.category.trim()||"General", location_code:v.location_code.trim().toUpperCase()||null, snoozed_until:null}); }
       saveTasks(); renderTasks();
       toast(t ? "Task updated" : "Task added");
     },
@@ -1543,33 +1604,48 @@ function openTaskForm(t){
    SEASONAL OUTDOOR CARE
    ================================================================== */
 const SEASONAL_SECTIONS = [
-  {key:"pool", icon:"waves", name:"Pool winterization",
-   fall:["Balance water chemistry before closing","Lower water level below skimmer","Blow out & drain plumbing lines","Add pool antifreeze to lines","Remove & store ladders/rails","Clean & store pool toys/floats","Install winter cover"],
-   spring:["Remove & clean winter cover","Reconnect pump & filter","Refill to normal level","Shock treat & rebalance chemistry","Inspect liner & equipment for damage","Reinstall ladders/rails"]},
-  {key:"kitchen", icon:"utensils", name:"Outdoor kitchen shutdown",
-   fall:["Deep clean grill & grates","Disconnect propane/gas line","Empty & clean mini-fridge","Drain any water lines","Cover grill & appliances","Store cushions & electronics"],
-   spring:["Uncover & inspect appliances","Reconnect gas & water lines","Test burners & ice maker","Clean all surfaces","Restock supplies"]},
-  {key:"fountain", icon:"droplet", name:"Fountain care",
-   fall:["Drain fountain completely","Clean basin & pump","Remove pump & store indoors","Cover or store fountain","Disconnect power"],
-   spring:["Clean basin","Reinstall pump","Refill with water","Test operation","Check for winter cracks or damage"]},
-  {key:"deck", icon:"broom", name:"Deck & patio cleanup",
-   fall:["Sweep & clear debris","Power wash if needed","Inspect for damage or rot","Apply sealant/stain if due","Clean furniture before storing"],
-   spring:["Power wash","Inspect boards & railings","Re-stain or seal if needed","Set up furniture"]},
-  {key:"furniture", icon:"chair", name:"Furniture storage",
-   fall:["Clean outdoor furniture","Dry fully before storing","Cover or move to shed/garage","Store cushions indoors","Store umbrella"],
-   spring:["Bring furniture back out","Wipe down all pieces","Inspect for winter damage","Set up cushions & umbrella"]},
-  {key:"landscaping", icon:"leaf", name:"Landscaping",
-   fall:["Final mow & fertilize","Aerate & overseed lawn","Cut back perennials","Mulch garden beds","Clean & store garden tools","Drain & store hoses","Winterize sprinkler system","Rake & remove leaves"],
-   spring:["First mow of the season","Fertilize / apply pre-emergent","Mulch beds","Prune shrubs","Turn on sprinkler system","Plant annuals"]},
+  {key:"pool", icon:"waves", name:"Pool",
+   winter:["Check cover after heavy snow or wind","Keep standing water managed per cover type"],
+   spring:["Document owner startup process before changing equipment","Remove & clean winter cover when appropriate","Inspect pump, filter, heater and plumbing before startup"],
+   summer:["Check water chemistry and equipment","Empty baskets / skimmer as needed","Inspect cover and pool gear storage"],
+   fall:["Owner walkthrough pending: document exact pool-closing process","Photograph valves, pump, filter and heater positions","Remove & store pool toys / loose accessories","Install winter cover per owner walkthrough"]},
+  {key:"kitchen", icon:"utensils", name:"Outdoor kitchen",
+   winter:["Keep water-connected components winterized","Check covers after storms"],
+   spring:["Reconnect water only after freeze risk passes","Inspect sink, fridge and ice maker","Clean grill and test burners"],
+   summer:["Clean grill and grease areas","Wipe fridge / ice maker and check drainage"],
+   fall:["Deep clean grill & grates","Winterize sink and ice maker per manufacturer instructions","Empty & clean outdoor fridge if shutting down","Cover / protect appliances as needed"]},
+  {key:"fountain", icon:"droplet", name:"Small fountain",
+   winter:["Keep basin free of standing water that can freeze"],
+   spring:["Inspect for freeze damage","Reinstall pump","Refill and test"],
+   summer:["Top off water","Clean debris and check pump flow"],
+   fall:["Drain completely before hard freeze","Clean basin and pump","Remove / protect pump","Do not leave standing water"]},
+  {key:"deck", icon:"broom", name:"Deck & patio",
+   winter:["Keep drains and walkways clear"],
+   spring:["Sweep / wash surfaces","Inspect boards, railings and drainage"],
+   summer:["Clear debris and check high-traffic areas"],
+   fall:["Clear leaves and debris","Inspect for standing water","Clean before winter"]},
+  {key:"furniture", icon:"chair", name:"Furniture & decor",
+   winter:["Keep stored cushions dry","Check covers after storms"],
+   spring:["Bring furniture back out","Inspect and wipe down pieces","Set up cushions and decor"],
+   summer:["Clean as needed","Dry cushions after storms"],
+   fall:["Clean and fully dry furniture","Store cushions indoors / dry storage","Move delicate decor and freeze-sensitive planters"]},
+  {key:"turf", icon:"leaf", name:"Artificial turf & beds",
+   winter:["Keep heavy debris from accumulating on turf"],
+   spring:["Remove winter debris","Brush matted turf","Check drainage","Clean perennial beds"],
+   summer:["Remove debris","Brush high-traffic areas as needed","Check drainage after heavy rain"],
+   fall:["Remove leaves and debris from turf","Brush matted areas","Keep drainage openings clear","Clean garden tools","Drain and store hoses","Clean fallen rose leaves"]},
   {key:"hvac", icon:"gear", name:"HVAC / air conditioner",
-   fall:["Call to schedule HVAC cleaning/service","Rinse off the outdoor A/C unit","Clear debris & leaves from around the unit"],
-   spring:[]}
-];
+   winter:["Keep outdoor unit clear of heavy debris while leaving manufacturer-required clearance"],
+   spring:["Schedule AC inspection / service if due","Clear leaves and debris around outdoor unit"],
+   summer:["Keep outdoor unit unobstructed"],
+   fall:["Schedule furnace / HVAC service","Clear debris around outdoor unit"]}
+]
 function seasonalSeed(){
   const out = [];
   SEASONAL_SECTIONS.forEach(sec=>{
-    sec.fall.forEach((title,idx)=>out.push({id:`${sec.key}-fall-${idx}`, section:sec.key, season:"fall", title, done_year:null}));
-    sec.spring.forEach((title,idx)=>out.push({id:`${sec.key}-spring-${idx}`, section:sec.key, season:"spring", title, done_year:null}));
+    ["winter","spring","summer","fall"].forEach(season=>{
+      (sec[season]||[]).forEach((title,idx)=>out.push({id:`${sec.key}-${season}-${idx}`, section:sec.key, season, title, done_year:null}));
+    });
   });
   return out;
 }
@@ -1578,14 +1654,33 @@ mergeNewSeedItems(seasonalItems, seasonalSeed(), saveSeasonal);
 function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); }
 const seasonalOpen = new Set();
 
+function currentSeason(){
+  const m = new Date().getMonth()+1;
+  if([12,1,2].includes(m)) return "winter";
+  if([3,4,5].includes(m)) return "spring";
+  if([6,7,8].includes(m)) return "summer";
+  return "fall";
+}
 function renderSeasonal(){
   const year = new Date().getFullYear();
+  const active = currentSeason();
+  const activeItems = seasonalItems.filter(i=>i.season===active);
+  const activeDone = activeItems.filter(i=>i.done_year===year).length;
+  $("#seasonalNow").innerHTML = `<div class="season-now">
+    <div class="eyebrow">${active} · right now</div>
+    <h3>${activeDone===activeItems.length && activeItems.length ? "This season is caught up" : `${activeItems.length-activeDone} seasonal tasks left`}</h3>
+    <p>Start with the areas below that still have unchecked ${active} items.</p>
+  </div>`;
+
+  const seasonOrder = [active, ...["winter","spring","summer","fall"].filter(x=>x!==active)];
   $("#seasonalList").innerHTML = SEASONAL_SECTIONS.map(sec=>{
     const items = seasonalItems.filter(i=>i.section===sec.key);
     const done = items.filter(i=>i.done_year===year).length;
-    const open = seasonalOpen.has(sec.key);
+    const hasOpenActive = items.some(i=>i.season===active && i.done_year!==year);
+    const open = seasonalOpen.has(sec.key) || hasOpenActive;
     const group = (season,label)=>{
       const list = items.filter(i=>i.season===season);
+      if(!list.length) return "";
       return `<p class="ssn-sub">${label}</p><ul class="check-list">${list.map(i=>`
         <li><label class="check-row ${i.done_year===year?"checked":""}">
           <input type="checkbox" data-ssn-id="${i.id}" ${i.done_year===year?"checked":""}>
@@ -1601,8 +1696,7 @@ function renderSeasonal(){
         <span class="chev" aria-hidden="true">›</span>
       </button>
       <div class="ssn-body" ${open?"":"hidden"}>
-        ${group("fall","Fall shutdown")}
-        ${group("spring","Spring startup")}
+        ${seasonOrder.map(season=>group(season,season[0].toUpperCase()+season.slice(1))).join("")}
       </div>
     </div>`;
   }).join("");
@@ -1668,18 +1762,18 @@ function openSeasonalAddForm(section, season){
    PLANTS
    ================================================================== */
 const PLANTS_SEED = [
-  {id:"ash-tree", name:"Ash tree", location:"", fall_task:"Apply emerald ash borer treatment if due (2-year cycle)", spring_task:"Inspect for borer damage; water deeply if dry", notes:"Treated 2025 — retreat every 2 years.", treatment_cycle_years:2, last_treated_year:2025},
-  {id:"rose-shrub", name:"Rose shrub", location:"", fall_task:"Cut back after first frost; mound mulch around base", spring_task:"Prune dead/damaged canes; fertilize as new growth starts", notes:"Watch for black spot and aphids in summer.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"hostas", name:"Hostas", location:"", fall_task:"Cut back foliage after first frost", spring_task:"Remove winter mulch as shoots emerge; divide if crowded", notes:"Shade-loving; watch for slug damage.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"daylilies", name:"Daylilies", location:"", fall_task:"Cut back foliage after it yellows", spring_task:"Remove old foliage; divide crowded clumps", notes:"Low-maintenance perennial.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"cannas", name:"Cannas", location:"", fall_task:"After first frost, cut back & dig up rhizomes for winter storage", spring_task:"Replant rhizomes after last frost", notes:"Not reliably hardy in Iowa winters — store rhizomes cool & dry.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"hanging-fern", name:"Hanging fern", location:"", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Set back outside after last frost; keep soil consistently moist", notes:"Not cold-hardy.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"mandevilla", name:"Mandevilla", location:"", fall_task:"Bring indoors before first frost or take cuttings; cut back if overwintering", spring_task:"Move back outside after last frost; provide a trellis", notes:"Tropical vine — not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"cordyline", name:"Cordyline / Ti plant", location:"", fall_task:"Bring indoors before first frost", spring_task:"Move back outside after last frost", notes:"Not cold hardy in Iowa; overwinter indoors.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"asparagus-fern", name:"Asparagus fern", location:"", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Move back outside after last frost", notes:"Not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"variegated-trailing", name:"Variegated trailing plant", location:"", fall_task:"Bring indoors before first frost if tender", spring_task:"Move back outside after last frost", notes:"Confirm exact variety to fine-tune care.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"coral-bells", name:"Coral bells", location:"", fall_task:"Cut back damaged foliage after frost; mulch lightly", spring_task:"Remove winter mulch; divide if crowded", notes:"Semi-evergreen; generally hardy in Iowa.", treatment_cycle_years:null, last_treated_year:null},
-  {id:"flowering-annuals", name:"Flowering annuals", location:"", fall_task:"Pull and compost after first frost", spring_task:"Plant new annuals after last frost date", notes:"Replace each year.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"ash-tree", name:"Ash tree", location:"Yard · established ash tree", fall_task:"Apply emerald ash borer treatment if due (2-year cycle)", spring_task:"Inspect for borer damage; water deeply if dry", notes:"Treated 2025 — retreat every 2 years.", treatment_cycle_years:2, last_treated_year:2025},
+  {id:"rose-shrub", name:"Rose shrub", location:"By shed", fall_task:"Remove dead/diseased/rubbing growth and fallen leaves; avoid heavy fall pruning", spring_task:"Prune dead/damaged canes; fertilize as new growth starts", notes:"Watch for black spot and aphids in summer.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"hostas", name:"Hostas", location:"Pool / patio beds", fall_task:"Cut back foliage after first frost", spring_task:"Remove winter mulch as shoots emerge; divide if crowded", notes:"Shade-loving; watch for slug damage.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"daylilies", name:"Daylilies", location:"Fountain / patio bed", fall_task:"Cut back foliage after it yellows", spring_task:"Remove old foliage; divide crowded clumps", notes:"Low-maintenance perennial.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"cannas", name:"Cannas", location:"Raised fence bed", fall_task:"After first frost, cut back & dig up rhizomes for winter storage", spring_task:"Replant rhizomes after last frost", notes:"Not reliably hardy in Iowa winters — store rhizomes cool & dry.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"hanging-fern", name:"Hanging fern", location:"Covered patio", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Set back outside after last frost; keep soil consistently moist", notes:"Not cold-hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"mandevilla", name:"Mandevilla", location:"Large blue deck planter", fall_task:"Bring indoors before first frost or take cuttings; cut back if overwintering", spring_task:"Move back outside after last frost; provide a trellis", notes:"Tropical vine — not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"cordyline", name:"Cordyline / Ti plant", location:"Large blue deck planter", fall_task:"Bring indoors before first frost", spring_task:"Move back outside after last frost", notes:"Not cold hardy in Iowa; overwinter indoors.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"asparagus-fern", name:"Asparagus fern", location:"Large blue deck planter", fall_task:"Bring indoors before first frost, or treat as annual", spring_task:"Move back outside after last frost", notes:"Not cold hardy.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"variegated-trailing", name:"Variegated trailing plant", location:"Large blue deck planter", fall_task:"Bring indoors before first frost if tender", spring_task:"Move back outside after last frost", notes:"Confirm exact variety to fine-tune care.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"coral-bells", name:"Coral bells", location:"Perennial beds", fall_task:"Cut back damaged foliage after frost; mulch lightly", spring_task:"Remove winter mulch; divide if crowded", notes:"Semi-evergreen; generally hardy in Iowa.", treatment_cycle_years:null, last_treated_year:null},
+  {id:"flowering-annuals", name:"Flowering annuals", location:"Planters / beds", fall_task:"Pull and compost after first frost", spring_task:"Plant new annuals after last frost date", notes:"Replace each year.", treatment_cycle_years:null, last_treated_year:null},
   {id:"unidentified", name:"Other unidentified plants", location:"", fall_task:"Identify before first frost to determine winter care", spring_task:"Monitor as it emerges and update this entry", notes:"Take a photo to help identify.", treatment_cycle_years:null, last_treated_year:null}
 ];
 let plants = Store.read("wil-plants", null) || PLANTS_SEED;
@@ -1695,17 +1789,34 @@ function plantCycleBadge(p){
   else if(year === due){ cls="soon"; label=`Due this year (${due})`; }
   return `<span class="badge ${cls}" style="margin-top:6px;display:inline-block">${label}</span>`;
 }
+function plantNextAction(p){
+  const season = currentSeason();
+  if(season==="fall" && p.fall_task) return p.fall_task;
+  if(season==="spring" && p.spring_task) return p.spring_task;
+  if(p.treatment_cycle_years && p.last_treated_year){
+    const due = p.last_treated_year + p.treatment_cycle_years;
+    return `Next scheduled treatment: ${due}`;
+  }
+  return season==="winter" ? "Monitor through winter" : "Monitor and water as needed";
+}
 function renderPlants(){
-  $("#plantsList").innerHTML = plants.map(p=>`
-    <button type="button" class="plant-card" data-edit-plant="${p.id}">
-      <b>${esc(p.name)}</b>
-      <div class="loc ${p.location?"":"unset"}">${p.location ? esc(p.location) : "Tap to set location"}</div>
-      <div class="tasks">
-        ${p.fall_task ? `<span>${icon("leaf")} ${esc(p.fall_task)}</span>` : ""}
-        ${p.spring_task ? `<span>${icon("sprout")} ${esc(p.spring_task)}</span>` : ""}
-      </div>
-      ${plantCycleBadge(p)}
-    </button>`).join("");
+  const groups = {};
+  plants.forEach(p=>{
+    const loc = p.location || "Location not set";
+    (groups[loc] ||= []).push(p);
+  });
+  const urgent = plants.filter(p=>currentSeason()==="fall" && /bring indoors|dig up|first frost/i.test(p.fall_task||"")).length;
+  $("#plantsSummary").innerHTML = `<div class="plant-summary"><b>${urgent}</b> frost-sensitive plant ${urgent===1?"entry":"entries"} need attention this fall. Tap a plant to edit its exact location or care notes.</div>`;
+  $("#plantsList").innerHTML = Object.entries(groups).map(([loc,list])=>`
+    <div class="plant-group-h">${esc(loc)}</div>
+    ${list.map(p=>`
+      <button type="button" class="plant-card" data-edit-plant="${p.id}">
+        <b>${esc(p.name)}</b>
+        <div class="loc">${esc(p.location||"Location not set")}</div>
+        <span class="plant-next">Next: ${esc(plantNextAction(p))}</span>
+        ${plantCycleBadge(p)}
+      </button>`).join("")}
+  `).join("");
 }
 $("#view-plants").addEventListener("click", e=>{
   const card = e.target.closest("[data-edit-plant]");
