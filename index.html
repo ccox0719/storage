@@ -997,7 +997,7 @@ const MOVING_STEPS = [
   {id:"mv-game",title:"Game room",why:"Finish recreation storage once the practical rooms are working.",codes:["M6"]},
   {id:"mv-outdoor",title:"Shed, pool & outdoor kitchen",why:"Last pass: outdoor gear, pool equipment, grilling, and yard supplies.",codes:["O1","O2","O3","O4","O5","O6","O7","O8"]}
 ];
-let movingProgress = loadJSON("wil-moving-progress", {});
+let movingProgress = (()=>{ try{return JSON.parse(localStorage.getItem("wil-moving-progress")||"{}");}catch{return {};} })();
 let movingExpanded = true;
 
 function saveMovingProgress(){
@@ -1056,18 +1056,18 @@ function renderMoving(){
   }).join("") + (next ? "" : `<div class="moving-done">Nice. Moving Mode can stay here as your permanent setup history.</div>`);
 }
 
-$("#movingToggle").addEventListener("click", ()=>{
+document.getElementById("movingToggle").addEventListener("click", ()=>{
   movingExpanded = !movingExpanded;
   renderMoving();
 });
-$("#movingMode").addEventListener("change", e=>{
+document.getElementById("movingMode").addEventListener("change", e=>{
   const cb = e.target.closest("[data-moving-check]");
   if(!cb) return;
   movingProgress[cb.dataset.movingCheck] = cb.checked;
   saveMovingProgress();
   renderMoving();
 });
-$("#movingMode").addEventListener("click", e=>{
+document.getElementById("movingMode").addEventListener("click", e=>{
   const b = e.target.closest("[data-moving-open]");
   if(!b) return;
   openSheet(b.dataset.movingOpen);
