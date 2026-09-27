@@ -178,6 +178,9 @@ mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 2px}
 .subdetail-h small{font-family:var(--body);font-weight:500;color:var(--muted);font-size:.73rem}
 .planned-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
 .planned-list li{border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:8px 9px;font-size:.79rem;line-height:1.25}
+.inventory-list li{border-color:color-mix(in srgb,var(--focus) 18%,var(--line))}
+.suggestion-list li{position:relative;padding-left:23px;color:var(--muted)}
+.suggestion-list li::before{content:"+";position:absolute;left:9px;top:7px;color:var(--focus);font-weight:800}
 .review-note{margin-top:16px;border:1px solid color-mix(in srgb,#B4790E 40%,var(--line));border-radius:12px;background:color-mix(in srgb,#B4790E 7%,var(--surface));padding:10px 12px;font-size:.78rem;line-height:1.4}
 .review-note b{display:block;margin-bottom:3px}
 .review-note p{margin:0;color:var(--muted)}
@@ -1459,6 +1462,118 @@ const SUBLOCATION_ITEMS = {
   "O6-B":["Thermometers","Skewers"],
   "O6-C":["Foil and grill backups"]
 };
+
+const SUBLOCATION_SUGGESTIONS = {
+  "B1-A":["Halloween décor","Easter décor","Thanksgiving décor","Wreaths","Garlands","Seasonal table décor","Holiday extension cords"],
+  "B1-B":["Old yearbooks","Wedding keepsakes","Baby books","Diplomas","Awards","Scrapbooks","Printed family photos"],
+  "B1-C":["Wrapping paper","Ribbon","Greeting cards","Extra printer paper","Binders","Craft glue","Gift boxes","Spare batteries","Extra household bulbs"],
+  "B1-D":["Router","Network switch","NVR","UPS battery backup","Ethernet patch cables","Smart-home hubs"],
+  "B2-A":["Furnace filters","Air purifier filters","Water filters used by house systems"],
+  "B2-B":["Sump-pump parts","Water-softener supplies","Thermostat accessories","Appliance manuals","Warranty paperwork"],
+  "B3-A":["Toilet paper","Hand soap","Plunger","Toilet brush","Guest towels","Air freshener"],
+  "B4-A":["Pasta maker","Mandoline","Immersion blender accessories","Specialty measuring tools"],
+  "B4-B":["Bread machine","Large Dutch oven","Turkey roaster","Pressure canner","Large serving cookware"],
+  "B4-C":["Measuring cups","Measuring spoons","Thermometers","Specialty whisks","Pastry tools"],
+  "B4-D":["Frequently used specialty appliances","Heavy mixing bowls","Large prep containers"],
+  "B5-A":["Punch bowl","Drink dispenser","Chafing dishes","Serving platters","Disposable cutlery"],
+  "B5-B":["Spare lids","Meal-prep containers","Large party containers","Cooler inserts"],
+  "B6-A":["Duffel bags","Travel pillows","Neck pillows","Luggage scales","Packing organizers"],
+  "B6-B":["Sleeping pads","Camping blankets","Camp pillows"],
+  "B6-C":["Tent","Camp chairs","Camping stove","Camp cookware","Hiking backpacks","Lanterns"],
+  "B7-A":["Birth certificates","Social Security cards","Will / estate papers","Vehicle titles","Home deed copies","Insurance records"],
+  "B7-B":["Jewelry","Backup hard drives","Spare house keys","Emergency cash"],
+  "M1-A":["Mixer attachments","Dough hook","Whisk attachment","Paddle attachment"],
+  "M1-B":["Spatulas","Wooden spoons","Tongs","Ladles","Peelers","Can opener"],
+  "M1-C":["Saucepans","Frying pans","Dutch oven","Lids","Everyday stock pot"],
+  "M1-D":["Dish soap","Dishwasher tabs","Sponges","Sink brush","Dish towels"],
+  "M1-E":["Flatware","Measuring spoons","Kitchen scissors","Prep gadgets"],
+  "M1-F":["Everyday leftovers containers","Matching lids","Snack containers","Lunch prep containers"],
+  "M1-G":["Cutting boards","Sheet pans","Cooling racks","Pizza pans"],
+  "M1-H":["Cake pans","Muffin tins","Loaf pans","Pie plates","Baking mats","Rolling pin"],
+  "M1-I":["Plates","Bowls","Glasses","Mugs","Everyday serving bowls"],
+  "M1-J":["Holiday serving pieces","Specialty glassware","Rarely used dishes"],
+  "M1-K":["Fridge filters","Water-filter backups","Food-storage accessories"],
+  "M2-A":["Cereal","Snacks","Pasta","Rice","Canned goods","Coffee","Tea"],
+  "M2-B":["Bulk flour","Sugar","Bulk snacks","Extra canned goods","Backstock condiments"],
+  "M2-C":["Cases of drinks","Paper towels","Large pantry appliances","Bulk pet or household consumables"],
+  "M3-A":["Coats","Light jackets","Rain jackets"],
+  "M3-B":["Sunglasses","Reusable shopping bags","Sunscreen","Dog leashes","Backpacks"],
+  "M3-C":["Boots","Everyday shoes","Slippers"],
+  "M4-A":["Guest hand towels","Hand lotion","Extra soap","Bathroom cleaner","Air freshener"],
+  "M5-A":["Label-approved spa chemicals","Sealed maintenance products approved for indoor conditioned storage"],
+  "M5-B":["Test strips","Spa thermometer","Filter-cleaning accessories","Small pool brushes"],
+  "M5-C":["Extra paper goods","Lightweight household refills","Seasonal laundry backups"],
+  "M5-D":["Bathroom cleaner","Stainless cleaner","Stone cleaner","Disinfecting wipes"],
+  "M5-E":["Trash bags","Dish soap refills","Hand-soap refills","Light bulbs","Batteries"],
+  "M5-F":["Microfiber cloths","Scrub brushes","Dusting tools","Magic erasers"],
+  "M5-G":["Stain remover","Lint rollers","Garment bags","Ironing accessories"],
+  "M5-H":["Dish gloves","Small sink caddy","Pipe-safe drain tools"],
+  "M5-I":["Pool towels","Cleaning towels","Mop heads","Bulky cleaning tools"],
+  "M6-A":["Board games","Playing cards","Dice games","Family puzzles"],
+  "M6-B":["Books","Remote controls","Game accessories","Family photo books"],
+  "M6-C":["LEGO bins","Dress-up accessories","Nerf gear","Indoor active-play toys"],
+  "G1-A":["Hammer","Screwdrivers","Pliers","Adjustable wrench","Tape measure"],
+  "G1-B":["Safety glasses","Work gloves","Lubricants","Tool manuals"],
+  "G1-C":["Hex keys","Precision screwdrivers","Small pliers"],
+  "G1-D":["Drill bits","Saw blades","Measuring tape","Squares"],
+  "G1-E":["Picture-hanging hardware","Hooks","Drywall anchors","Machine screws"],
+  "G1-F":["Glue gun","Staple gun","Caulk gun","Heat gun accessories"],
+  "G1-G":["Drill","Impact driver","Circular saw","Battery chargers"],
+  "G1-H":["Shop vacuum accessories","Jacks","Large clamps"],
+  "G2-A":["Fishing licenses","Reels","Lures","Bike helmets","Sports balls"],
+  "G2-B":["Life jackets","Long-handled nets","Fishing rods"],
+  "G2-C":["Heavy tackle bags","Portable sports gear","Outdoor game bases"],
+  "G3-A":["Bug spray","Sunscreen","Gardening gloves","Flashlights"],
+  "G3-B":["Small extension cords","Outdoor wipes","Work towels"],
+  "G4-A":["Cookout drinks","Extra milk","Party beverages","Condiments"],
+  "G4-B":["Bulk meat","Frozen meals","Holiday leftovers","Party ice"],
+  "G5-A":["Car-care towels","Small covers","Tie-down straps"],
+  "G5-B":["Car ramps","Tall automotive gear","Folding equipment"],
+  "G5-C":["Snow shovel","Heavy automotive supplies","Large seasonal gear"],
+  "U1-A":["Folded clothes","Off-season clothes","Small hobby bins"],
+  "U1-B":["Shirts","Jackets","Dress clothes"],
+  "U1-C":["Shoes","Extra pillows","Small luggage"],
+  "U2-A":["Bath towels","Hand towels","Extra toilet paper","Spare toiletries"],
+  "U2-B":["Daily shampoo","Soap","Toothpaste","Nail clippers"],
+  "U2-C":["Bathroom cleaner","Toilet cleaner","Spare trash bags"],
+  "U3-A":["Tablet stands","Camera gear","Game controllers","Tech cases"],
+  "U3-B":["Charging cables","Spare adapters","SD cards","Battery packs"],
+  "U4-A":["Sheet sets","Pillowcases","Mattress protectors"],
+  "U4-B":["Throws","Light blankets","Electric blankets"],
+  "U4-C":["Comforters","Duvets","Extra pillows"],
+  "U5-A":["Air purifier","White-noise machines","Humidifiers","Diffusers"],
+  "U5-B":["Sleep masks","Diffuser refills","Night lights","Extra humidifier parts"],
+  "U6-A":["Electric razor","Trimmer guards","Daily cologne","Daily deodorant"],
+  "U6-B":["Daily skincare","Hair products","Makeup","Contact solution"],
+  "U6-C":["First-aid basics","Personal-care backups","Travel toiletries"],
+  "U6-D":["Hair dryer","Curling iron","Nail kit","Extra grooming tools"],
+  "U7-A":["Everyday hanging clothes","Formalwear","Military uniforms"],
+  "U7-B":["T-shirts","Shorts","Workout clothes"],
+  "U7-C":["Sweaters","Jeans","Pajamas"],
+  "U7-D":["Belts","Handbags","Shoes","Hats"],
+  "U7-E":["Laundry refills","Extra hangers","Garment bags"],
+  "U7-F":["Delicates wash","Stain tools","Ironing supplies"],
+  "U8-A":["Folded clothes","Off-season clothes","Personal storage bins"],
+  "U8-B":["Hanging clothes","Dress clothes"],
+  "U8-C":["Shoes","Extra pillows","Hobby gear"],
+  "O1-A":["Rake","Shovel","Broom","Long-handled garden tools"],
+  "O1-B":["Hand pruners","Small garden tools","Extension cords"],
+  "O1-C":["Outdoor repair tools","Potting supplies","Project staging"],
+  "O1-D":["Plant ties","Garden gloves","Hose nozzles","Small outdoor hardware"],
+  "O1-E":["Wheelbarrow","Hose reel","Large yard equipment","Outdoor games"],
+  "O2-A":["Pre-emergent","Weed killer","Insect control products"],
+  "O2-B":["Fertilizer","Plant food","Grass seed","Soil amendments"],
+  "O3-A":["Pool toys","Floaties","Vacuum hose","Skimmer net","Pool cover accessories"],
+  "O3-B":["Replacement filters","Pump accessories","Pool vacuum parts"],
+  "O4-A":["Test kit","Test-strip backups","Small skimmer parts","Brush heads"],
+  "O4-B":["Hose adapters","Winter plugs","Fittings","Seasonal caps"],
+  "O5-A":["Outdoor tablecloth","Citronella candles","Serving trays","Outdoor paper goods"],
+  "O6-A":["Tongs","Spatulas","Grill brush"],
+  "O6-B":["Meat thermometer","Skewers","Injector","Basting brush"],
+  "O6-C":["Foil","Butcher paper","Grill gloves","Disposable drip pans"]
+};
+function suggestedItemsForSub(subCode){ return SUBLOCATION_SUGGESTIONS[subCode] || []; }
+
 const SUBLOCATION_REVIEW = {
   "B1-C":["Fireworks are listed in the old inventory, but they are intentionally not assigned to a storage location here. Choose storage that follows the product label, local rules, and fire-safety guidance."]
 };
@@ -1817,6 +1932,7 @@ function openSubSheet(subCode){
   if(!sub) return;
   const l = byCode[sub.location];
   const planned = plannedItemsForSub(subCode);
+  const suggested = suggestedItemsForSub(subCode).filter(item=>!planned.some(p=>norm(p)===norm(item)));
   const assigned = l.items.filter(it=>subMoves[it.id]===subCode);
   const review = (SUBLOCATION_REVIEW && SUBLOCATION_REVIEW[subCode]) || [];
   $("#sheetBody").setAttribute("style", zc(sub.location));
@@ -1832,9 +1948,13 @@ function openSubSheet(subCode){
     </div>
     <p class="job">${esc(sub.notes)}</p>
 
-    <div class="subdetail-h"><span>What belongs here</span><small>Based on your inventory</small></div>
-    ${planned.length ? `<ul class="planned-list">${planned.map(item=>`<li>${esc(item)}</li>`).join("")}</ul>`
-      : `<p class="hint">No specific items from the inventory PDF are mapped here yet. Use the category above as the rule for this spot.</p>`}
+    <div class="subdetail-h"><span>From your inventory</span><small>Items you already own</small></div>
+    ${planned.length ? `<ul class="planned-list inventory-list">${planned.map(item=>`<li>${esc(item)}</li>`).join("")}</ul>`
+      : `<p class="hint">Nothing from the PDF is specifically mapped here yet.</p>`}
+
+    ${suggested.length ? `
+      <div class="subdetail-h"><span>Also makes sense here</span><small>Suggested category matches</small></div>
+      <ul class="planned-list suggestion-list">${suggested.map(item=>`<li>${esc(item)}</li>`).join("")}</ul>` : ""}
 
     ${assigned.length ? `
       <div class="subdetail-h"><span>Assigned in the app</span><small>${assigned.length}</small></div>
