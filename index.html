@@ -663,6 +663,26 @@ body{
 }
 .auth-card input{border-radius:12px}
 .auth-card .primary,.auth-card .secondary{border-radius:12px}
+
+/* ---------- Temporary decor shopping ---------- */
+.decor-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+.decor-stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.decor-stat b{display:block;font-family:var(--display);font-size:1.18rem}.decor-stat span{color:var(--muted);font-size:.72rem}
+.decor-progress{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:0 0 16px}.decor-progress span{display:block;height:100%;background:var(--z-G);transition:width .2s}
+.decor-tools{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px}
+.decor-tools input,.decor-tools select{border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:9px 10px;font:inherit;color:inherit}
+.decor-tools input{min-width:170px;flex:1}.decor-tools select{max-width:160px}
+.decor-room-h{font-family:var(--display);font-size:.88rem;text-transform:uppercase;letter-spacing:.055em;color:var(--muted);margin:18px 2px 8px}
+.decor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:9px}
+.decor-card{display:grid;grid-template-columns:86px 1fr;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:9px;box-shadow:var(--shadow)}
+.decor-card img{width:86px;height:86px;border-radius:9px;object-fit:cover;background:var(--paper)}
+.decor-card h3{font-size:.93rem;margin:1px 0 2px;line-height:1.2}.decor-card p{font-size:.76rem;color:var(--muted);margin:0;line-height:1.3}
+.decor-price{font-family:var(--display);font-weight:700;color:var(--z-G);font-size:.85rem;margin-top:5px}
+.decor-card-actions{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}.decor-card-actions button,.decor-card-actions a{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:5px 8px;font:inherit;font-size:.71rem;font-weight:650;color:inherit;text-decoration:none;cursor:pointer}
+.decor-card-actions .bought{background:var(--z-G);border-color:var(--z-G);color:#fff}
+.decor-history{margin-top:22px;border-top:1px solid var(--line);padding-top:13px}.decor-history summary{cursor:pointer;color:var(--muted);font-size:.84rem;font-weight:700}
+.decor-history-row{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.82rem}.decor-history-row img{width:42px;height:42px;border-radius:7px;object-fit:cover}.decor-history-row span{flex:1}.decor-history-row button{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:5px 8px;cursor:pointer}
+.decor-empty{border:1px dashed var(--line);border-radius:12px;padding:24px;text-align:center;color:var(--muted)}
 @media (max-width:520px){
   .wrap{padding-left:14px;padding-right:14px}
   .app-hero{padding-top:22px}
@@ -670,6 +690,7 @@ body{
   .summary-grid{grid-template-columns:1fr 1fr 1fr}
   .summary-card{padding:10px 8px}
   .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .decor-summary{grid-template-columns:repeat(3,1fr)}.decor-stat{padding:9px 7px}.decor-card{grid-template-columns:74px 1fr}.decor-card img{width:74px;height:74px}
 }
 </style>
 </head>
@@ -764,6 +785,15 @@ body{
     <div id="plantsSummary"></div>
     <div id="plantsList"></div>
   </main>
+
+  <main id="view-decor" class="view" hidden>
+    <div class="view-h"><h2>Decor shopping</h2></div>
+    <p class="view-sub">Room-by-room targets and visual references. Mark an item bought and it leaves the active list.</p>
+    <div id="decorSummary"></div>
+    <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search decor…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
+    <div id="decorList"></div>
+    <details class="decor-history" id="decorHistory"><summary id="decorHistoryTitle">Purchased items</summary><div id="decorPurchased"></div></details>
+  </main>
   <div id="cloudBottomBar" class="cloud-bottom-bar" hidden>
     <span id="cloudStateText"><b>Cloud</b> · connecting…</span>
     <button id="cloudSignOut" type="button">Sign out</button>
@@ -775,6 +805,7 @@ body{
   <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
   <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
   <button class="tab-btn" type="button" data-tab="plants"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span>Plants</button>
+  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti">🛋️</span>Decor</button>
 </nav>
 
 
@@ -929,11 +960,15 @@ function cloudRowsItems(){
   }));
 }
 function cloudRowsTasks(){
-  return tasks.map(t=>({
+  return [...tasks.map(t=>({
     household_id:homeHouseholdId, external_id:t.id, title:t.title,
     frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || "",
     category:t.category || "General", location_code:t.location_code || null, snoozed_until:t.snoozed_until || null
-  }));
+  })), ...decorItems.map(i=>({
+    household_id:homeHouseholdId, external_id:`decor:${i.id}`, title:i.name,
+    frequency_months:999, last_done:i.purchased_at || null,
+    notes:`__DECOR__${JSON.stringify(i)}`, category:"Decor Shopping", location_code:null, snoozed_until:null
+  }))];
 }
 function cloudRowsSeasonal(){
   return seasonalItems.map(i=>({
@@ -1029,7 +1064,12 @@ async function cloudPull(){
   }
 
   if(tr.data.length){
-    tasks = tr.data.map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
+    const decorRows = tr.data.filter(r=>String(r.external_id).startsWith("decor:") || String(r.notes||"").startsWith("__DECOR__"));
+    if(decorRows.length){
+      const parsed = decorRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__DECOR__/,""));}catch{return null}}).filter(Boolean);
+      if(parsed.length){decorItems=parsed;Store.write("wil-decor",decorItems);}
+    }
+    tasks = tr.data.filter(r=>!String(r.external_id).startsWith("decor:") && !String(r.notes||"").startsWith("__DECOR__")).map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
     tasks.forEach(t=>{
       const seed = TASKS_SEED.find(x=>x.id===t.id);
       if(!seed) return;
@@ -1076,7 +1116,7 @@ async function cloudPull(){
   }
 
   renderDirectory(); renderTiles(); search(); renderMoving();
-  renderTasks(); renderSeasonal(); renderPlants();
+  renderTasks(); renderSeasonal(); renderPlants(); renderDecor();
 }
 
 document.getElementById("authForm").addEventListener("submit", async e=>{
@@ -2495,7 +2535,52 @@ function openPlantForm(p){
 }
 
 /* ==================================================================
-   Generic form sheet (used by Tasks, Seasonal, Plants)
+   DECOR SHOPPING · temporary until the house is furnished
+   ================================================================== */
+const DECOR_RAW = [
+["Living Room","6' faux olive tree",40,"Natural trunk, airy leaves, woven basket"],["Living Room","9×12 rug",175,"Cream/taupe vintage pattern with muted rust or sage"],["Living Room","Coffee table",150,"48–54 in. warm oak/walnut, simple lines"],["Living Room","End table #1",60,"Round wood top with black metal base"],["Living Room","End table #2",60,"Coordinate with first end table"],["Living Room","Lamp #1",35,"Cream ceramic base with linen shade"],["Living Room","Lamp #2",35,"Coordinate with first lamp"],["Living Room","Pillows + throw",75,"Olive, muted rust and cream textures"],
+["Dining Room","Tall faux grass/tree #1",30,"Slim natural-looking faux olive-style plant"],["Dining Room","Tall faux grass/tree #2",30,"Matching or coordinating plant"],["Dining Room","8×10 rug",125,"Cream/taupe low-contrast vintage pattern"],["Dining Room","Buffet",200,"Warm wood, black hardware, about 48–60 in."],["Dining Room","Centerpiece / decor",50,"Tray, greenery and black candleholders"],
+["Entry","Console",120,"Warm wood, 42–60 in. wide"],["Entry","Mirror",60,"Round or softly arched, black or aged brass"],["Entry","Lamp",35,"Cream ceramic or stone-look base"],["Entry","Plant + basket",50,"Olive/eucalyptus with woven basket"],["Entry","Runner",60,"Muted vintage cream/taupe/rust"],
+["Primary Bedroom","8×10 or 9×12 rug",175,"Cream / blue-gray vintage pattern"],["Primary Bedroom","Lamp #1",35,"Stone or ceramic base, linen shade"],["Primary Bedroom","Lamp #2",35,"Coordinate with lamp #1"],["Primary Bedroom","Bench",100,"Wood + cream upholstered seat"],["Primary Bedroom","Tall plant",40,"Olive tree or soft green foliage"],["Primary Bedroom","Art",60,"Muted landscape or abstract"],
+["Elsie’s Room","5×7 or 6×9 rug",80,"Cream with soft floral pink/blue accents"],["Elsie’s Room","Small lamp",25,"Cream base and warm linen shade"],
+["Boys’ Room","Shared nightstand",60,"Warm wood with simple drawer"],["Boys’ Room","Under-bed storage #1",25,"Low-profile woven bin or drawer"],["Boys’ Room","Under-bed storage #2",25,"Matching bin or drawer"],["Boys’ Room","Twin bed #1",200,"Simple wood frame with storage"],["Boys’ Room","Twin bed #2",200,"Match bed #1"],
+["Game Room","Shelf greenery #1",10,"Small pothos in cream stone pot"],["Game Room","Shelf greenery #2",10,"Eucalyptus in white ceramic pot"],["Game Room","Shelf greenery #3",10,"Small trailing plant"],["Game Room","Basket/bin #1",20,"Woven storage basket"],["Game Room","Basket/bin #2",20,"Coordinating woven storage bin"],["Game Room","Bar stool #1",60,"Brown faux leather + black metal"],["Game Room","Bar stool #2",60,"Match stool #1"],["Game Room","Bar stool #3",60,"Match stool #1"],["Game Room","Bar stool #4",60,"Match stool #1"],
+["Basement TV Room","9×12 rug",175,"Warm vintage cream/rust/taupe pattern"],["Basement TV Room","Coffee table",150,"Warm wood top + black metal base"],["Basement TV Room","End table #1",60,"Round wood/black metal"],["Basement TV Room","End table #2",60,"Coordinate with first"],["Basement TV Room","Lamp #1",35,"Warm textured ceramic base"],["Basement TV Room","Lamp #2",35,"Coordinate with first"]
+];
+const DECOR_IMAGE_GROUPS=[["living",8],["dining",5],["entry",5],["primary",6],["elsie",2],["boys",5],["game",9],["basement",6]];
+const DECOR_IMAGES=DECOR_IMAGE_GROUPS.flatMap(([name,count])=>Array.from({length:count},(_,i)=>`assets/decor/${name}-${i+1}.jpg`));
+const DECOR_SEED=DECOR_RAW.map((r,i)=>({id:`d${i+1}`,room:r[0],name:r[1],target:r[2],style:r[3],image:DECOR_IMAGES[i],actual:null,store:"",link:"",status:"Looking",purchased_at:null}));
+let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
+mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
+function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();}
+function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
+function renderDecor(){
+  const active=decorItems.filter(i=>!i.purchased_at), bought=decorItems.filter(i=>i.purchased_at);
+  const planned=active.reduce((s,i)=>s+Number(i.target||0),0), spent=bought.reduce((s,i)=>s+Number(i.actual||0),0);
+  const pct=Math.round(bought.length/decorItems.length*100);
+  $("#decorSummary").innerHTML=`<div class="decor-summary"><div class="decor-stat"><b>${active.length}</b><span>Still needed</span></div><div class="decor-stat"><b>${decorMoney(planned)}</b><span>Targets left</span></div><div class="decor-stat"><b>${decorMoney(spent)}</b><span>Spent</span></div></div><div class="decor-progress"><span style="width:${pct}%"></span></div>`;
+  const room=$("#decorRoom").value||"all", q=$("#decorSearch").value.toLowerCase().trim();
+  const filtered=active.filter(i=>(room==="all"||i.room===room)&&(!q||(i.name+" "+i.style+" "+i.room).toLowerCase().includes(q)));
+  const rooms=[...new Set(filtered.map(i=>i.room))];
+  $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<div class="decor-room-h">${esc(roomName)}</div><div class="decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card"><a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} style reference"></a><div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">Target ${decorMoney(i.target)}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div></article>`).join("")}</div>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
+  $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
+  $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("");
+  const tab=$("#decorTab"); tab.hidden=active.length===0;
+  if(!active.length && !$("#view-decor").hidden) switchTab("storage");
+}
+function openDecorForm(item){
+  openForm({title:`Edit ${item.name}`,fields:[{key:"actual",label:"Actual price paid",type:"number",value:item.actual||""},{key:"store",label:"Store",type:"text",value:item.store||""},{key:"link",label:"Product link",type:"text",value:item.link||""},{key:"status",label:"Shopping status",type:"text",value:item.status||"Looking"}],onSave(v){item.actual=v.actual?Number(v.actual):null;item.store=v.store.trim();item.link=v.link.trim();item.status=v.status.trim()||"Looking";saveDecor();renderDecor();toast("Decor item updated");},onDelete:null});
+}
+$("#view-decor").addEventListener("click",e=>{
+  const edit=e.target.closest("[data-decor-edit]");if(edit){openDecorForm(decorItems.find(i=>i.id===edit.dataset.decorEdit));return;}
+  const buy=e.target.closest("[data-decor-bought]");if(buy){const i=decorItems.find(x=>x.id===buy.dataset.decorBought);i.purchased_at=todayISO();i.status="Bought";saveDecor();renderDecor();toast(`${i.name} purchased`);return;}
+  const restore=e.target.closest("[data-decor-restore]");if(restore){const i=decorItems.find(x=>x.id===restore.dataset.decorRestore);i.purchased_at=null;i.status="Looking";saveDecor();renderDecor();toast(`${i.name} restored`);}
+});
+$("#decorSearch").addEventListener("input",renderDecor);$("#decorRoom").addEventListener("change",renderDecor);
+const decorRooms=[...new Set(DECOR_SEED.map(i=>i.room))];decorRooms.forEach(r=>$("#decorRoom").add(new Option(r,r)));
+
+/* ==================================================================
+   Generic form sheet (used by Tasks, Seasonal, Plants, Decor)
    ================================================================== */
 const formDlg = $("#formSheet");
 let formCtx = null;
@@ -2537,7 +2622,7 @@ formDlg.addEventListener("click", e=>{
 /* ==================================================================
    Tab navigation
    ================================================================== */
-const TABS = ["storage","tasks","seasonal","plants"];
+const TABS = ["storage","tasks","seasonal","plants","decor"];
 function switchTab(name){
   TABS.forEach(t=>{
     $(`#view-${t}`).hidden = t!==name;
@@ -2552,7 +2637,7 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search(); renderMoving();
-renderTasks(); renderSeasonal(); renderPlants();
+renderTasks(); renderSeasonal(); renderPlants(); renderDecor();
 initCloud();
 </script>
 </body>
