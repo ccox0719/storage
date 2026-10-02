@@ -27,7 +27,8 @@ function renderHomeDashboard(){
     attention.innerHTML = list.length ? list.map(t=>{
       const st = taskStatus(t);
       const loc = t.location_code && byCode[t.location_code] ? byCode[t.location_code] : null;
-      return `<button type="button" class="home-card" data-home-tab="tasks">
+      const systemId = typeof systemForTask==="function" ? systemForTask(t) : null;
+      return `<button type="button" class="home-card" ${systemId ? `data-home-system="${systemId}"` : 'data-home-tab="tasks"'}>
         <span class="home-card-icon">${icon("check-circle")}</span>
         <span><b>${esc(t.title)}</b><small>${esc(st.label)}${loc ? " · "+esc(loc.name) : ""}</small></span>
         <span class="home-arrow">›</span>
@@ -48,6 +49,12 @@ function renderHomeDashboard(){
 }
 
 $("#view-home").addEventListener("click", e=>{
+  const systemJump=e.target.closest("[data-home-system]");
+  if(systemJump){
+    switchTab("systems");
+    setTimeout(()=>focusSystem(systemJump.dataset.homeSystem),0);
+    return;
+  }
   const jump = e.target.closest("[data-home-tab]");
   if(jump){
     switchTab(jump.dataset.homeTab);
