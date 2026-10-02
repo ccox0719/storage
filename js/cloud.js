@@ -261,7 +261,7 @@ async function cloudPull(){
   }
 
   renderDirectory(); renderTiles(); search(); renderMoving();
-  renderTasks(); renderSeasonal(); renderPlants(); renderDecor();
+  renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderHomeDashboard();
 }
 
 document.getElementById("authForm").addEventListener("submit", async e=>{
