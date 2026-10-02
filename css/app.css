@@ -745,3 +745,10 @@ body{
   .system-facts div{border-right:0;border-bottom:1px solid var(--line)}
   .system-facts div:last-child{border-bottom:0}
 }
+
+
+.system-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}
+.system-profile-grid div{border:1px solid var(--line);border-radius:9px;background:var(--paper);padding:8px 9px;min-width:0}
+.system-profile-grid span{display:block;color:var(--muted);font-size:.67rem;text-transform:uppercase;letter-spacing:.045em}
+.system-profile-grid b{display:block;font-size:.8rem;margin-top:2px;overflow-wrap:anywhere}
+@media (max-width:430px){.system-profile-grid{grid-template-columns:1fr}}
