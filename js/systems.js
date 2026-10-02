@@ -44,8 +44,111 @@ const HOUSE_SYSTEMS = [
       "Record water changes, filter cleaning and major chemical corrections.",
       "Keep maintenance products in their labeled storage locations."
     ]
+  },
+  {
+    id:"hvac",
+    name:"HVAC",
+    icon:"gear",
+    summary:"Heating, cooling, filters and seasonal service",
+    facts:[
+      ["Supplies","Mechanical Room"],
+      ["Filter task","Recurring"],
+      ["Storage","B2"]
+    ],
+    supplies:[
+      {label:"HVAC and air filters",code:"B2-A"},
+      {label:"House-system parts, manuals and maintenance supplies",code:"B2-B"}
+    ],
+    next:[
+      "Confirm filter size and record it in a maintenance entry.",
+      "Keep the outdoor unit clear of leaves and debris.",
+      "Record professional furnace and air-conditioning service dates."
+    ]
+  },
+  {
+    id:"water-heater",
+    name:"Water Heater",
+    icon:"flame",
+    summary:"Hot-water equipment and service history",
+    facts:[
+      ["Area","Mechanical Room"],
+      ["Maintenance","Annual check / flush task"],
+      ["Storage","B2"]
+    ],
+    supplies:[
+      {label:"House-system replacement parts and manuals",code:"B2-B"}
+    ],
+    next:[
+      "Record the manufacturer, model, serial number and installation date when convenient.",
+      "Log any flush, inspection, leak or service event here.",
+      "Keep the area around the unit accessible and watch for moisture or corrosion."
+    ]
+  },
+  {
+    id:"network",
+    name:"Network & Home Assistant",
+    icon:"plug",
+    summary:"Internet, NVR, router and smart-home core",
+    facts:[
+      ["Network shelf","Basement storage"],
+      ["Home Assistant","Planned integration"],
+      ["Storage","B1-D"]
+    ],
+    supplies:[
+      {label:"Router, network switch, NVR, UPS and Ethernet accessories",code:"B1-D"},
+      {label:"Spare electronics and household tech overflow",code:"B1-C"}
+    ],
+    next:[
+      "Label the router, switch, NVR and future Home Assistant connections.",
+      "Record ISP equipment, Wi-Fi details and network changes in maintenance history without storing passwords.",
+      "Keep a simple device map so cameras, sensors and automations can be traced later."
+    ]
+  },
+  {
+    id:"appliances",
+    name:"Major Appliances",
+    icon:"plug",
+    summary:"Kitchen, laundry, garage and outdoor appliances",
+    facts:[
+      ["Kitchen","M1"],
+      ["Garage fridge","G4"],
+      ["Outdoor kitchen","O5-O8"]
+    ],
+    supplies:[
+      {label:"Fridge filters and everyday appliance accessories",code:"M1-K"},
+      {label:"Garage fridge / freezer overflow",code:"G4"},
+      {label:"Outdoor kitchen serving and appliance area",code:"O5"},
+      {label:"Outdoor kitchen fridge",code:"O7"},
+      {label:"Outdoor ice maker",code:"O8"}
+    ],
+    next:[
+      "Add model and serial numbers when an appliance needs service or a filter.",
+      "Log filter replacements, repairs and warranty work.",
+      "Keep manuals and hard-to-replace appliance parts with the appropriate house-system supplies."
+    ]
+  },
+  {
+    id:"garage",
+    name:"Garage Systems",
+    icon:"wrench",
+    summary:"Doors, heated garage, drains and work area",
+    facts:[
+      ["Garage","3 stalls"],
+      ["Floor","Epoxy"],
+      ["Features","Heat + drains"]
+    ],
+    supplies:[
+      {label:"Tools, hardware and repair supplies",code:"G1"},
+      {label:"Quick-grab garage and backyard supplies",code:"G3"},
+      {label:"Bulky garage and automotive gear",code:"G5"}
+    ],
+    next:[
+      "Test garage-door auto-reverse safety on the recurring maintenance schedule.",
+      "Keep floor drains clear and note any slow drainage.",
+      "Log heater service, garage-door repairs and major floor or drain maintenance."
+    ]
   }
-];
+]
 
 let systemLog = loadJSON("wil-system-log", []);
 
