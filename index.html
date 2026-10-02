@@ -37,7 +37,40 @@
 </div>
 
 <div class="wrap">
-  <main id="view-storage" class="view">
+  <main id="view-home" class="view">
+    <section class="home-hero">
+      <div>
+        <span class="app-kicker">Cox Home</span>
+        <h1>Home command center</h1>
+        <p>What needs attention, what is coming up, and where everything lives.</p>
+      </div>
+      <span class="hero-mark" aria-hidden="true">${icon("home")}</span>
+    </section>
+
+    <button type="button" class="home-search" id="homeSearchBtn">
+      <span class="home-search-icon" aria-hidden="true">⌕</span>
+      <span><b>Where is something?</b><small>Search the house inventory</small></span>
+      <span class="home-arrow">›</span>
+    </button>
+
+    <div id="homeStats" class="home-stats"></div>
+
+    <div class="home-section-head"><h2>Needs attention</h2><button type="button" data-home-tab="tasks">See tasks</button></div>
+    <div id="homeAttention" class="home-stack"></div>
+
+    <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Seasonal board</button></div>
+    <div id="homeSeasonal" class="home-stack"></div>
+
+    <div class="home-section-head"><h2>Quick access</h2></div>
+    <div class="home-actions">
+      <button type="button" data-home-tab="storage">${icon("box")}<span><b>Storage</b><small>Find or file an item</small></span></button>
+      <button type="button" data-home-tab="tasks">${icon("check-circle")}<span><b>Tasks</b><small>Maintenance & reminders</small></span></button>
+      <button type="button" data-home-tab="plants">${icon("sprout")}<span><b>Plants & yard</b><small>Seasonal plant care</small></span></button>
+      <button type="button" data-home-tab="decor">🛋️<span><b>Decor</b><small>Shopping & furnishing</small></span></button>
+    </div>
+  </main>
+
+  <main id="view-storage" class="view" hidden>
 
   <div class="finder">
     <label class="search">
@@ -125,7 +158,8 @@
 </div>
 
 <nav class="tabbar" aria-label="Sections">
-  <button class="tab-btn" type="button" data-tab="storage" aria-current="true"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>Storage</button>
+  <button class="tab-btn" type="button" data-tab="home" aria-current="true"><span class="ti">⌂</span>Home</button>
+  <button class="tab-btn" type="button" data-tab="storage"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>Storage</button>
   <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
   <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
   <button class="tab-btn" type="button" data-tab="plants"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span>Plants</button>
@@ -184,6 +218,7 @@
 <script src="js/seasonal.js"></script>
 <script src="js/plants.js"></script>
 <script src="js/decor.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/ui.js"></script>
 </body>
 </html>
