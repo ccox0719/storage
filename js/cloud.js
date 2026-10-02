@@ -113,6 +113,10 @@ function cloudRowsTasks(){
     household_id:homeHouseholdId, external_id:`decor:${i.id}`, title:i.name,
     frequency_months:999, last_done:i.purchased_at || null,
     notes:`__DECOR__${JSON.stringify(i)}`, category:"Decor Shopping", location_code:null, snoozed_until:null
+  })), ...systemLog.map(i=>({
+    household_id:homeHouseholdId, external_id:`systemlog:${i.id}`, title:i.note,
+    frequency_months:999, last_done:i.date || null,
+    notes:`__SYSTEMLOG__${JSON.stringify(i)}`, category:"System History", location_code:null, snoozed_until:null
   }))];
 }
 function cloudRowsSeasonal(){
@@ -214,7 +218,19 @@ async function cloudPull(){
       const parsed = decorRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__DECOR__/,""));}catch{return null}}).filter(Boolean);
       if(parsed.length){decorItems=parsed;Store.write("wil-decor",decorItems);}
     }
-    tasks = tr.data.filter(r=>!String(r.external_id).startsWith("decor:") && !String(r.notes||"").startsWith("__DECOR__")).map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
+
+    const systemRows = tr.data.filter(r=>String(r.external_id).startsWith("systemlog:") || String(r.notes||"").startsWith("__SYSTEMLOG__"));
+    if(systemRows.length){
+      const parsed = systemRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SYSTEMLOG__/,""));}catch{return null}}).filter(Boolean);
+      if(parsed.length){systemLog=parsed;saveJSON("wil-system-log",systemLog);}
+    }
+
+    tasks = tr.data.filter(r=>
+      !String(r.external_id).startsWith("decor:") &&
+      !String(r.notes||"").startsWith("__DECOR__") &&
+      !String(r.external_id).startsWith("systemlog:") &&
+      !String(r.notes||"").startsWith("__SYSTEMLOG__")
+    ).map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
     tasks.forEach(t=>{
       const seed = TASKS_SEED.find(x=>x.id===t.id);
       if(!seed) return;
@@ -261,7 +277,7 @@ async function cloudPull(){
   }
 
   renderDirectory(); renderTiles(); search(); renderMoving();
-  renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderHomeDashboard();
+  renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderSystems(); renderHomeDashboard();
 }
 
 document.getElementById("authForm").addEventListener("submit", async e=>{
