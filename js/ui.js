@@ -41,8 +41,9 @@ formDlg.addEventListener("click", e=>{
 /* ==================================================================
    Tab navigation
    ================================================================== */
-const TABS = ["storage","tasks","seasonal","plants","decor"];
+const TABS = ["home","storage","tasks","seasonal","plants","decor"];
 function switchTab(name){
+  if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   TABS.forEach(t=>{
     $(`#view-${t}`).hidden = t!==name;
   });
@@ -56,5 +57,5 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search(); renderMoving();
-renderTasks(); renderSeasonal(); renderPlants(); renderDecor();
+renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderHomeDashboard();
 initCloud();
