@@ -151,10 +151,18 @@ const HOUSE_SYSTEMS = [
 ]
 
 let systemLog = loadJSON("wil-system-log", []);
+let systemProfiles = loadJSON("wil-system-profiles", {});
 
 function saveSystemLog(){
   saveJSON("wil-system-log",systemLog);
   cloudSyncTasksSoon();
+}
+function saveSystemProfiles(){
+  saveJSON("wil-system-profiles",systemProfiles);
+  cloudSyncTasksSoon();
+}
+function systemProfile(id){
+  return systemProfiles[id] || {};
 }
 
 function systemLogFor(id){
@@ -172,6 +180,24 @@ function renderSystems(){
         <div><h3>${esc(sys.name)}</h3><p>${esc(sys.summary)}</p></div>
       </div>
       <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
+
+      <div class="system-block system-equipment">
+        <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
+        ${(()=>{
+          const p=systemProfile(sys.id);
+          const rows=[
+            ["Manufacturer",p.manufacturer],
+            ["Model",p.model],
+            ["Serial",p.serial],
+            ["Installed",p.install_date ? fmtDate(p.install_date) : ""],
+            ["Service",p.service_contact],
+            ["Manual",p.manual_url]
+          ].filter(([,v])=>v);
+          return rows.length
+            ? `<div class="system-profile-grid">${rows.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>`
+            : `<p class="system-empty">No equipment details recorded yet.</p>`;
+        })()}
+      </div>
 
       <div class="system-block">
         <h4>What to do next</h4>
@@ -199,6 +225,41 @@ $("#view-systems").addEventListener("click",e=>{
     if(parent) openSheet(parent);
     return;
   }
+  const editProfile=e.target.closest("[data-edit-system-profile]");
+  if(editProfile){
+    const sys=HOUSE_SYSTEMS.find(x=>x.id===editProfile.dataset.editSystemProfile);
+    const p=systemProfile(sys.id);
+    openForm({
+      title:`Edit ${sys.name} equipment`,
+      fields:[
+        {key:"manufacturer",label:"Manufacturer",type:"text",value:p.manufacturer||""},
+        {key:"model",label:"Model",type:"text",value:p.model||""},
+        {key:"serial",label:"Serial number",type:"text",value:p.serial||""},
+        {key:"install_date",label:"Installed / purchased",type:"date",value:p.install_date||""},
+        {key:"service_contact",label:"Service company / contact",type:"text",value:p.service_contact||""},
+        {key:"manual_url",label:"Manual / reference link",type:"text",value:p.manual_url||""},
+        {key:"notes",label:"Equipment notes",type:"textarea",value:p.notes||""}
+      ],
+      onSave(v){
+        systemProfiles[sys.id]={
+          manufacturer:v.manufacturer.trim(),
+          model:v.model.trim(),
+          serial:v.serial.trim(),
+          install_date:v.install_date||"",
+          service_contact:v.service_contact.trim(),
+          manual_url:v.manual_url.trim(),
+          notes:v.notes.trim()
+        };
+        saveSystemProfiles();renderSystems();toast("Equipment record saved");
+      },
+      onDelete:Object.keys(p).length ? ()=>{
+        delete systemProfiles[sys.id];
+        saveSystemProfiles();renderSystems();toast("Equipment record cleared");
+      } : null
+    });
+    return;
+  }
+
   const add=e.target.closest("[data-add-system-log]");
   if(add){
     const sys=HOUSE_SYSTEMS.find(x=>x.id===add.dataset.addSystemLog);
