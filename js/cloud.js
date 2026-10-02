@@ -117,6 +117,10 @@ function cloudRowsTasks(){
     household_id:homeHouseholdId, external_id:`systemlog:${i.id}`, title:i.note,
     frequency_months:999, last_done:i.date || null,
     notes:`__SYSTEMLOG__${JSON.stringify(i)}`, category:"System History", location_code:null, snoozed_until:null
+  })), ...Object.entries(systemProfiles).map(([systemId,p])=>({
+    household_id:homeHouseholdId, external_id:`systemprofile:${systemId}`, title:`System profile: ${systemId}`,
+    frequency_months:999, last_done:p.install_date || null,
+    notes:`__SYSTEMPROFILE__${JSON.stringify({system_id:systemId,...p})}`, category:"System Profile", location_code:null, snoozed_until:null
   }))];
 }
 function cloudRowsSeasonal(){
@@ -225,11 +229,23 @@ async function cloudPull(){
       if(parsed.length){systemLog=parsed;saveJSON("wil-system-log",systemLog);}
     }
 
+    const profileRows = tr.data.filter(r=>String(r.external_id).startsWith("systemprofile:") || String(r.notes||"").startsWith("__SYSTEMPROFILE__"));
+    if(profileRows.length){
+      const parsed = profileRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SYSTEMPROFILE__/,""));}catch{return null}}).filter(Boolean);
+      if(parsed.length){
+        systemProfiles={};
+        parsed.forEach(p=>{if(p.system_id){const {system_id,...rest}=p;systemProfiles[system_id]=rest;}});
+        saveJSON("wil-system-profiles",systemProfiles);
+      }
+    }
+
     tasks = tr.data.filter(r=>
       !String(r.external_id).startsWith("decor:") &&
       !String(r.notes||"").startsWith("__DECOR__") &&
       !String(r.external_id).startsWith("systemlog:") &&
-      !String(r.notes||"").startsWith("__SYSTEMLOG__")
+      !String(r.notes||"").startsWith("__SYSTEMLOG__") &&
+      !String(r.external_id).startsWith("systemprofile:") &&
+      !String(r.notes||"").startsWith("__SYSTEMPROFILE__")
     ).map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
     tasks.forEach(t=>{
       const seed = TASKS_SEED.find(x=>x.id===t.id);
