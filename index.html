@@ -70,6 +70,12 @@
     </div>
   </main>
 
+  <main id="view-systems" class="view" hidden>
+    <div class="view-h"><h2>House systems</h2></div>
+    <p class="view-sub">Operating notes, supplies, seasonal care, and maintenance history for the systems that keep the house running.</p>
+    <div id="systemsList" class="systems-list"></div>
+  </main>
+
   <main id="view-storage" class="view" hidden>
 
   <div class="finder">
@@ -159,6 +165,7 @@
 
 <nav class="tabbar" aria-label="Sections">
   <button class="tab-btn" type="button" data-tab="home" aria-current="true"><span class="ti">⌂</span>Home</button>
+  <button class="tab-btn" type="button" data-tab="systems"><span class="ti">⚙︎</span>Systems</button>
   <button class="tab-btn" type="button" data-tab="storage"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>Storage</button>
   <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
   <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
@@ -218,6 +225,7 @@
 <script src="js/seasonal.js"></script>
 <script src="js/plants.js"></script>
 <script src="js/decor.js"></script>
+<script src="js/systems.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/ui.js"></script>
 </body>
