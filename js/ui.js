@@ -41,7 +41,7 @@ formDlg.addEventListener("click", e=>{
 /* ==================================================================
    Tab navigation
    ================================================================== */
-const TABS = ["home","storage","tasks","seasonal","plants","decor"];
+const TABS = ["home","systems","storage","tasks","seasonal","plants","decor"];
 function switchTab(name){
   if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   TABS.forEach(t=>{
@@ -57,5 +57,5 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 
 /* ---------- init ---------- */
 renderDirectory(); renderTiles(); search(); renderMoving();
-renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderHomeDashboard();
+renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderSystems(); renderHomeDashboard();
 initCloud();
