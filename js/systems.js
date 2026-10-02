@@ -154,6 +154,7 @@ let systemLog = loadJSON("wil-system-log", []);
 
 function saveSystemLog(){
   saveJSON("wil-system-log",systemLog);
+  cloudSyncTasksSoon();
 }
 
 function systemLogFor(id){
