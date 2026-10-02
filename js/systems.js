@@ -169,12 +169,38 @@ function systemLogFor(id){
   return systemLog.filter(x=>x.system_id===id).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 }
 
+const SYSTEM_TASK_IDS = {
+  pool:[],
+  "hot-tub":[],
+  hvac:["t1","t8"],
+  "water-heater":["t3"],
+  network:[],
+  appliances:["t4","t6","t11"],
+  garage:["t9"]
+};
+function systemTasks(id){
+  const ids=SYSTEM_TASK_IDS[id]||[];
+  return tasks.filter(t=>ids.includes(t.id)).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+}
+function systemForTask(t){
+  const match=Object.entries(SYSTEM_TASK_IDS).find(([,ids])=>ids.includes(t.id));
+  return match ? match[0] : null;
+}
+function focusSystem(id){
+  const el=document.getElementById(`system-${id}`);
+  if(!el) return;
+  el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  el.classList.add("system-focus");
+  setTimeout(()=>el.classList.remove("system-focus"),1200);
+}
+
 function renderSystems(){
   const host=$("#systemsList");
   if(!host) return;
   host.innerHTML=HOUSE_SYSTEMS.map(sys=>{
     const logs=systemLogFor(sys.id);
-    return `<section class="system-card">
+    const linkedTasks=systemTasks(sys.id);
+    return `<section class="system-card" id="system-${sys.id}">
       <div class="system-head">
         <span class="system-icon">${icon(sys.icon)}</span>
         <div><h3>${esc(sys.name)}</h3><p>${esc(sys.summary)}</p></div>
@@ -199,6 +225,17 @@ function renderSystems(){
         })()}
       </div>
 
+      ${linkedTasks.length ? `<div class="system-block">
+        <h4>Recurring maintenance</h4>
+        <div class="system-task-list">${linkedTasks.map(t=>{
+          const st=taskStatus(t);
+          return `<div class="system-task-row">
+            <span><b>${esc(t.title)}</b><small>Every ${t.frequency_months} month${t.frequency_months==1?"":"s"} · ${esc(st.label)}</small></span>
+            <button type="button" data-system-task-done="${t.id}">Done</button>
+          </div>`;
+        }).join("")}</div>
+      </div>` : ""}
+
       <div class="system-block">
         <h4>What to do next</h4>
         <ul>${sys.next.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
@@ -218,6 +255,21 @@ function renderSystems(){
 }
 
 $("#view-systems").addEventListener("click",e=>{
+  const doneTask=e.target.closest("[data-system-task-done]");
+  if(doneTask){
+    const t=tasks.find(x=>x.id===doneTask.dataset.systemTaskDone);
+    if(t){
+      t.last_done=todayISO();
+      t.snoozed_until=null;
+      saveTasks();
+      renderTasks();
+      renderSystems();
+      renderHomeDashboard();
+      toast(`Marked “${t.title}” done today`);
+    }
+    return;
+  }
+
   const open=e.target.closest("[data-system-open]");
   if(open){
     const code=open.dataset.systemOpen;

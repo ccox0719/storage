@@ -752,3 +752,11 @@ body{
 .system-profile-grid span{display:block;color:var(--muted);font-size:.67rem;text-transform:uppercase;letter-spacing:.045em}
 .system-profile-grid b{display:block;font-size:.8rem;margin-top:2px;overflow-wrap:anywhere}
 @media (max-width:430px){.system-profile-grid{grid-template-columns:1fr}}
+
+
+.system-task-list{display:grid;gap:7px}
+.system-task-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:9px 10px}
+.system-task-row b{display:block;font-size:.82rem}
+.system-task-row small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+.system-task-row button{border:1px solid var(--focus);border-radius:8px;background:var(--surface);color:var(--focus);font-weight:700;padding:6px 9px;cursor:pointer}
+.system-focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 25%,transparent),var(--shadow)}
