@@ -107,7 +107,8 @@ function cloudRowsItems(){
 function cloudRowsTasks(){
   return [...tasks.map(t=>({
     household_id:homeHouseholdId, external_id:t.id, title:t.title,
-    frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null, notes:t.notes || "",
+    frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null,
+    notes:t.disabled ? `__TASKSTATE__${JSON.stringify({disabled:true,notes:t.notes||""})}` : (t.notes || ""),
     category:t.category || "General", location_code:t.location_code || null, snoozed_until:t.snoozed_until || null
   })), ...decorItems.map(i=>({
     household_id:homeHouseholdId, external_id:`decor:${i.id}`, title:i.name,
@@ -246,7 +247,17 @@ async function cloudPull(){
       !String(r.notes||"").startsWith("__SYSTEMLOG__") &&
       !String(r.external_id).startsWith("systemprofile:") &&
       !String(r.notes||"").startsWith("__SYSTEMPROFILE__")
-    ).map(r=>({id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes:r.notes||"",category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null}));
+    ).map(r=>{
+      let notes=r.notes||"", disabled=false;
+      if(String(notes).startsWith("__TASKSTATE__")){
+        try{
+          const meta=JSON.parse(String(notes).replace(/^__TASKSTATE__/,""));
+          disabled=!!meta.disabled;
+          notes=meta.notes||"";
+        }catch{}
+      }
+      return {id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes,category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null,disabled};
+    });
     tasks.forEach(t=>{
       const seed = TASKS_SEED.find(x=>x.id===t.id);
       if(!seed) return;
