@@ -2,21 +2,22 @@
    TASKS
    ================================================================== */
 const TASKS_SEED = [
-  {id:"t1", title:"Change HVAC filter", frequency_months:2, last_done:null, notes:"Filters are stored in the Mechanical Room.", category:"HVAC", location_code:"B2", snoozed_until:null},
-  {id:"t2", title:"Test smoke & CO detectors", frequency_months:6, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
-  {id:"t3", title:"Flush water heater", frequency_months:12, last_done:null, notes:"Mechanical Room.", category:"Plumbing", location_code:"B2", snoozed_until:null},
-  {id:"t4", title:"Clean dryer vent", frequency_months:12, last_done:null, notes:"Check both laundry areas.", category:"Laundry", location_code:"M5", snoozed_until:null},
-  {id:"t5", title:"Clean gutters", frequency_months:6, last_done:null, notes:"Spring and fall.", category:"Exterior", location_code:null, snoozed_until:null},
-  {id:"t6", title:"Replace fridge water filter", frequency_months:6, last_done:null, notes:"Backup filters belong in the main kitchen.", category:"Kitchen", location_code:"M1", snoozed_until:null},
-  {id:"t7", title:"Check water softener salt", frequency_months:1, last_done:null, notes:"", category:"Plumbing", location_code:"B2", snoozed_until:null},
-  {id:"t8", title:"Service furnace & AC (professional)", frequency_months:12, last_done:null, notes:"Schedule seasonal HVAC service.", category:"HVAC", location_code:"B2", snoozed_until:null},
-  {id:"t9", title:"Test garage door auto-reverse safety", frequency_months:12, last_done:null, notes:"", category:"Garage", location_code:"G1", snoozed_until:null},
-  {id:"t10", title:"Check fire extinguishers", frequency_months:12, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
-  {id:"t11", title:"Deep clean garbage disposal", frequency_months:3, last_done:null, notes:"", category:"Kitchen", location_code:"M1", snoozed_until:null},
-  {id:"t12", title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:"", category:"Bedrooms", location_code:"U4", snoozed_until:null}
+  {id:"t1", notify_important:false, title:"Change HVAC filter", frequency_months:2, last_done:null, notes:"Filters are stored in the Mechanical Room.", category:"HVAC", location_code:"B2", snoozed_until:null},
+  {id:"t2", notify_important:true, title:"Test smoke & CO detectors", frequency_months:6, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
+  {id:"t3", notify_important:true, title:"Flush water heater", frequency_months:12, last_done:null, notes:"Mechanical Room.", category:"Plumbing", location_code:"B2", snoozed_until:null},
+  {id:"t4", notify_important:true, title:"Clean dryer vent", frequency_months:12, last_done:null, notes:"Check both laundry areas.", category:"Laundry", location_code:"M5", snoozed_until:null},
+  {id:"t5", notify_important:true, title:"Clean gutters", frequency_months:6, last_done:null, notes:"Spring and fall.", category:"Exterior", location_code:null, snoozed_until:null},
+  {id:"t6", notify_important:false, title:"Replace fridge water filter", frequency_months:6, last_done:null, notes:"Backup filters belong in the main kitchen.", category:"Kitchen", location_code:"M1", snoozed_until:null},
+  {id:"t7", notify_important:false, title:"Check water softener salt", frequency_months:1, last_done:null, notes:"", category:"Plumbing", location_code:"B2", snoozed_until:null},
+  {id:"t8", notify_important:true, title:"Service furnace & AC (professional)", frequency_months:12, last_done:null, notes:"Schedule seasonal HVAC service.", category:"HVAC", location_code:"B2", snoozed_until:null},
+  {id:"t9", notify_important:true, title:"Test garage door auto-reverse safety", frequency_months:12, last_done:null, notes:"", category:"Garage", location_code:"G1", snoozed_until:null},
+  {id:"t10", notify_important:true, title:"Check fire extinguishers", frequency_months:12, last_done:null, notes:"", category:"Safety", location_code:null, snoozed_until:null},
+  {id:"t11", notify_important:false, title:"Deep clean garbage disposal", frequency_months:3, last_done:null, notes:"", category:"Kitchen", location_code:"M1", snoozed_until:null},
+  {id:"t12", notify_important:false, title:"Flip / rotate mattresses", frequency_months:6, last_done:null, notes:"", category:"Bedrooms", location_code:"U4", snoozed_until:null}
 ]
 let tasks = Store.read("wil-tasks", null) || TASKS_SEED;
 mergeNewSeedItems(tasks, TASKS_SEED, saveTasks);
+tasks.forEach(t=>{ if(typeof t.notify_important!=="boolean"){ const seed=TASKS_SEED.find(x=>x.id===t.id); t.notify_important=!!seed?.notify_important; } });
 function saveTasks(){ Store.write("wil-tasks", tasks); cloudSyncTasksSoon(); }
 
 function taskStatus(t){
@@ -44,7 +45,7 @@ function taskRow(t){
       <span class="badge ${st.cls}">${st.label}</span>
       <span class="task-meta">
         <span class="meta-chip">${esc(t.category||"General")}</span>
-        ${loc?`<span class="meta-chip">${esc(t.location_code)} · ${esc(loc.name)}</span>`:""}
+        ${loc?`<span class="meta-chip">${esc(t.location_code)} · ${esc(loc.name)}</span>`:""}${t.notify_important?`<span class="meta-chip">Email reminder</span>`:""}
       </span>
     </button>
     <span class="task-actions">
@@ -112,12 +113,13 @@ function openTaskForm(t){
       {key:"frequency_months", label:"Repeat every (months)", type:"number", value:t?t.frequency_months:3},
       {key:"category", label:"Category", type:"text", value:t?(t.category||"General"):"General"},
       {key:"location_code", label:"Storage / system code (optional)", type:"text", value:t?(t.location_code||""):""},
+      {key:"notify_important", label:"Important email reminder", type:"checkbox", value:t?!!t.notify_important:false},
       {key:"notes", label:"Notes", type:"textarea", value:t?t.notes:""}
     ],
     onSave(v){
       if(!v.title.trim()) return;
-      if(t){ t.title=v.title.trim(); t.frequency_months=Math.max(1,Number(v.frequency_months)||1); t.category=v.category.trim()||"General"; t.location_code=v.location_code.trim().toUpperCase()||null; t.notes=v.notes.trim(); }
-      else { tasks.push({id:Store.uid(), title:v.title.trim(), frequency_months:Math.max(1,Number(v.frequency_months)||1), last_done:null, notes:v.notes.trim(), category:v.category.trim()||"General", location_code:v.location_code.trim().toUpperCase()||null, snoozed_until:null}); }
+      if(t){ t.title=v.title.trim(); t.frequency_months=Math.max(1,Number(v.frequency_months)||1); t.category=v.category.trim()||"General"; t.location_code=v.location_code.trim().toUpperCase()||null; t.notify_important=!!v.notify_important; t.notes=v.notes.trim(); }
+      else { tasks.push({id:Store.uid(), title:v.title.trim(), frequency_months:Math.max(1,Number(v.frequency_months)||1), last_done:null, notes:v.notes.trim(), category:v.category.trim()||"General", location_code:v.location_code.trim().toUpperCase()||null, snoozed_until:null, notify_important:!!v.notify_important}); }
       saveTasks(); renderTasks();
       toast(t ? "Task updated" : "Task added");
     },
