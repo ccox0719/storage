@@ -180,13 +180,10 @@ const RAW_LOCATIONS = [
 
 
 const SUBLOCATIONS = [
-  {code:"B1-A",location:"B1",name:"Shelves A · 1–8",notes:"Delicate / temperature-sensitive holiday décor, candles and sentimental seasonal pieces"},
-  {code:"B1-B",location:"B1",name:"Shelves B · 9–16",notes:"Keepsakes, photos, kids memories"},
-  {code:"B1-C",location:"B1",name:"Shelves C · 17–24",notes:"Office, craft, party, gift and household backups"},
   {code:"B1-D",location:"B1",name:"Network / security overhead",notes:"Router, NVR and house-system equipment only"},
-  {code:"B1-E",location:"B1",name:"16 shallow shelves",notes:"Approx. 47 in wide × 18.5 in deep × 17 in high each; climate-controlled"},
-  {code:"B1-F",location:"B1",name:"4 deep back-corner shelves",notes:"Approx. 57 in wide × 36 in deep × 17 in high each; climate-controlled and well suited to two black/yellow 27-gal totes per shelf"},
-  {code:"B1-G",location:"B1",name:"Top continuous shelf",notes:"Long open shelf above the built-ins with no dividers; best for flat/lightweight items"},
+  {code:"B1-E",location:"B1",name:"Shallow built-in shelves · 16",notes:"Approx. 47 in wide × 18.5 in deep × 17 in high each. Best for one tote per shelf or organized smaller bins; climate-controlled."},
+  {code:"B1-F",location:"B1",name:"Deep back-corner shelves · 4",notes:"Approx. 57 in wide × 36 in deep × 17 in high each. Best for bulky storage and two black/yellow 27-gal totes per shelf when rotated."},
+  {code:"B1-G",location:"B1",name:"Continuous top shelf",notes:"Long open shelf above the built-ins with no vertical dividers. Best for flat, lightweight, awkward seasonal items."},
   {code:"B2-A",location:"B2",name:"Filter shelf",notes:"HVAC, humidifier and house-system filters"},
   {code:"B2-B",location:"B2",name:"System parts / manuals",notes:"House-system replacement parts, manuals and maintenance pieces"},
   {code:"B3-A",location:"B3",name:"Vanity",notes:"Basement bathroom supplies"},
@@ -296,9 +293,6 @@ const SUBLOCATIONS = [
 ];
 
 const SUBLOCATION_ITEMS = {
-  "B1-A":["Stocking hangers","Christmas lights","Ornaments","Christmas tree apron / tree skirt","Nativity","Stockings","Christmas toilet seat cover","Harry Potter village set boxes","Decorative lanterns"],
-  "B1-B":["Norway memories","Journals","Annie childhood school memories","Encouraging notes","Decorated mug and plates","Frames","Pictures","Photo albums","Family notes","Kids memories","Childhood artwork","School projects","Baby photos","Milestone keepsakes","Kids crafts"],
-  "B1-C":["Stapler","Hole punchers","Folders","Paper","Scotch tape","Craft paints","Paint brushes","Post-it notes","Postcards","Highlighters","Dry erase markers","Rubber bands","Trapper Keepers","Construction paper","Dry erase boards","Shredder","Musical instrument tuners","Paper slicer / cutter","Party bags","Tissue paper","Treat bags","Teacher delivery box","Gift bags","Power cords","Wireless USB adapter","Stereo wires","Older laptops / Chromebook","Headphones","iPad holder","Wireless controller","Apple TV","HDMI cords","Ziploc bags","Sandwich bags","Gallon bags","Vacuum seal bags","Lightbulbs","Nightlight bulbs","Switches","Space-saver bags","Space heater","Indoor grow light"],
   "B2-A":["Air filter","Humidifier filter","Miscellaneous house filter"],
   "B2-B":["House-system replacement parts","Appliance maintenance pieces"],
   "B4-A":["Spice grinder","Coffee grinder","Cookie cutter set","Tortilla maker","Onion chopper","Vegetable chopper"],
@@ -347,9 +341,9 @@ const SUBLOCATION_ITEMS = {
   "G2-C":["Fishing gear","Heavier outdoor recreation gear"],
   "G5-A":["Tarp / waterproof cover"],
   "G5-B":["Awkward bulky garage gear"],
-  "B1-E":["Smaller seasonal bins","Seasonal wreaths / garlands","Holiday inflatables","Outdoor seasonal décor"],
-  "B1-F":["Black/yellow 27-gal totes","Large seasonal bins","Bulky but climate-sensitive seasonal storage"],
-  "B1-G":["Flattened wreath boxes","Tree skirts","Folded covers","Flat holiday signs","Lightweight framed seasonal décor"],
+  "B1-E":["Stocking hangers","Christmas lights","Ornaments","Christmas tree apron / tree skirt","Nativity","Stockings","Christmas toilet seat cover","Harry Potter village set boxes","Decorative lanterns","Norway memories","Journals","Annie childhood school memories","Encouraging notes","Decorated mug and plates","Frames","Pictures","Photo albums","Family notes","Kids memories","Childhood artwork","School projects","Baby photos","Milestone keepsakes","Kids crafts","Stapler","Hole punchers","Folders","Paper","Scotch tape","Craft paints","Paint brushes","Post-it notes","Postcards","Highlighters","Dry erase markers","Rubber bands","Trapper Keepers","Construction paper","Dry erase boards","Shredder","Musical instrument tuners","Paper slicer / cutter","Party bags","Tissue paper","Treat bags","Teacher delivery box","Gift bags","Power cords","Wireless USB adapter","Stereo wires","Older laptops / Chromebook","Headphones","iPad holder","Wireless controller","Apple TV","HDMI cords","Ziploc bags","Sandwich bags","Gallon bags","Vacuum seal bags","Lightbulbs","Nightlight bulbs","Switches","Space-saver bags","Space heater","Indoor grow light","Smaller seasonal bins","Seasonal wreaths / garlands","Holiday inflatables","Outdoor seasonal décor"],
+  "B1-F":["Black/yellow 27-gal totes","Large seasonal bins","Bulky but climate-sensitive seasonal storage","Large keepsake totes","Craft / party overflow totes","Household backup totes"],
+  "B1-G":["Flattened wreath boxes","Tree skirts","Folded covers","Flat holiday signs","Lightweight framed seasonal décor","Wrapping paper tubes","Long lightweight décor"],
   "G6-A":["Artificial tree","Empty bins","Lightweight camping overflow","Bulky seasonal items"],
   "G6-B":["Long decorations","Long lightweight items","Awkward seasonal overflow"],
   "U1-A":["Folded shirts","Shorts","Pants","Sweatshirts","Pajamas","Underwear","Socks"],
@@ -391,10 +385,10 @@ const SUBLOCATION_ITEMS = {
 };
 
 const SUBLOCATION_SUGGESTIONS = {
-  "B1-A":["Delicate ornaments","Candles","Sentimental holiday pieces","Fragile seasonal table décor","Temperature-sensitive decorations","Holiday electronics you want kept conditioned"],
-  "B1-B":["Old yearbooks","Wedding keepsakes","Baby books","Diplomas","Awards","Scrapbooks","Printed family photos"],
-  "B1-C":["Wrapping paper","Ribbon","Greeting cards","Extra printer paper","Binders","Craft glue","Gift boxes","Spare batteries","Extra household bulbs"],
   "B1-D":["Router","Network switch","NVR","UPS battery backup","Ethernet patch cables","Smart-home hubs"],
+  "B1-E":["Delicate ornaments","Candles","Sentimental holiday pieces","Printed family photos","Old yearbooks","Wedding keepsakes","Baby books","Scrapbooks","Office supplies","Craft supplies","Gift bags","Ribbon","Greeting cards","Spare household bulbs","Small electronics kept conditioned"],
+  "B1-F":["Large labeled totes by category","Keepsake totes","Seasonal décor totes","Party-supply totes","Household-backup totes","Bulky climate-sensitive items"],
+  "B1-G":["Flat wreath boxes","Wrapping paper","Long signs","Lightweight framed décor","Folded seasonal covers"],
   "B2-A":["Furnace filters","Air purifier filters","Water filters used by house systems"],
   "B2-B":["Sump-pump parts","Water-softener supplies","Thermostat accessories","Appliance manuals","Warranty paperwork"],
   "B3-A":["Toilet paper","Hand soap","Plunger","Toilet brush","Guest towels","Air freshener","Backup toiletries","Bathroom cleaner"],
