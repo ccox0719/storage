@@ -180,7 +180,7 @@ const SYSTEM_TASK_IDS = {
 };
 function systemTasks(id){
   const ids=SYSTEM_TASK_IDS[id]||[];
-  return tasks.filter(t=>ids.includes(t.id)).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+  return tasks.filter(t=>!t.disabled && ids.includes(t.id)).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
 }
 function systemForTask(t){
   const match=Object.entries(SYSTEM_TASK_IDS).find(([,ids])=>ids.includes(t.id));
