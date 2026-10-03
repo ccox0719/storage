@@ -59,6 +59,9 @@ function renderTasks(){
   const activeTasks = tasks.filter(t=>!t.disabled);
   const removedTasks = tasks.filter(t=>t.disabled);
   const rows = [...activeTasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+  const importantCount = activeTasks.filter(t=>t.notify_important).length;
+  const notifBox=$("#taskNotifications");
+  if(notifBox) notifBox.innerHTML=`<div class="home-empty" style="margin:10px 0 16px"><b>Important email reminders: ${importantCount} task${importantCount===1?"":"s"}</b><span>Planned cadence: about 7 days before due, again when due/overdue, with repeat nagging suppressed. Email delivery still needs a sender connection before messages can actually go out.</span></div>`;
   const now = rows.filter(t=>taskStatus(t).bucket==="now");
   const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
   const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
