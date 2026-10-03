@@ -1,5 +1,5 @@
 /* ==================================================================
-   DECOR SHOPPING · temporary until the house is furnished
+   HOME SHOPPING · furnishings, storage, systems and other house purchases
    ================================================================== */
 const DECOR_RAW = [
 ["Living Room","6' faux olive tree",40,"Natural trunk, airy leaves, woven basket"],["Living Room","9×12 rug",175,"Cream/taupe vintage pattern with muted rust or sage"],["Living Room","Coffee table",150,"48–54 in. warm oak/walnut, simple lines"],["Living Room","End table #1",60,"Round wood top with black metal base"],["Living Room","End table #2",60,"Coordinate with first end table"],["Living Room","Lamp #1",35,"Cream ceramic base with linen shade"],["Living Room","Lamp #2",35,"Coordinate with first lamp"],["Living Room","Pillows + throw",75,"Olive, muted rust and cream textures"],
@@ -14,9 +14,13 @@ const DECOR_RAW = [
 const DECOR_IMAGE_GROUPS=[["living",8],["dining",5],["entry",5],["primary",6],["elsie",2],["boys",5],["game",9],["basement",6]];
 const DECOR_IMAGES=DECOR_IMAGE_GROUPS.flatMap(([name,count])=>Array.from({length:count},(_,i)=>`assets/decor/${name}-${i+1}.jpg`));
 const DECOR_SEED=DECOR_RAW.map((r,i)=>({id:`d${i+1}`,room:r[0],name:r[1],target:r[2],style:r[3],image:DECOR_IMAGES[i],actual:null,store:"",link:"",status:"Looking",purchased_at:null}));
+DECOR_SEED.push(
+  {id:"d-home-1",room:"Storage",name:"Garage attic storage totes",target:0,style:"Measure shelf column width, depth and usable height first. Prefer existing black/yellow heavy-duty totes if they fit efficiently.",image:"",actual:null,store:"",link:"",status:"Measure first",purchased_at:null},
+  {id:"d-home-2",room:"Home systems",name:"House-system supplies / parts",target:0,style:"Use this shopping list for practical home needs too, not only decor.",image:"",actual:null,store:"",link:"",status:"As needed",purchased_at:null}
+);
 let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
 mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
-function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();}
+function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();if(typeof refreshDecorRooms==="function")refreshDecorRooms();}
 function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
 function renderDecor(){
   const active=decorItems.filter(i=>!i.disabled && !i.purchased_at), bought=decorItems.filter(i=>!i.disabled && i.purchased_at), removed=decorItems.filter(i=>i.disabled);
@@ -27,15 +31,17 @@ function renderDecor(){
   const room=$("#decorRoom").value||"all", q=$("#decorSearch").value.toLowerCase().trim();
   const filtered=active.filter(i=>(room==="all"||i.room===room)&&(!q||(i.name+" "+i.style+" "+i.room).toLowerCase().includes(q)));
   const rooms=[...new Set(filtered.map(i=>i.room))];
-  $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<div class="decor-room-h">${esc(roomName)}</div><div class="decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card"><a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} style reference"></a><div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">Target ${decorMoney(i.target)}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div></article>`).join("")}</div>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
+  $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<div class="decor-room-h">${esc(roomName)}</div><div class="decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card">${i.image?`<a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} reference"></a>`:""}<div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">${Number(i.target||0)>0?`Target ${decorMoney(i.target)}`:"Budget TBD"}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div></article>`).join("")}</div>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
   $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
   $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
     (removed.length?`<details class="removed-tasks"><summary>Removed decor (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
   const tab=$("#decorTab"); tab.hidden=false;
 }
 function openDecorForm(item){
+  const isNew=!item;
+  item=item||{id:Store.uid(),room:"General",name:"",target:0,style:"",image:"",actual:null,store:"",link:"",status:"Looking",purchased_at:null};
   openForm({
-    title:`Edit ${item.name}`,
+    title:isNew?"Add home purchase":`Edit ${item.name}`,
     fields:[
       {key:"name",label:"Item",type:"text",value:item.name||""},
       {key:"room",label:"Room",type:"text",value:item.room||""},
@@ -57,19 +63,28 @@ function openDecorForm(item){
       item.link=v.link.trim();
       item.status=v.status.trim()||"Looking";
       item.disabled=false;
-      saveDecor();renderDecor();toast("Decor item updated");
+      if(isNew) decorItems.push(item);
+      saveDecor();renderDecor();toast(isNew?"Home purchase added":"Home purchase updated");
     },
-    onDelete(){
+    onDelete:isNew?null:()=>{
       item.disabled=true;
-      saveDecor();renderDecor();toast("Decor item removed");
+      saveDecor();renderDecor();toast("Home purchase removed");
     }
   });
 }
 $("#view-decor").addEventListener("click",e=>{
+  if(e.target.id==="addDecorBtn"){openDecorForm(null);return;}
   const edit=e.target.closest("[data-decor-edit]");if(edit){openDecorForm(decorItems.find(i=>i.id===edit.dataset.decorEdit));return;}
   const buy=e.target.closest("[data-decor-bought]");if(buy){const i=decorItems.find(x=>x.id===buy.dataset.decorBought);i.purchased_at=todayISO();i.status="Bought";saveDecor();renderDecor();toast(`${i.name} purchased`);return;}
   const restore=e.target.closest("[data-decor-restore]");if(restore){const i=decorItems.find(x=>x.id===restore.dataset.decorRestore);i.purchased_at=null;i.status="Looking";saveDecor();renderDecor();toast(`${i.name} restored`);return;}
   const unremove=e.target.closest("[data-decor-unremove]");if(unremove){const i=decorItems.find(x=>x.id===unremove.dataset.decorUnremove);i.disabled=false;saveDecor();renderDecor();toast(`${i.name} restored`);}
 });
 $("#decorSearch").addEventListener("input",renderDecor);$("#decorRoom").addEventListener("change",renderDecor);
-const decorRooms=[...new Set(DECOR_SEED.map(i=>i.room))];decorRooms.forEach(r=>$("#decorRoom").add(new Option(r,r)));
+function refreshDecorRooms(){
+  const select=$("#decorRoom");
+  const current=select.value||"all";
+  [...select.options].slice(1).forEach(o=>o.remove());
+  [...new Set(decorItems.filter(i=>!i.disabled).map(i=>i.room).filter(Boolean))].sort().forEach(r=>select.add(new Option(r,r)));
+  select.value=[...select.options].some(o=>o.value===current)?current:"all";
+}
+refreshDecorRooms();
