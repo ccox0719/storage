@@ -126,12 +126,16 @@ function cloudRowsTasks(){
     household_id:homeHouseholdId, external_id:`systempref:${systemId}`, title:`System preference: ${systemId}`,
     frequency_months:999, last_done:null,
     notes:`__SYSTEMPREF__${JSON.stringify({system_id:systemId,...p})}`, category:"System Preference", location_code:null, snoozed_until:null
+  })), ...seasonalItems.filter(i=>i.disabled).map(i=>({
+    household_id:homeHouseholdId, external_id:`seasonalstate:${i.id}`, title:`Removed seasonal: ${i.title}`,
+    frequency_months:999, last_done:null,
+    notes:`__SEASONALSTATE__${JSON.stringify(i)}`, category:"Seasonal State", location_code:null, snoozed_until:null
   }))];
 }
 function cloudRowsSeasonal(){
-  return seasonalItems.map(i=>({
+  return seasonalItems.filter(i=>!i.disabled).map(i=>({
     household_id:homeHouseholdId, external_id:i.id, section:i.section,
-    season:i.season, title:i.title, done_year:i.disabled ? -1 : (i.done_year || null)
+    season:i.season, title:i.title, done_year:i.done_year || null
   }));
 }
 function cloudRowsMoving(){
@@ -254,6 +258,9 @@ async function cloudPull(){
       }
     }
 
+    const seasonalStateRows = tr.data.filter(r=>String(r.external_id).startsWith("seasonalstate:") || String(r.notes||"").startsWith("__SEASONALSTATE__"));
+    const removedSeasonal = seasonalStateRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SEASONALSTATE__/,""));}catch{return null}}).filter(Boolean);
+
     tasks = tr.data.filter(r=>
       !String(r.external_id).startsWith("decor:") &&
       !String(r.notes||"").startsWith("__DECOR__") &&
@@ -262,7 +269,9 @@ async function cloudPull(){
       !String(r.external_id).startsWith("systemprofile:") &&
       !String(r.notes||"").startsWith("__SYSTEMPROFILE__") &&
       !String(r.external_id).startsWith("systempref:") &&
-      !String(r.notes||"").startsWith("__SYSTEMPREF__")
+      !String(r.notes||"").startsWith("__SYSTEMPREF__") &&
+      !String(r.external_id).startsWith("seasonalstate:") &&
+      !String(r.notes||"").startsWith("__SEASONALSTATE__")
     ).map(r=>{
       let notes=r.notes||"", disabled=false;
       if(String(notes).startsWith("__TASKSTATE__")){
@@ -284,17 +293,20 @@ async function cloudPull(){
     mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
     Store.write("wil-tasks",tasks);
   }
-  if(sr.data.length){
+  {
     const seedNow = seasonalSeed();
     const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
+    const removedById = Object.fromEntries((removedSeasonal||[]).map(i=>[i.id,i]));
     const builtInPattern = /^(pool|kitchen|fountain|deck|furniture|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
     seasonalItems = seedNow.map(seed=>{
       const old = cloudById[seed.id];
-      return {...seed, disabled:old ? old.done_year===-1 : false, done_year:old && old.done_year!==-1 ? old.done_year : null};
+      const removed = removedById[seed.id];
+      return {...seed, ...(removed||{}), disabled:!!removed, done_year:removed ? null : (old ? old.done_year : null)};
     });
     sr.data.filter(r=>!builtInPattern.test(r.external_id)).forEach(r=>{
-      seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,disabled:r.done_year===-1,done_year:r.done_year===-1?null:r.done_year});
+      if(!removedById[r.external_id]) seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year,disabled:false});
     });
+    (removedSeasonal||[]).filter(i=>!builtInPattern.test(i.id)).forEach(i=>seasonalItems.push({...i,disabled:true,done_year:null}));
     Store.write("wil-seasonal",seasonalItems);
   }
   if(mr.data.length){
