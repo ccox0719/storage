@@ -15,7 +15,7 @@ const DECOR_IMAGE_GROUPS=[["living",8],["dining",5],["entry",5],["primary",6],["
 const DECOR_IMAGES=DECOR_IMAGE_GROUPS.flatMap(([name,count])=>Array.from({length:count},(_,i)=>`assets/decor/${name}-${i+1}.jpg`));
 const DECOR_SEED=DECOR_RAW.map((r,i)=>({id:`d${i+1}`,room:r[0],name:r[1],target:r[2],style:r[3],image:DECOR_IMAGES[i],actual:null,store:"",link:"",status:"Looking",purchased_at:null}));
 DECOR_SEED.push(
-  {id:"d-home-1",room:"Storage",name:"Garage attic storage totes",target:0,style:"Measure shelf column width, depth and usable height first. Prefer existing black/yellow heavy-duty totes if they fit efficiently.",image:"",actual:null,store:"",link:"",status:"Measure first",purchased_at:null},
+  {id:"d-home-1",room:"Storage",name:"Garage attic storage totes",target:0,style:"Measured shelf bay: 47 in wide × 18.5 in deep × 17 in high per shelf. Check each remaining column before buying. Existing common 27-gal black/yellow totes are about 30.6 × 20.6 × 14.3 in, so height/width work but depth would overhang about 2.1 in. Prefer existing totes only where that overhang is safe; otherwise choose bins 18 in deep or less.",image:"",actual:null,store:"",link:"",status:"Measure remaining columns",purchased_at:null},
   {id:"d-home-2",room:"Home systems",name:"House-system supplies / parts",target:0,style:"Use this shopping list for practical home needs too, not only decor.",image:"",actual:null,store:"",link:"",status:"As needed",purchased_at:null}
 );
 let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
