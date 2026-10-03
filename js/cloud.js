@@ -99,10 +99,14 @@ function cloudRowsSubLocations(){
   }));
 }
 function cloudRowsItems(){
-  return [...RAW_LOCATIONS.flatMap(l=>l.items), ...customItems].map(it=>({
-    household_id:homeHouseholdId, item_key:it.id, name:it.text, origin_code:it.origin,
-    location_code:moves[it.id] || it.origin, sublocation_code:subMoves[it.id] || null, status:"placed", notes:""
-  }));
+  return [...RAW_LOCATIONS.flatMap(l=>l.items), ...customItems].map(it=>{
+    const override = typeof itemOverrides!=="undefined" ? itemOverrides[it.id] : null;
+    return {
+      household_id:homeHouseholdId, item_key:it.id, name:override?.text || it.text, origin_code:it.origin,
+      location_code:moves[it.id] || it.origin, sublocation_code:subMoves[it.id] || null,
+      status:override?.deleted ? "removed" : "placed", notes:""
+    };
+  });
 }
 function cloudRowsTasks(){
   return [...tasks.map(t=>({
@@ -205,15 +209,21 @@ async function cloudPull(){
   for(const r of [ir,tr,sr,pr,mr]) if(r.error) throw r.error;
 
   if(ir.data.length){
-    const seedIds = new Set(RAW_LOCATIONS.flatMap(l=>l.items).map(i=>i.id));
+    const seedItems = RAW_LOCATIONS.flatMap(l=>l.items);
+    const seedById = Object.fromEntries(seedItems.map(i=>[i.id,i]));
+    const seedIds = new Set(seedItems.map(i=>i.id));
     moves = {};
     subMoves = {};
     customItems = [];
+    itemOverrides = {};
     ir.data.forEach(r=>{
       if(seedIds.has(r.item_key)){
+        const seed=seedById[r.item_key];
+        if(r.status==="removed") itemOverrides[r.item_key]={deleted:true};
+        else if(r.name && r.name!==seed.text) itemOverrides[r.item_key]={text:r.name,deleted:false};
         if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
         if(r.sublocation_code) subMoves[r.item_key]=r.sublocation_code;
-      }else{
+      }else if(r.status!=="removed"){
         customItems.push({id:r.item_key,text:r.name,origin:r.origin_code});
         if(r.location_code && r.location_code!==r.origin_code) moves[r.item_key]=r.location_code;
         if(r.sublocation_code) subMoves[r.item_key]=r.sublocation_code;
@@ -222,6 +232,7 @@ async function cloudPull(){
     saveJSON("wil-moves",moves);
     saveJSON("wil-submoves",subMoves);
     saveJSON("wil-custom",customItems);
+    saveJSON("wil-item-overrides",itemOverrides);
     rebuild();
   }
 
