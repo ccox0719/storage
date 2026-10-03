@@ -11,6 +11,8 @@ function openForm(cfg){
       <label for="f-${f.key}">${esc(f.label)}</label>
       ${f.type==="textarea"
         ? `<textarea id="f-${f.key}" data-field="${f.key}">${esc(f.value||"")}</textarea>`
+        : f.type==="checkbox"
+        ? `<input id="f-${f.key}" data-field="${f.key}" type="checkbox" ${f.value?"checked":""}>`
         : `<input id="f-${f.key}" data-field="${f.key}" type="${f.type}" value="${esc(String(f.value ?? ""))}">`}
     </div>`).join("");
   $("#formDelete").hidden = !cfg.onDelete;
@@ -22,7 +24,7 @@ function openForm(cfg){
 $("#formSave").addEventListener("click", ()=>{
   if(!formCtx) return;
   const values = {};
-  formCtx.fields.forEach(f=>{ values[f.key] = $(`#formFields [data-field="${f.key}"]`).value; });
+  formCtx.fields.forEach(f=>{ const el=$(`#formFields [data-field="${f.key}"]`); values[f.key] = f.type==="checkbox" ? el.checked : el.value; });
   formCtx.onSave(values);
   formDlg.close();
   formCtx = null;
