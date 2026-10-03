@@ -760,3 +760,11 @@ body{
 .system-task-row small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
 .system-task-row button{border:1px solid var(--focus);border-radius:8px;background:var(--surface);color:var(--focus);font-weight:700;padding:6px 9px;cursor:pointer}
 .system-focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 25%,transparent),var(--shadow)}
+
+
+.removed-tasks{margin:14px 0 2px;border-top:1px solid var(--line);padding-top:10px}
+.removed-tasks summary{cursor:pointer;color:var(--muted);font-size:.82rem;font-weight:700}
+.removed-task-list{display:grid;gap:7px;margin-top:9px}
+.removed-task-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:9px 10px}
+.removed-task-row span{font-size:.82rem;color:var(--muted)}
+.removed-task-row button{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:5px 9px;font-size:.75rem;font-weight:700;cursor:pointer}
