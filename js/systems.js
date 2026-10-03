@@ -71,7 +71,9 @@ const HOUSE_SYSTEMS = [
     next:[
       "Confirm filter size and record it in a maintenance entry.",
       "Keep the outdoor unit clear of leaves and debris.",
-      "Record professional furnace and air-conditioning service dates."
+      "IMPORTANT: Keep the upstairs and downstairs thermostats in the same operating mode. Do not run heat on one thermostat while the other is set to cool; Brian reported this once damaged a control board.",
+      "The whole-house humidifier has a replaceable pad/filter; inspect and replace it on a routine schedule.",
+      "Record professional furnace, air-conditioning and humidifier service dates."
     ]
   },
   {
@@ -99,7 +101,10 @@ const HOUSE_SYSTEMS = [
     icon:"plug",
     summary:"Internet, NVR, router and smart-home core",
     facts:[
-      ["Network shelf","Basement storage"],
+      ["Network shelf","Basement storage / IT closet"],
+      ["Cabling","Gray = Ethernet · purple = speaker wiring"],
+      ["Yard conduit","Existing 3/4-inch conduit runs under yard for current cable route"],
+      ["Fiber note","Metronet utility access is near neighbor-side utility box; goal is to route fiber to IT closet"],
       ["Home Assistant","Planned integration"],
       ["Storage","B1-D"]
     ],
@@ -108,7 +113,11 @@ const HOUSE_SYSTEMS = [
       {label:"Spare electronics and household tech overflow",code:"B1-C"}
     ],
     next:[
-      "Label the router, switch, NVR and future Home Assistant connections.",
+      "Label the router, switch, NVR, Sonos amps, camera-system hardware and future Home Assistant connections.",
+      "Gray low-voltage runs are Ethernet; purple runs are speaker wiring.",
+      "Existing 3/4-inch conduit runs under the yard for the current cable path. Before trenching or boring, trace this route and the utility access points.",
+      "For Metronet fiber, preferred end point is the basement IT closet; Brian noted the utility box is on the neighbor-side area behind the shed/fence.",
+      "Basement ceiling tiles near the office/IT area can provide routing access for a new line.",
       "Record ISP equipment, Wi-Fi details and network changes in maintenance history without storing passwords.",
       "Keep a simple device map so cameras, sensors and automations can be traced later."
     ]
@@ -250,6 +259,48 @@ const HOUSE_SYSTEMS = [
     ]
   },
   {
+    id:"exterior",
+    name:"Exterior & Fence",
+    icon:"wrench",
+    summary:"Modular wood fence, turf edge and exterior maintenance",
+    facts:[
+      ["Fence","Modular / individually repairable sections"],
+      ["Posts","Mix of original cedar and newer treated replacements"],
+      ["Stain cycle","Historically about every 3 years"],
+      ["Turf edge","PVC edging/board with stone base beneath"]
+    ],
+    supplies:[
+      {label:"Tools, hardware and repair supplies",code:"G1"},
+      {label:"Quick-grab garage and backyard supplies",code:"G3"}
+    ],
+    next:[
+      "Fence sections can be disassembled by removing the exterior face boards, allowing individual posts or damaged boards to be replaced instead of replacing the whole fence.",
+      "Inspect post bases and lower boards each spring for rot, movement or storm damage.",
+      "Brian historically had the fence cleaned/restained about every 3 years.",
+      "Where lower fence boards deteriorate, a replacement/taller lower board can be added as a localized repair.",
+      "Artificial turf perimeter uses a PVC-style board/edge with light-colored stone chips beneath; document this before any digging near the turf."
+    ]
+  },
+  {
+    id:"central-vac",
+    name:"Central Vacuum (Inactive)",
+    icon:"plug",
+    summary:"Legacy central-vac piping/inlets remain; main unit removed",
+    facts:[
+      ["Status","Not currently operational"],
+      ["Main unit","Removed"],
+      ["Remaining parts","Some wall / kick-plate inlets may remain"]
+    ],
+    supplies:[
+      {label:"House-system parts, manuals and maintenance supplies",code:"B2-B"}
+    ],
+    next:[
+      "Do not assume remaining kick-plate or wall inlets are active; the central vacuum power unit was removed.",
+      "If restoring the system later, first locate and inspect the remaining piping/inlets and determine where the original power unit connected.",
+      "Until restored, treat the visible inlets as legacy house infrastructure."
+    ]
+  },
+  {
     id:"garage",
     name:"Garage Systems",
     icon:"wrench",
@@ -311,7 +362,9 @@ const SYSTEM_TASK_IDS = {
   fountain:[],
   lighting:[],
   electrical:[],
-  entertainment:[]
+  entertainment:[],
+  exterior:[],
+  "central-vac":[]
 };
 function systemTasks(id){
   const ids=SYSTEM_TASK_IDS[id]||[];
