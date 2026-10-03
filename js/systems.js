@@ -329,6 +329,95 @@ const HOUSE_SYSTEMS = [
   }
 ]
 
+
+const WINTERIZE_STEPS = [
+  {section:"Pool",items:[
+    "Finish final swim, skim/brush/vacuum, and balance water for closing.",
+    "Lower pool water to the established winter closing level.",
+    "Turn pump OFF before changing the multiport valve position.",
+    "Remove the two return jet/nozzle fittings while holding the couplers steady.",
+    "Blow/vacuum the return lines clear of water.",
+    "Install the correct expandable winter plugs in the return/skimmer openings.",
+    "Pour pink RV/pool antifreeze into the return-line openings until it appears at the paired opening, then plug both ends. Brian estimated roughly 7–8 gallons for the two return lines.",
+    "Winterize heater: pour antifreeze into one heater-side opening until it appears at the opposite side, then plug both sides.",
+    "Turn heater OFF and close the gas shutoff for winter.",
+    "Drain pump completely by removing the two pump drain plugs; leave the pump dry.",
+    "Store removed pump/drain plugs and small winter fittings together in the pump/filter basket.",
+    "Blow flexible pool hoses clear with the air compressor from one end, then reverse and blow from the other end.",
+    "Place a capped plastic soda bottle about half-full of antifreeze in the skimmer for freeze protection.",
+    "Set the multiport/valves to their final winter positions after lines are drained and protected.",
+    "Install the mesh winter cover."
+  ]},
+  {section:"Fountain",items:[
+    "Vacuum/drain all remaining water from the fountain bowl and drainage pocket.",
+    "Remove the fountain pump/filter components.",
+    "Rinse/wipe fountain parts and store loose pieces in the shed/pool storage.",
+    "Bring the freeze-sensitive fountain bowl/component indoors if applicable.",
+    "Note fountain O-ring replacement for spring."
+  ]},
+  {section:"Outdoor kitchen & water",items:[
+    "Shut off the two basement valves serving the outdoor sink/ice-maker water line.",
+    "Open/drain the exterior water lines so trapped water is removed.",
+    "Disconnect outdoor ice maker power.",
+    "Disconnect the ice-maker water-supply line and garden-hose drain line.",
+    "Cover/tape the exposed water-line opening so dirt cannot enter.",
+    "Move the outdoor ice maker into the garage.",
+    "Leave the outdoor refrigerator and grills in place.",
+    "Note exterior water/ice-maker filter replacement for spring."
+  ]},
+  {section:"Hot tub",items:[
+    "Keep hot tub operating normally through winter.",
+    "When topping off in winter, use the hose by the hot tub as needed.",
+    "Always disconnect the hose from the spigot after winter use so trapped water cannot freeze."
+  ]},
+  {section:"Patio & outdoor items",items:[
+    "Bring patio cushions into the garage/shed.",
+    "Roll up and store outdoor rugs.",
+    "Store loose pool/fountain accessories and seasonal parts.",
+    "Decide whether to overwinter plants or let inexpensive annuals die back."
+  ]},
+  {section:"Irrigation / drip lines",items:[
+    "Shut off water to the outdoor drip/irrigation system.",
+    "Connect the compressor adapter and blow the irrigation/drip lines clear."
+  ]},
+  {section:"Garage",items:[
+    "Confirm garage floor drains are clear before freeze season.",
+    "Remember garage floor is not radiant-heated; use the overhead blower heater as needed.",
+    "Keep the attic pull-down access and winter storage path clear."
+  ]}
+];
+
+let winterizeChecks = loadJSON("wil-winterize-checks", {});
+function saveWinterizeChecks(){ saveJSON("wil-winterize-checks",winterizeChecks); cloudSyncTasksSoon(); }
+function winterizeKey(section,index){ return section+"::"+index; }
+function winterizeProgress(){
+  const total=WINTERIZE_STEPS.reduce((n,s)=>n+s.items.length,0);
+  const done=WINTERIZE_STEPS.reduce((n,s)=>n+s.items.filter((_,i)=>winterizeChecks[winterizeKey(s.section,i)]).length,0);
+  return {done,total};
+}
+function renderWinterizeChecklist(){
+  const p=winterizeProgress();
+  return `<section class="system-card winterize-card" id="system-winterize">
+    <div class="system-head">
+      <span class="system-icon">${icon("snowflake")}</span>
+      <div><h3>Winterize House</h3><p>Step-by-step seasonal shutdown checklist · ${p.done}/${p.total} complete</p></div>
+      <button type="button" class="system-edit-btn" data-reset-winterize>Reset</button>
+    </div>
+    ${WINTERIZE_STEPS.map(sec=>`<div class="system-block">
+      <h4>${esc(sec.section)}</h4>
+      <div class="system-task-list">
+        ${sec.items.map((item,i)=>{
+          const key=winterizeKey(sec.section,i);
+          const checked=!!winterizeChecks[key];
+          return `<label class="system-task-row winterize-row">
+            <span><input type="checkbox" data-winterize-check="${esc(key)}" ${checked?"checked":""}> <b>${esc(item)}</b></span>
+          </label>`;
+        }).join("")}
+      </div>
+    </div>`).join("")}
+  </section>`;
+}
+
 let systemLog = loadJSON("wil-system-log", []);
 let systemProfiles = loadJSON("wil-system-profiles", {});
 let systemPrefs = loadJSON("wil-system-prefs", {});
@@ -394,7 +483,7 @@ function renderSystems(){
   if(!host) return;
   const activeSystems=HOUSE_SYSTEMS.filter(sys=>!systemPref(sys.id).disabled);
   const removedSystems=HOUSE_SYSTEMS.filter(sys=>systemPref(sys.id).disabled);
-  host.innerHTML=activeSystems.map(sys=>{
+  host.innerHTML=renderWinterizeChecklist()+activeSystems.map(sys=>{
     const pref=systemPref(sys.id);
     const displayName=pref.name||sys.name;
     const displaySummary=pref.summary||sys.summary;
@@ -455,7 +544,25 @@ function renderSystems(){
   }).join("") + (removedSystems.length ? `<details class="removed-tasks system-removed"><summary>Removed systems (${removedSystems.length})</summary><div class="removed-task-list">${removedSystems.map(sys=>`<div class="removed-task-row"><span>${esc(systemPref(sys.id).name||sys.name)}</span><button type="button" data-restore-system="${sys.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 
+$("#view-systems").addEventListener("change",e=>{
+  const cb=e.target.closest("[data-winterize-check]");
+  if(cb){
+    winterizeChecks[cb.dataset.winterizeCheck]=cb.checked;
+    saveWinterizeChecks();
+    renderSystems();
+  }
+});
 $("#view-systems").addEventListener("click",e=>{
+  const reset=e.target.closest("[data-reset-winterize]");
+  if(reset){
+    if(confirm("Reset all Winterize House checklist items?")){
+      winterizeChecks={};
+      saveWinterizeChecks();
+      renderSystems();
+      toast("Winterize checklist reset");
+    }
+    return;
+  }
   const restoreSystem=e.target.closest("[data-restore-system]");
   if(restoreSystem){
     const id=restoreSystem.dataset.restoreSystem;
