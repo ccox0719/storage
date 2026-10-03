@@ -49,7 +49,7 @@ function seasonalSeed(){
 }
 let seasonalItems = Store.read("wil-seasonal", null) || seasonalSeed();
 mergeNewSeedItems(seasonalItems, seasonalSeed(), saveSeasonal);
-function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); }
+function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); cloudSyncTasksSoon(); }
 const seasonalOpen = new Set();
 
 function currentSeason(){
