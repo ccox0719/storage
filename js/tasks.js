@@ -55,7 +55,9 @@ function taskRow(t){
   </div>`;
 }
 function renderTasks(){
-  const rows = [...tasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+  const activeTasks = tasks.filter(t=>!t.disabled);
+  const removedTasks = tasks.filter(t=>t.disabled);
+  const rows = [...activeTasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const now = rows.filter(t=>taskStatus(t).bucket==="now");
   const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
   const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
@@ -66,9 +68,21 @@ function renderTasks(){
       <div class="summary-card"><b>${later.length}</b><span>All good</span></div>
     </div>`;
   const section = (label,list)=> list.length ? `<div class="task-section-h">${label}</div>${list.map(taskRow).join("")}` : "";
-  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+section("All good",later)+`<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`;
+  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+section("All good",later)+
+    `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`+
+    (removedTasks.length ? `<details class="removed-tasks"><summary>Removed tasks (${removedTasks.length})</summary><div class="removed-task-list">${removedTasks.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-task="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 $("#view-tasks").addEventListener("click", e=>{
+  const restore = e.target.closest("[data-restore-task]");
+  if(restore){
+    const t = tasks.find(x=>x.id===restore.dataset.restoreTask);
+    if(t){
+      t.disabled = false;
+      saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
+      toast(`Restored “${t.title}”`);
+    }
+    return;
+  }
   const done = e.target.closest("[data-done-task]");
   if(done){
     const t = tasks.find(x=>x.id===done.dataset.doneTask);
@@ -108,9 +122,16 @@ function openTaskForm(t){
       toast(t ? "Task updated" : "Task added");
     },
     onDelete: t ? ()=>{
-      tasks = tasks.filter(x=>x.id!==t.id);
-      saveTasks(); renderTasks();
-      toast("Task deleted");
+      const builtIn = TASKS_SEED.some(seed=>seed.id===t.id);
+      if(builtIn){
+        t.disabled = true;
+        saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
+        toast("Task removed");
+      }else{
+        tasks = tasks.filter(x=>x.id!==t.id);
+        saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
+        toast("Task deleted");
+      }
     } : null
   });
 }
