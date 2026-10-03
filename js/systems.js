@@ -336,16 +336,14 @@ const WINTERIZE_STEPS = [
     "Lower pool water to the established winter closing level.",
     "Turn pump OFF before changing the multiport valve position.",
     "Remove the two return jet/nozzle fittings while holding the couplers steady.",
-    "Blow/vacuum the return lines clear of water.",
+    "Use the shop vac to vacuum the pool return lines clear of water. The air compressor is for the irrigation/drip lines, not the pool PVC.",
     "Install the correct expandable winter plugs in the return/skimmer openings.",
     "Pour pink RV/pool antifreeze into the return-line openings until it appears at the paired opening, then plug both ends. Brian estimated roughly 7–8 gallons for the two return lines.",
     "Winterize heater: pour antifreeze into one heater-side opening until it appears at the opposite side, then plug both sides.",
     "Turn heater OFF and close the gas shutoff for winter.",
     "Drain pump completely by removing the two pump drain plugs; leave the pump dry.",
-    "Store removed pump/drain plugs and small winter fittings together in the pump/filter basket.",
-    "Blow flexible pool hoses clear with the air compressor from one end, then reverse and blow from the other end.",
     "Place a capped plastic soda bottle about half-full of antifreeze in the skimmer for freeze protection.",
-    "Set the multiport/valves to their final winter positions after lines are drained and protected.",
+    "Set the sand-filter multiport dial to Winterize after the pool lines are drained and protected.",
     "Install the mesh winter cover."
   ]},
   {section:"Fountain",items:[
@@ -366,15 +364,14 @@ const WINTERIZE_STEPS = [
     "Note exterior water/ice-maker filter replacement for spring."
   ]},
   {section:"Hot tub",items:[
-    "Keep hot tub operating normally through winter.",
-    "When topping off in winter, use the hose by the hot tub as needed.",
+    "Top off the hot tub with the nearby hose when needed during winter.",
     "Always disconnect the hose from the spigot after winter use so trapped water cannot freeze."
   ]},
   {section:"Patio & outdoor items",items:[
     "Bring patio cushions into the garage/shed.",
     "Roll up and store outdoor rugs.",
     "Store loose pool/fountain accessories and seasonal parts.",
-    "Decide whether to overwinter plants or let inexpensive annuals die back."
+    "Let the annuals die back for winter and clear them when convenient."
   ]},
   {section:"Irrigation / drip lines",items:[
     "Shut off water to the outdoor drip/irrigation system.",
@@ -387,7 +384,13 @@ const WINTERIZE_STEPS = [
   ]}
 ];
 
+const WINTERIZE_CHECKLIST_VERSION = 2;
 let winterizeChecks = loadJSON("wil-winterize-checks", {});
+if(Number(localStorage.getItem("wil-winterize-checklist-version")||0) < WINTERIZE_CHECKLIST_VERSION){
+  winterizeChecks = {};
+  saveJSON("wil-winterize-checks", winterizeChecks);
+  localStorage.setItem("wil-winterize-checklist-version", String(WINTERIZE_CHECKLIST_VERSION));
+}
 function saveWinterizeChecks(){ saveJSON("wil-winterize-checks",winterizeChecks); cloudSyncTasksSoon(); }
 function winterizeKey(section,index){ return section+"::"+index; }
 function winterizeProgress(){
