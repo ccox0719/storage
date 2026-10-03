@@ -5,7 +5,7 @@ function renderHomeDashboard(){
   const totalItems = Object.keys(itemsById || {}).length;
   const totalLocations = Array.isArray(LOCATIONS) ? LOCATIONS.length : 0;
 
-  const taskRows = [...tasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
+  const taskRows = tasks.filter(t=>!t.disabled).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const urgentTasks = taskRows.filter(t=>taskStatus(t).bucket==="now");
   const soonTasks = taskRows.filter(t=>taskStatus(t).bucket==="soon");
 
