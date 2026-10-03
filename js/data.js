@@ -48,10 +48,10 @@ function icon(key){
 }
 
 const RAW_LOCATIONS = [
-  {code:"B1",icon:"box",name:"Basement Storage Room",job:"Long-term household storage",
-   items:["Christmas décor","Memories","Photo albums","Kids' keepsakes","Office supplies","Craft supplies","Party supplies","Gift supplies","Long-term electronics","Spare household supplies","Paint overflow","Repair overflow"],
-   maybe:["Halloween & Easter decor","Wrapping paper & gift bags","Wedding keepsakes","Old yearbooks","Baby items being saved","Extra light bulbs & batteries"],
-   kw:"christmas halloween easter thanksgiving decorations ornaments wreath lights tinsel garland keepsake memento memorabilia scrapbook yearbook wedding baby book trophy award diploma craft scrapbooking wrapping paper gift bag ribbon greeting card stationery office supply printer paper binder file folder old phone old laptop router spare paint touch up caulk tube lightbulb spare battery spare"},
+  {code:"B1",icon:"box",name:"Basement Storage Room",job:"Conditioned long-term storage for fragile, sentimental and household backup items",
+   items:["Memories","Photo albums","Kids' keepsakes","Office supplies","Craft supplies","Party supplies","Gift supplies","Long-term electronics","Spare household supplies","Paint overflow","Repair overflow","Delicate holiday décor"],
+   maybe:["Wedding keepsakes","Old yearbooks","Baby items being saved","Wrapping paper & gift bags","Candles","Delicate ornaments","Extra light bulbs & batteries"],
+   kw:"keepsake memento memorabilia scrapbook yearbook wedding baby book trophy award diploma craft scrapbooking wrapping paper gift bag ribbon greeting card stationery office supply printer paper binder file folder old phone old laptop router spare paint touch up caulk tube lightbulb spare battery spare delicate ornament candle photo album electronics"},
   {code:"B2",icon:"gear",name:"Mechanical Room",job:"House mechanical supplies only",
    items:["HVAC filters","Air filters","Humidifier filters","House-system replacement items"],
    maybe:["Appliance manuals","Sump pump parts","Water softener salt","Smoke detector batteries"],
@@ -118,10 +118,10 @@ const RAW_LOCATIONS = [
    items:["Tarps","Covers","Shoulder dolly","Large outdoor items","Car items","Awkward equipment"],
    maybe:["Snow shovels","Small ladder","Holiday inflatables","Car ramps"],
    kw:"tarp cover shoulder dolly snow shovel small ladder car ramp holiday inflatable bulky"},
-  {code:"G6",icon:"box",name:"Garage Attic Storage",job:"Long-term and bulky seasonal storage",
-   items:["Long-term storage bins","Rarely used household items","Seasonal overflow"],
-   maybe:["Holiday overflow","Camping overflow","Long lightweight items","Empty storage bins"],
-   kw:"garage attic attic storage long term seasonal overflow holiday camping bins rarely used long lightweight"},
+  {code:"G6",icon:"box",name:"Garage Attic Storage",job:"Lightweight, heat-tolerant, rarely accessed seasonal storage",
+   items:["Christmas décor in sealed bins","Halloween & Easter décor","Holiday inflatables","Seasonal wreaths/garlands","Empty storage bins","Lightweight seasonal overflow","Long lightweight items"],
+   maybe:["Artificial trees","Outdoor décor","Camping overflow","Rarely used lightweight household items"],
+   kw:"garage attic attic storage seasonal holiday christmas halloween easter decorations wreath garland inflatable artificial tree empty bin lightweight long item camping overflow"},
 
   {code:"U1",icon:"hanger",name:"West Bedroom Closet",job:"That bedroom's personal storage",
    items:["Clothing","Shoes","Personal items","Keepsakes (modest)"],maybe:["Off-season clothing","Extra pillows","Hobby supplies","Board games"],
@@ -180,7 +180,7 @@ const RAW_LOCATIONS = [
 
 
 const SUBLOCATIONS = [
-  {code:"B1-A",location:"B1",name:"Shelves A · 1–8",notes:"Seasonal décor and holiday bins"},
+  {code:"B1-A",location:"B1",name:"Shelves A · 1–8",notes:"Delicate / temperature-sensitive holiday décor, candles and sentimental seasonal pieces"},
   {code:"B1-B",location:"B1",name:"Shelves B · 9–16",notes:"Keepsakes, photos, kids memories"},
   {code:"B1-C",location:"B1",name:"Shelves C · 17–24",notes:"Office, craft, party, gift and household backups"},
   {code:"B1-D",location:"B1",name:"Network / security overhead",notes:"Router, NVR and house-system equipment only"},
@@ -247,8 +247,8 @@ const SUBLOCATIONS = [
   {code:"G5-A",location:"G5",name:"Upper shelf",notes:"Lighter bulky-garage accessories"},
   {code:"G5-B",location:"G5",name:"Open center",notes:"Awkward or tall garage gear"},
   {code:"G5-C",location:"G5",name:"Lower shelf",notes:"Heavy bulky garage gear"},
-  {code:"G6-A",location:"G6",name:"Existing attic shelves",notes:"Built-in shelving accessed from the east side of the garage; use for lightweight long-term storage"},
-  {code:"G6-B",location:"G6",name:"Open attic floor / future shelving",notes:"Additional long-term storage space; keep access path clear and avoid overloading framing"},
+  {code:"G6-A",location:"G6",name:"Existing attic shelves",notes:"Primary home for sealed holiday/seasonal bins and other lightweight heat-tolerant items; access from east side of garage"},
+  {code:"G6-B",location:"G6",name:"Open attic floor / future shelving",notes:"Overflow for artificial trees, empty bins and long lightweight items; keep access path clear and avoid overloading framing"},
   {code:"U1-A",location:"U1",name:"Shelves",notes:"Folded clothes and personal storage"},
   {code:"U1-B",location:"U1",name:"Hanging section",notes:"Hanging clothes"},
   {code:"U1-C",location:"U1",name:"Floor area",notes:"Shoes and bulky bedroom items"},
@@ -337,8 +337,8 @@ const SUBLOCATION_ITEMS = {
   "G2-C":["Fishing gear","Heavier outdoor recreation gear"],
   "G5-A":["Tarp / waterproof cover"],
   "G5-B":["Awkward bulky garage gear"],
-  "G6-A":["Long-term storage bins","Seasonal overflow","Rarely used household items"],
-  "G6-B":["Empty bins","Lightweight long items","Future shelving space"],
+  "G6-A":["Sealed holiday décor bins","Seasonal wreaths / garlands","Holiday inflatables","Outdoor seasonal décor"],
+  "G6-B":["Artificial tree","Empty bins","Lightweight long items","Future shelving space"],
   "U3-A":["Tablets","Kindle","Laptops","Camera","Camera lenses","Gameboy","Portable speaker"],
   "U3-B":["USB-C cords","Micro-USB cords","HDMI cords","Charging blocks","Smart plugs","Charging station","Headphones","Earbuds","Headlamps","Waterproof phone case","Batteries","Nightlight","Camera charger","Mouse","Watch batteries"],
   "U4-A":["Fitted sheets","Sheets","Pillowcases","Mattress cover"],
@@ -366,7 +366,7 @@ const SUBLOCATION_ITEMS = {
 };
 
 const SUBLOCATION_SUGGESTIONS = {
-  "B1-A":["Halloween décor","Easter décor","Thanksgiving décor","Wreaths","Garlands","Seasonal table décor","Holiday extension cords"],
+  "B1-A":["Delicate ornaments","Candles","Sentimental holiday pieces","Fragile seasonal table décor","Temperature-sensitive decorations","Holiday electronics you want kept conditioned"],
   "B1-B":["Old yearbooks","Wedding keepsakes","Baby books","Diplomas","Awards","Scrapbooks","Printed family photos"],
   "B1-C":["Wrapping paper","Ribbon","Greeting cards","Extra printer paper","Binders","Craft glue","Gift boxes","Spare batteries","Extra household bulbs"],
   "B1-D":["Router","Network switch","NVR","UPS battery backup","Ethernet patch cables","Smart-home hubs"],
@@ -426,8 +426,8 @@ const SUBLOCATION_SUGGESTIONS = {
   "G2-A":["Fishing licenses","Reels","Lures","Bike helmets","Sports balls"],
   "G2-B":["Life jackets","Long-handled nets","Fishing rods"],
   "G2-C":["Heavy tackle bags","Portable sports gear","Outdoor game bases"],
-  "G6-A":["Holiday overflow","Camping overflow","Keepsake bins","Rarely used lightweight household items"],
-  "G6-B":["Additional shelving","Lightweight seasonal bins","Long lightweight items"],
+  "G6-A":["Christmas décor in sealed bins","Halloween décor","Easter décor","Wreaths","Garlands","Holiday extension cords","Outdoor seasonal décor","Holiday inflatables"],
+  "G6-B":["Artificial Christmas tree","Empty storage bins","Long lightweight items","Camping overflow","Additional lightweight seasonal bins"],
   "G3-A":["Bug spray","Sunscreen","Gardening gloves","Flashlights"],
   "G3-B":["Small extension cords","Outdoor wipes","Work towels"],
   "G4-A":["Cookout drinks","Extra milk","Party beverages","Condiments"],
