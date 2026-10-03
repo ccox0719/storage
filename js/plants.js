@@ -40,12 +40,14 @@ function plantNextAction(p){
   return season==="winter" ? "Monitor through winter" : "Monitor and water as needed";
 }
 function renderPlants(){
+  const activePlants=plants.filter(p=>!p.disabled);
+  const removedPlants=plants.filter(p=>p.disabled);
   const groups = {};
-  plants.forEach(p=>{
+  activePlants.forEach(p=>{
     const loc = p.location || "Location not set";
     (groups[loc] ||= []).push(p);
   });
-  const urgent = plants.filter(p=>currentSeason()==="fall" && /bring indoors|dig up|first frost/i.test(p.fall_task||"")).length;
+  const urgent = activePlants.filter(p=>currentSeason()==="fall" && /bring indoors|dig up|first frost/i.test(p.fall_task||"")).length;
   $("#plantsSummary").innerHTML = `<div class="plant-summary"><b>${urgent}</b> frost-sensitive plant ${urgent===1?"entry":"entries"} need attention this fall. Tap a plant to edit its exact location or care notes.</div>`;
   $("#plantsList").innerHTML = Object.entries(groups).map(([loc,list])=>`
     <div class="plant-group-h">${esc(loc)}</div>
@@ -56,9 +58,15 @@ function renderPlants(){
         <span class="plant-next">Next: ${esc(plantNextAction(p))}</span>
         ${plantCycleBadge(p)}
       </button>`).join("")}
-  `).join("");
+  `).join("") + (removedPlants.length ? `<details class="removed-tasks"><summary>Removed plants (${removedPlants.length})</summary><div class="removed-task-list">${removedPlants.map(x=>`<div class="removed-task-row"><span>${esc(x.name)}</span><button type="button" data-restore-plant="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 $("#view-plants").addEventListener("click", e=>{
+  const restore=e.target.closest("[data-restore-plant]");
+  if(restore){
+    const p=plants.find(x=>x.id===restore.dataset.restorePlant);
+    if(p){p.disabled=false;savePlants();renderPlants();toast(`Restored “${p.name}”`);}
+    return;
+  }
   const card = e.target.closest("[data-edit-plant]");
   if(card) openPlantForm(plants.find(p=>p.id===card.dataset.editPlant));
 });
@@ -90,9 +98,9 @@ function openPlantForm(p){
       toast(p ? "Plant updated" : "Plant added");
     },
     onDelete: p ? ()=>{
-      plants = plants.filter(x=>x.id!==p.id);
+      p.disabled=true;
       savePlants(); renderPlants();
-      toast("Plant deleted");
+      toast("Plant removed");
     } : null
   });
 }
