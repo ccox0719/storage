@@ -394,8 +394,9 @@ if(Number(localStorage.getItem("wil-winterize-checklist-version")||0) < WINTERIZ
 function saveWinterizeChecks(){ saveJSON("wil-winterize-checks",winterizeChecks); cloudSyncTasksSoon(); }
 function winterizeKey(section,index){ return section+"::"+index; }
 function winterizeProgress(){
-  const total=WINTERIZE_STEPS.reduce((n,s)=>n+s.items.length,0);
-  const done=WINTERIZE_STEPS.reduce((n,s)=>n+s.items.filter((_,i)=>winterizeChecks[winterizeKey(s.section,i)]).length,0);
+  const sections=winterizeSections();
+  const total=sections.reduce((n,s)=>n+s.items.length,0);
+  const done=sections.reduce((n,s)=>n+s.items.filter((_,i)=>winterizeChecks[winterizeKey(s.section,i)]).length,0);
   return {done,total};
 }
 function renderWinterizeChecklist(){
@@ -424,6 +425,19 @@ function renderWinterizeChecklist(){
 let systemLog = loadJSON("wil-system-log", []);
 let systemProfiles = loadJSON("wil-system-profiles", {});
 let systemPrefs = loadJSON("wil-system-prefs", {});
+
+function winterizeSections(){
+  const saved=systemPrefs["winterize-checklist"]?.sections;
+  return Array.isArray(saved) && saved.length ? saved : WINTERIZE_STEPS.map(s=>({section:s.section,items:[...s.items]}));
+}
+function saveWinterizeSections(sections){
+  systemPrefs["winterize-checklist"]={...(systemPrefs["winterize-checklist"]||{}),sections};
+  saveSystemPrefs();
+}
+function resetWinterizeChecksForEdit(){
+  winterizeChecks={};
+  saveWinterizeChecks();
+}
 
 function saveSystemLog(){
   saveJSON("wil-system-log",systemLog);
