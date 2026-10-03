@@ -331,8 +331,8 @@ function openStorageItemEdit(id){
       }
       rebuild();
       renderTiles();
-      if(currentSheetCode) openSheet(currentSheetCode);
       if(query) search();
+      setTimeout(()=>{ if(currentSheetCode){ if(dlg.open) dlg.close(); openSheet(currentSheetCode); } },0);
       toast("Item updated");
     },
     onDelete(){
@@ -348,8 +348,8 @@ function openStorageItemEdit(id){
       saveMoves();
       rebuild();
       renderTiles();
-      if(currentSheetCode) openSheet(currentSheetCode);
       if(query) search();
+      setTimeout(()=>{ if(currentSheetCode){ if(dlg.open) dlg.close(); openSheet(currentSheetCode); } },0);
       toast("Item removed");
     }
   });
