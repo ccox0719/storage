@@ -122,10 +122,18 @@ function cloudRowsTasks(){
     household_id:homeHouseholdId, external_id:`systemprofile:${systemId}`, title:`System profile: ${systemId}`,
     frequency_months:999, last_done:p.install_date || null,
     notes:`__SYSTEMPROFILE__${JSON.stringify({system_id:systemId,...p})}`, category:"System Profile", location_code:null, snoozed_until:null
+  })), ...Object.entries(systemPrefs).map(([systemId,p])=>({
+    household_id:homeHouseholdId, external_id:`systempref:${systemId}`, title:`System preference: ${systemId}`,
+    frequency_months:999, last_done:null,
+    notes:`__SYSTEMPREF__${JSON.stringify({system_id:systemId,...p})}`, category:"System Preference", location_code:null, snoozed_until:null
+  })), ...seasonalItems.filter(i=>i.disabled).map(i=>({
+    household_id:homeHouseholdId, external_id:`seasonalstate:${i.id}`, title:`Removed seasonal: ${i.title}`,
+    frequency_months:999, last_done:null,
+    notes:`__SEASONALSTATE__${JSON.stringify(i)}`, category:"Seasonal State", location_code:null, snoozed_until:null
   }))];
 }
 function cloudRowsSeasonal(){
-  return seasonalItems.map(i=>({
+  return seasonalItems.filter(i=>!i.disabled).map(i=>({
     household_id:homeHouseholdId, external_id:i.id, section:i.section,
     season:i.season, title:i.title, done_year:i.done_year || null
   }));
@@ -139,7 +147,7 @@ function cloudRowsPlants(){
   return plants.map(p=>({
     household_id:homeHouseholdId, external_id:p.id, name:p.name,
     location:p.location || "", fall_task:p.fall_task || "", spring_task:p.spring_task || "",
-    notes:p.notes || "", treatment_cycle_years:p.treatment_cycle_years || null,
+    notes:p.disabled ? `__PLANTSTATE__${JSON.stringify({disabled:true,notes:p.notes||""})}` : (p.notes || ""), treatment_cycle_years:p.treatment_cycle_years || null,
     last_treated_year:p.last_treated_year || null
   }));
 }
@@ -217,6 +225,7 @@ async function cloudPull(){
     rebuild();
   }
 
+  let removedSeasonal = [];
   if(tr.data.length){
     const decorRows = tr.data.filter(r=>String(r.external_id).startsWith("decor:") || String(r.notes||"").startsWith("__DECOR__"));
     if(decorRows.length){
@@ -240,13 +249,30 @@ async function cloudPull(){
       }
     }
 
+    const prefRows = tr.data.filter(r=>String(r.external_id).startsWith("systempref:") || String(r.notes||"").startsWith("__SYSTEMPREF__"));
+    if(prefRows.length){
+      const parsed = prefRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SYSTEMPREF__/,""));}catch{return null}}).filter(Boolean);
+      if(parsed.length){
+        systemPrefs={};
+        parsed.forEach(p=>{if(p.system_id){const {system_id,...rest}=p;systemPrefs[system_id]=rest;}});
+        saveJSON("wil-system-prefs",systemPrefs);
+      }
+    }
+
+    const seasonalStateRows = tr.data.filter(r=>String(r.external_id).startsWith("seasonalstate:") || String(r.notes||"").startsWith("__SEASONALSTATE__"));
+    removedSeasonal = seasonalStateRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SEASONALSTATE__/,""));}catch{return null}}).filter(Boolean);
+
     tasks = tr.data.filter(r=>
       !String(r.external_id).startsWith("decor:") &&
       !String(r.notes||"").startsWith("__DECOR__") &&
       !String(r.external_id).startsWith("systemlog:") &&
       !String(r.notes||"").startsWith("__SYSTEMLOG__") &&
       !String(r.external_id).startsWith("systemprofile:") &&
-      !String(r.notes||"").startsWith("__SYSTEMPROFILE__")
+      !String(r.notes||"").startsWith("__SYSTEMPROFILE__") &&
+      !String(r.external_id).startsWith("systempref:") &&
+      !String(r.notes||"").startsWith("__SYSTEMPREF__") &&
+      !String(r.external_id).startsWith("seasonalstate:") &&
+      !String(r.notes||"").startsWith("__SEASONALSTATE__")
     ).map(r=>{
       let notes=r.notes||"", disabled=false;
       if(String(notes).startsWith("__TASKSTATE__")){
@@ -268,17 +294,20 @@ async function cloudPull(){
     mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
     Store.write("wil-tasks",tasks);
   }
-  if(sr.data.length){
+  {
     const seedNow = seasonalSeed();
     const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
+    const removedById = Object.fromEntries((removedSeasonal||[]).map(i=>[i.id,i]));
     const builtInPattern = /^(pool|kitchen|fountain|deck|furniture|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
     seasonalItems = seedNow.map(seed=>{
       const old = cloudById[seed.id];
-      return {...seed, done_year:old ? old.done_year : null};
+      const removed = removedById[seed.id];
+      return {...seed, ...(removed||{}), disabled:!!removed, done_year:removed ? null : (old ? old.done_year : null)};
     });
     sr.data.filter(r=>!builtInPattern.test(r.external_id)).forEach(r=>{
-      seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year});
+      if(!removedById[r.external_id]) seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year,disabled:false});
     });
+    (removedSeasonal||[]).filter(i=>!builtInPattern.test(i.id)).forEach(i=>seasonalItems.push({...i,disabled:true,done_year:null}));
     Store.write("wil-seasonal",seasonalItems);
   }
   if(mr.data.length){
@@ -288,11 +317,21 @@ async function cloudPull(){
   }
 
   if(pr.data.length){
-    plants = pr.data.map(r=>({
-      id:r.external_id,name:r.name,location:r.location||"",fall_task:r.fall_task||"",
-      spring_task:r.spring_task||"",notes:r.notes||"",treatment_cycle_years:r.treatment_cycle_years,
-      last_treated_year:r.last_treated_year
-    }));
+    plants = pr.data.map(r=>{
+      let notes=r.notes||"", disabled=false;
+      if(String(notes).startsWith("__PLANTSTATE__")){
+        try{
+          const meta=JSON.parse(String(notes).replace(/^__PLANTSTATE__/,""));
+          disabled=!!meta.disabled;
+          notes=meta.notes||"";
+        }catch{}
+      }
+      return {
+        id:r.external_id,name:r.name,location:r.location||"",fall_task:r.fall_task||"",
+        spring_task:r.spring_task||"",notes,treatment_cycle_years:r.treatment_cycle_years,
+        last_treated_year:r.last_treated_year,disabled
+      };
+    });
     plants.forEach(p=>{
       const seed = PLANTS_SEED.find(x=>x.id===p.id);
       if(!seed) return;

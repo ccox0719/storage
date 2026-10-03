@@ -152,6 +152,7 @@ const HOUSE_SYSTEMS = [
 
 let systemLog = loadJSON("wil-system-log", []);
 let systemProfiles = loadJSON("wil-system-profiles", {});
+let systemPrefs = loadJSON("wil-system-prefs", {});
 
 function saveSystemLog(){
   saveJSON("wil-system-log",systemLog);
@@ -163,6 +164,13 @@ function saveSystemProfiles(){
 }
 function systemProfile(id){
   return systemProfiles[id] || {};
+}
+function systemPref(id){
+  return systemPrefs[id] || {};
+}
+function saveSystemPrefs(){
+  saveJSON("wil-system-prefs",systemPrefs);
+  cloudSyncTasksSoon();
 }
 
 function systemLogFor(id){
@@ -184,7 +192,8 @@ function systemTasks(id){
 }
 function systemForTask(t){
   const match=Object.entries(SYSTEM_TASK_IDS).find(([,ids])=>ids.includes(t.id));
-  return match ? match[0] : null;
+  if(!match) return null;
+  return systemPref(match[0]).disabled ? null : match[0];
 }
 function focusSystem(id){
   const el=document.getElementById(`system-${id}`);
@@ -197,13 +206,19 @@ function focusSystem(id){
 function renderSystems(){
   const host=$("#systemsList");
   if(!host) return;
-  host.innerHTML=HOUSE_SYSTEMS.map(sys=>{
+  const activeSystems=HOUSE_SYSTEMS.filter(sys=>!systemPref(sys.id).disabled);
+  const removedSystems=HOUSE_SYSTEMS.filter(sys=>systemPref(sys.id).disabled);
+  host.innerHTML=activeSystems.map(sys=>{
+    const pref=systemPref(sys.id);
+    const displayName=pref.name||sys.name;
+    const displaySummary=pref.summary||sys.summary;
     const logs=systemLogFor(sys.id);
     const linkedTasks=systemTasks(sys.id);
     return `<section class="system-card" id="system-${sys.id}">
       <div class="system-head">
         <span class="system-icon">${icon(sys.icon)}</span>
-        <div><h3>${esc(sys.name)}</h3><p>${esc(sys.summary)}</p></div>
+        <div><h3>${esc(displayName)}</h3><p>${esc(displaySummary)}</p></div>
+        <button type="button" class="system-edit-btn" data-edit-system="${sys.id}" aria-label="Edit ${esc(displayName)}">Edit</button>
       </div>
       <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
 
@@ -251,10 +266,40 @@ function renderSystems(){
         ${logs.length ? `<div class="system-history">${logs.slice(0,6).map(l=>`<div><b>${esc(fmtDate(l.date))}</b><span>${esc(l.note)}</span></div>`).join("")}</div>` : `<p class="system-empty">No maintenance logged yet.</p>`}
       </div>
     </section>`;
-  }).join("");
+  }).join("") + (removedSystems.length ? `<details class="removed-tasks system-removed"><summary>Removed systems (${removedSystems.length})</summary><div class="removed-task-list">${removedSystems.map(sys=>`<div class="removed-task-row"><span>${esc(systemPref(sys.id).name||sys.name)}</span><button type="button" data-restore-system="${sys.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 
 $("#view-systems").addEventListener("click",e=>{
+  const restoreSystem=e.target.closest("[data-restore-system]");
+  if(restoreSystem){
+    const id=restoreSystem.dataset.restoreSystem;
+    systemPrefs[id]={...(systemPrefs[id]||{}),disabled:false};
+    saveSystemPrefs();renderSystems();toast("System restored");
+    return;
+  }
+
+  const editSystem=e.target.closest("[data-edit-system]");
+  if(editSystem){
+    const sys=HOUSE_SYSTEMS.find(x=>x.id===editSystem.dataset.editSystem);
+    const pref=systemPref(sys.id);
+    openForm({
+      title:`Edit ${pref.name||sys.name}`,
+      fields:[
+        {key:"name",label:"System name",type:"text",value:pref.name||sys.name},
+        {key:"summary",label:"Summary",type:"text",value:pref.summary||sys.summary}
+      ],
+      onSave(v){
+        systemPrefs[sys.id]={...(systemPrefs[sys.id]||{}),name:v.name.trim()||sys.name,summary:v.summary.trim()||sys.summary,disabled:false};
+        saveSystemPrefs();renderSystems();toast("System updated");
+      },
+      onDelete(){
+        systemPrefs[sys.id]={...(systemPrefs[sys.id]||{}),disabled:true};
+        saveSystemPrefs();renderSystems();toast("System removed");
+      }
+    });
+    return;
+  }
+
   const doneTask=e.target.closest("[data-system-task-done]");
   if(doneTask){
     const t=tasks.find(x=>x.id===doneTask.dataset.systemTaskDone);

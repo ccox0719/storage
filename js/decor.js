@@ -19,26 +19,57 @@ mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
 function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();}
 function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
 function renderDecor(){
-  const active=decorItems.filter(i=>!i.purchased_at), bought=decorItems.filter(i=>i.purchased_at);
+  const active=decorItems.filter(i=>!i.disabled && !i.purchased_at), bought=decorItems.filter(i=>!i.disabled && i.purchased_at), removed=decorItems.filter(i=>i.disabled);
   const planned=active.reduce((s,i)=>s+Number(i.target||0),0), spent=bought.reduce((s,i)=>s+Number(i.actual||0),0);
-  const pct=Math.round(bought.length/decorItems.length*100);
+  const visibleTotal=active.length+bought.length;
+  const pct=visibleTotal?Math.round(bought.length/visibleTotal*100):0;
   $("#decorSummary").innerHTML=`<div class="decor-summary"><div class="decor-stat"><b>${active.length}</b><span>Still needed</span></div><div class="decor-stat"><b>${decorMoney(planned)}</b><span>Targets left</span></div><div class="decor-stat"><b>${decorMoney(spent)}</b><span>Spent</span></div></div><div class="decor-progress"><span style="width:${pct}%"></span></div>`;
   const room=$("#decorRoom").value||"all", q=$("#decorSearch").value.toLowerCase().trim();
   const filtered=active.filter(i=>(room==="all"||i.room===room)&&(!q||(i.name+" "+i.style+" "+i.room).toLowerCase().includes(q)));
   const rooms=[...new Set(filtered.map(i=>i.room))];
   $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<div class="decor-room-h">${esc(roomName)}</div><div class="decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card"><a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} style reference"></a><div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">Target ${decorMoney(i.target)}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div></article>`).join("")}</div>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
   $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
-  $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("");
-  const tab=$("#decorTab"); tab.hidden=active.length===0;
-  if(!active.length && !$("#view-decor").hidden) switchTab("storage");
+  $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
+    (removed.length?`<details class="removed-tasks"><summary>Removed decor (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
+  const tab=$("#decorTab"); tab.hidden=false;
 }
 function openDecorForm(item){
-  openForm({title:`Edit ${item.name}`,fields:[{key:"actual",label:"Actual price paid",type:"number",value:item.actual||""},{key:"store",label:"Store",type:"text",value:item.store||""},{key:"link",label:"Product link",type:"text",value:item.link||""},{key:"status",label:"Shopping status",type:"text",value:item.status||"Looking"}],onSave(v){item.actual=v.actual?Number(v.actual):null;item.store=v.store.trim();item.link=v.link.trim();item.status=v.status.trim()||"Looking";saveDecor();renderDecor();toast("Decor item updated");},onDelete:null});
+  openForm({
+    title:`Edit ${item.name}`,
+    fields:[
+      {key:"name",label:"Item",type:"text",value:item.name||""},
+      {key:"room",label:"Room",type:"text",value:item.room||""},
+      {key:"target",label:"Target budget",type:"number",value:item.target||""},
+      {key:"style",label:"Style / notes",type:"textarea",value:item.style||""},
+      {key:"actual",label:"Actual price paid",type:"number",value:item.actual||""},
+      {key:"store",label:"Store",type:"text",value:item.store||""},
+      {key:"link",label:"Product link",type:"text",value:item.link||""},
+      {key:"status",label:"Shopping status",type:"text",value:item.status||"Looking"}
+    ],
+    onSave(v){
+      if(!v.name.trim()) return;
+      item.name=v.name.trim();
+      item.room=v.room.trim()||item.room;
+      item.target=v.target?Number(v.target):0;
+      item.style=v.style.trim();
+      item.actual=v.actual?Number(v.actual):null;
+      item.store=v.store.trim();
+      item.link=v.link.trim();
+      item.status=v.status.trim()||"Looking";
+      item.disabled=false;
+      saveDecor();renderDecor();toast("Decor item updated");
+    },
+    onDelete(){
+      item.disabled=true;
+      saveDecor();renderDecor();toast("Decor item removed");
+    }
+  });
 }
 $("#view-decor").addEventListener("click",e=>{
   const edit=e.target.closest("[data-decor-edit]");if(edit){openDecorForm(decorItems.find(i=>i.id===edit.dataset.decorEdit));return;}
   const buy=e.target.closest("[data-decor-bought]");if(buy){const i=decorItems.find(x=>x.id===buy.dataset.decorBought);i.purchased_at=todayISO();i.status="Bought";saveDecor();renderDecor();toast(`${i.name} purchased`);return;}
-  const restore=e.target.closest("[data-decor-restore]");if(restore){const i=decorItems.find(x=>x.id===restore.dataset.decorRestore);i.purchased_at=null;i.status="Looking";saveDecor();renderDecor();toast(`${i.name} restored`);}
+  const restore=e.target.closest("[data-decor-restore]");if(restore){const i=decorItems.find(x=>x.id===restore.dataset.decorRestore);i.purchased_at=null;i.status="Looking";saveDecor();renderDecor();toast(`${i.name} restored`);return;}
+  const unremove=e.target.closest("[data-decor-unremove]");if(unremove){const i=decorItems.find(x=>x.id===unremove.dataset.decorUnremove);i.disabled=false;saveDecor();renderDecor();toast(`${i.name} restored`);}
 });
 $("#decorSearch").addEventListener("input",renderDecor);$("#decorRoom").addEventListener("change",renderDecor);
 const decorRooms=[...new Set(DECOR_SEED.map(i=>i.room))];decorRooms.forEach(r=>$("#decorRoom").add(new Option(r,r)));

@@ -49,7 +49,7 @@ function seasonalSeed(){
 }
 let seasonalItems = Store.read("wil-seasonal", null) || seasonalSeed();
 mergeNewSeedItems(seasonalItems, seasonalSeed(), saveSeasonal);
-function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); }
+function saveSeasonal(){ Store.write("wil-seasonal", seasonalItems); cloudSyncSeasonalSoon(); cloudSyncTasksSoon(); }
 const seasonalOpen = new Set();
 
 function currentSeason(){
@@ -62,7 +62,7 @@ function currentSeason(){
 function renderSeasonal(){
   const year = new Date().getFullYear();
   const active = currentSeason();
-  const activeItems = seasonalItems.filter(i=>i.season===active);
+  const activeItems = seasonalItems.filter(i=>!i.disabled && i.season===active);
   const activeDone = activeItems.filter(i=>i.done_year===year).length;
   $("#seasonalNow").innerHTML = `<div class="season-now">
     <div class="eyebrow">${active} · right now</div>
@@ -71,8 +71,9 @@ function renderSeasonal(){
   </div>`;
 
   const seasonOrder = [active, ...["winter","spring","summer","fall"].filter(x=>x!==active)];
+  const removedItems=seasonalItems.filter(i=>i.disabled);
   $("#seasonalList").innerHTML = SEASONAL_SECTIONS.map(sec=>{
-    const items = seasonalItems.filter(i=>i.section===sec.key);
+    const items = seasonalItems.filter(i=>!i.disabled && i.section===sec.key);
     const done = items.filter(i=>i.done_year===year).length;
     const hasOpenActive = items.some(i=>i.season===active && i.done_year!==year);
     const open = seasonalOpen.has(sec.key) || hasOpenActive;
@@ -97,9 +98,15 @@ function renderSeasonal(){
         ${seasonOrder.map(season=>group(season,season[0].toUpperCase()+season.slice(1))).join("")}
       </div>
     </div>`;
-  }).join("");
+  }).join("") + (removedItems.length ? `<details class="removed-tasks"><summary>Removed seasonal tasks (${removedItems.length})</summary><div class="removed-task-list">${removedItems.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-seasonal="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 $("#view-seasonal").addEventListener("click", e=>{
+  const restore=e.target.closest("[data-restore-seasonal]");
+  if(restore){
+    const item=seasonalItems.find(i=>i.id===restore.dataset.restoreSeasonal);
+    if(item){item.disabled=false;saveSeasonal();renderSeasonal();toast("Seasonal task restored");}
+    return;
+  }
   const toggle = e.target.closest("[data-ssn-toggle]");
   if(toggle){
     const key = toggle.dataset.ssnToggle;
@@ -134,9 +141,10 @@ function openSeasonalItemForm(item){
       toast("Task updated");
     },
     onDelete(){
-      seasonalItems = seasonalItems.filter(i=>i.id!==item.id);
+      item.disabled=true;
+      item.done_year=null;
       saveSeasonal(); renderSeasonal();
-      toast("Task deleted");
+      toast("Seasonal task removed");
     }
   });
 }

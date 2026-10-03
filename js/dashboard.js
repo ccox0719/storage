@@ -11,7 +11,7 @@ function renderHomeDashboard(){
 
   const season = currentSeason();
   const year = new Date().getFullYear();
-  const activeSeasonal = seasonalItems.filter(i=>i.season===season && i.done_year!==year);
+  const activeSeasonal = seasonalItems.filter(i=>!i.disabled && i.season===season && i.done_year!==year);
 
   const stats = $("#homeStats");
   if(stats){
