@@ -158,19 +158,19 @@ function renderSeasonal(){
   const active = currentSeason();
   const activeItems = seasonalItems.filter(i=>!i.disabled && i.season===active);
   const activeDone = activeItems.filter(i=>i.done_year===year).length;
-  $("#seasonalNow").innerHTML = `<div class="season-now">
+  $("#seasonalNow").innerHTML = `<div class="season-now compact-overview">
     <div class="eyebrow">${active} · right now</div>
     <h3>${activeDone===activeItems.length && activeItems.length ? "This season is caught up" : `${activeItems.length-activeDone} seasonal tasks left`}</h3>
-    <p>Start with the areas below that still have unchecked ${active} items.</p>
+    <p>Open an area when you are ready to work on it. Everything else stays tucked away.</p>
   </div>`;
 
-  const seasonOrder = [active, ...["winter","spring","summer","fall"].filter(x=>x!==active)];
+  const otherSeasons=["winter","spring","summer","fall"].filter(x=>x!==active);
   const removedItems=seasonalItems.filter(i=>i.disabled);
   $("#seasonalList").innerHTML = SEASONAL_SECTIONS.map(sec=>{
     const items = seasonalItems.filter(i=>!i.disabled && i.section===sec.key);
-    const done = items.filter(i=>i.done_year===year).length;
-    const hasOpenActive = items.some(i=>i.season===active && i.done_year!==year);
-    const open = seasonalOpen.has(sec.key) || hasOpenActive;
+    const current = items.filter(i=>i.season===active);
+    const currentDone = current.filter(i=>i.done_year===year).length;
+    const open = seasonalOpen.has(sec.key);
     const group = (season,label)=>{
       const list = items.filter(i=>i.season===season);
       if(!list.length) return "";
@@ -179,17 +179,24 @@ function renderSeasonal(){
           <input type="checkbox" data-ssn-id="${i.id}" ${i.done_year===year?"checked":""}>
           <span data-ssn-edit="${i.id}">${esc(i.title)}</span>
         </label></li>`).join("")}</ul>
-        <button type="button" class="add-row" style="margin-top:4px" data-ssn-add="${sec.key}|${season}">+ Add task</button>`;
+        <button type="button" class="add-row subtle-add" data-ssn-add="${sec.key}|${season}">+ Add task</button>`;
     };
+    const future = otherSeasons.map(season=>{
+      const list=items.filter(i=>i.season===season);
+      if(!list.length) return "";
+      const label=season[0].toUpperCase()+season.slice(1);
+      return `<details class="season-disclosure"><summary>${label}<span>${list.length}</span></summary><div class="season-disclosure-body">${group(season,label)}</div></details>`;
+    }).join("");
     return `<div class="ssn-card" data-expanded="${open}" data-sec="${sec.key}">
       <button type="button" class="ssn-head" data-ssn-toggle="${sec.key}">
         <span class="ti">${icon(sec.icon)}</span>
-        <b>${sec.name}</b>
-        <span class="ssn-progress">${done}/${items.length}</span>
+        <span class="ssn-title"><b>${sec.name}</b><small>${current.length ? `${current.length-currentDone} left this ${active}` : `No ${active} tasks`}</small></span>
+        <span class="ssn-progress">${currentDone}/${current.length}</span>
         <span class="chev" aria-hidden="true">›</span>
       </button>
       <div class="ssn-body" ${open?"":"hidden"}>
-        ${seasonOrder.map(season=>group(season,season[0].toUpperCase()+season.slice(1))).join("")}
+        ${current.length ? group(active,"This "+active) : `<p class="hint">Nothing scheduled here for ${active}.</p>`}
+        ${future ? `<div class="future-seasons"><div class="future-label">Other seasons</div>${future}</div>` : ""}
       </div>
     </div>`;
   }).join("") + (removedItems.length ? `<details class="removed-tasks"><summary>Removed seasonal tasks (${removedItems.length})</summary><div class="removed-task-list">${removedItems.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-seasonal="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
