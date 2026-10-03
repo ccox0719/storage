@@ -51,7 +51,8 @@ const HOUSE_SYSTEMS = [
     next:[
       "Test water before making chemical adjustments.",
       "Record water changes, filter cleaning and major chemical corrections.",
-      "Keep maintenance products in their labeled storage locations."
+      "Keep maintenance products in their labeled storage locations.",
+      "WINTER FILLING: The hose by the hot tub can still be used in winter as long as it is disconnected from the spigot after use. Do not leave the hose attached where trapped water can freeze."
     ]
   },
   {
@@ -307,8 +308,11 @@ const HOUSE_SYSTEMS = [
     summary:"Doors, heated garage, drains and work area",
     facts:[
       ["Garage","3 stalls"],
-      ["Floor","Epoxy"],
-      ["Features","Heat + drains"]
+      ["Floor","Epoxy; not radiant-heated"],
+      ["Insulation","Extra insulation added when garage was built"],
+      ["Heat","Overhead blower heater; sufficient for winter use"],
+      ["Drains","Garage drains discharge to a low area in the yard below the tree"],
+      ["Attic","Pull-down access on east side of garage; existing shelves + room for more"]
     ],
     supplies:[
       {label:"Tools, hardware and repair supplies",code:"G1"},
@@ -317,7 +321,9 @@ const HOUSE_SYSTEMS = [
     ],
     next:[
       "Test garage-door auto-reverse safety on the recurring maintenance schedule.",
-      "Keep floor drains clear and note any slow drainage.",
+      "Garage floor is not heated. The space relies on extra insulation plus the overhead blower heater and can be used comfortably in winter.",
+      "Keep floor drains clear and note any slow drainage. Drain discharge runs to the low spot in the yard below the tree.",
+      "Garage attic access is on the east side via pull-down stick/ladder. Existing shelves provide long-term storage; preserve a clear access path and avoid overloading attic framing.",
       "Log heater service, garage-door repairs and major floor or drain maintenance."
     ]
   }
