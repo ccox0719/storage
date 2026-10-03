@@ -31,8 +31,7 @@ function renderDecor(){
   $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
   $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
     (removed.length?`<details class="removed-tasks"><summary>Removed decor (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
-  const tab=$("#decorTab"); tab.hidden=active.length===0;
-  if(!active.length && !$("#view-decor").hidden) switchTab("storage");
+  const tab=$("#decorTab"); tab.hidden=false;
 }
 function openDecorForm(item){
   openForm({
