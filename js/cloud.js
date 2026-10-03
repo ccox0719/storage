@@ -225,6 +225,7 @@ async function cloudPull(){
     rebuild();
   }
 
+  let removedSeasonal = [];
   if(tr.data.length){
     const decorRows = tr.data.filter(r=>String(r.external_id).startsWith("decor:") || String(r.notes||"").startsWith("__DECOR__"));
     if(decorRows.length){
@@ -259,7 +260,7 @@ async function cloudPull(){
     }
 
     const seasonalStateRows = tr.data.filter(r=>String(r.external_id).startsWith("seasonalstate:") || String(r.notes||"").startsWith("__SEASONALSTATE__"));
-    const removedSeasonal = seasonalStateRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SEASONALSTATE__/,""));}catch{return null}}).filter(Boolean);
+    removedSeasonal = seasonalStateRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SEASONALSTATE__/,""));}catch{return null}}).filter(Boolean);
 
     tasks = tr.data.filter(r=>
       !String(r.external_id).startsWith("decor:") &&
