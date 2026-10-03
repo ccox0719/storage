@@ -3,40 +3,134 @@
    ================================================================== */
 const SEASONAL_SECTIONS = [
   {key:"pool", icon:"waves", name:"Pool",
-   winter:["Check cover after heavy snow or wind","Keep standing water managed per cover type"],
-   spring:["Document owner startup process before changing equipment","Remove & clean winter cover when appropriate","Inspect pump, filter, heater and plumbing before startup"],
-   summer:["Check water chemistry and equipment","Empty baskets / skimmer as needed","Inspect cover and pool gear storage"],
-   fall:["Owner walkthrough pending: document exact pool-closing process","Photograph valves, pump, filter and heater positions","Remove & store pool toys / loose accessories","Install winter cover per owner walkthrough"]},
-  {key:"kitchen", icon:"utensils", name:"Outdoor kitchen",
-   winter:["Keep water-connected components winterized","Check covers after storms"],
-   spring:["Reconnect water only after freeze risk passes","Inspect sink, fridge and ice maker","Clean grill and test burners"],
-   summer:["Clean grill and grease areas","Wipe fridge / ice maker and check drainage"],
-   fall:["Deep clean grill & grates","Winterize sink and ice maker per manufacturer instructions","Empty & clean outdoor fridge if shutting down","Cover / protect appliances as needed"]},
+   winter:[
+     "Check the mesh cover after heavy snow, wind, or debris buildup.",
+     "Keep standing water managed as appropriate for the mesh cover."
+   ],
+   spring:[
+     "Remove and clean the mesh winter cover.",
+     "Remove winter plugs and the skimmer freeze-protection bottle.",
+     "Reinstall the two return jets / nozzles.",
+     "Fill pool to the normal skimmer operating line.",
+     "Reconnect PVC and lubricate O-rings / gaskets with Magic Lube.",
+     "Start the pump and inspect the system for leaks.",
+     "Take the Oxygen Pools system information to the Grimes pool store for current startup dosing.",
+     "Circulate startup chemistry, then vacuum settled debris to WASTE if needed and refill lost water."
+   ],
+   summer:[
+     "Check water chemistry and equipment operation.",
+     "Empty baskets / skimmer as needed.",
+     "Keep pool gear and accessories organized in O3 / O4."
+   ],
+   fall:[
+     "Finish final swim, skim / brush / vacuum, and balance water for closing.",
+     "Lower pool water to the established winter closing level.",
+     "Turn pump OFF before changing the sand-filter multiport dial.",
+     "Remove the two return jet / nozzle fittings while holding the couplers steady.",
+     "Use the shop vac to vacuum the pool return PVC lines clear of water. Do not use the irrigation air-compressor step here.",
+     "Install the correct expandable winter plugs in the return / skimmer openings.",
+     "Pour pink RV / pool antifreeze into the return-line openings until it appears at the paired opening, then plug both ends. Brian estimated roughly 7–8 gallons for the two return lines.",
+     "Winterize the heater loop by pouring pink RV / pool antifreeze into one heater-side opening until it appears at the other, then plug both sides.",
+     "Turn the heater OFF and close the gas shutoff for winter.",
+     "Drain the pump completely by removing the two pump drain plugs; leave the pump dry.",
+     "Place a capped plastic soda bottle about half-full of antifreeze in the skimmer for freeze protection.",
+     "Set the sand-filter multiport dial to Winterize after the pool lines are drained and protected.",
+     "Install the mesh winter cover."
+   ]},
+  {key:"kitchen", icon:"utensils", name:"Outdoor kitchen & water",
+   winter:[
+     "Keep the exterior water system shut down through freezing weather.",
+     "Check appliance covers and the outdoor kitchen area after storms."
+   ],
+   spring:[
+     "Reconnect the outdoor ice-maker water-supply line and garden-hose drain line after freeze risk passes.",
+     "Tighten the drain-hose clamp.",
+     "Reopen the two basement shutoff valves serving the outdoor water system.",
+     "Check the sink, ice maker, and connections for leaks.",
+     "Replace the exterior water / ice-maker filter when due."
+   ],
+   summer:[
+     "Clean grill and grease areas.",
+     "Wipe the outdoor fridge / ice maker and check drainage."
+   ],
+   fall:[
+     "Shut off the two basement valves serving the outdoor sink / ice-maker water line.",
+     "Open and drain the exterior water lines so trapped water is removed.",
+     "Disconnect outdoor ice-maker power.",
+     "Disconnect the ice-maker water-supply line and garden-hose drain line.",
+     "Cover / tape the exposed water-line opening so dirt cannot enter.",
+     "Move the outdoor ice maker into the garage.",
+     "Leave the outdoor refrigerator and grills in place.",
+     "Note the exterior water / ice-maker filter for spring replacement if due."
+   ]},
   {key:"fountain", icon:"droplet", name:"Small fountain",
-   winter:["Keep basin free of standing water that can freeze"],
-   spring:["Inspect for freeze damage","Reinstall pump","Refill and test"],
-   summer:["Top off water","Clean debris and check pump flow"],
-   fall:["Drain completely before hard freeze","Clean basin and pump","Remove / protect pump","Do not leave standing water"]},
+   winter:["Keep the fountain dry and protected from freeze damage."],
+   spring:[
+     "Inspect the fountain bowl / components for freeze damage.",
+     "Replace the noted fountain O-ring if needed.",
+     "Reinstall the pump / filter components.",
+     "Refill and test the fountain."
+   ],
+   summer:[
+     "Top off water as needed.",
+     "Clean debris and check pump flow.",
+     "Use only a small label-directed amount of algaecide when needed."
+   ],
+   fall:[
+     "Vacuum / drain all remaining water from the fountain bowl and drainage pocket.",
+     "Remove the fountain pump / filter components.",
+     "Rinse or wipe fountain parts and store loose pieces in the shed / pool storage.",
+     "Bring the freeze-sensitive fountain bowl / component indoors if applicable."
+   ]},
+  {key:"hot-tub", icon:"droplet", name:"Hot tub",
+   winter:[
+     "Top off the hot tub with the nearby hose when needed.",
+     "Always disconnect the hose from the spigot after winter use so trapped water cannot freeze."
+   ],
+   spring:[],
+   summer:[],
+   fall:[]},
+  {key:"irrigation", icon:"droplet", name:"Irrigation / drip lines",
+   winter:["Leave the irrigation / drip water supply shut off through freezing weather."],
+   spring:["Reconnect / reopen the irrigation and drip system after freeze risk passes and inspect for leaks."],
+   summer:["Check drip lines and emitters for clogs, leaks, or disconnected lines."],
+   fall:[
+     "Shut off water to the outdoor drip / irrigation system.",
+     "Connect the compressor adapter and blow the irrigation / drip lines clear."
+   ]},
   {key:"deck", icon:"broom", name:"Deck & patio",
-   winter:["Keep drains and walkways clear"],
-   spring:["Sweep / wash surfaces","Inspect boards, railings and drainage"],
-   summer:["Clear debris and check high-traffic areas"],
-   fall:["Clear leaves and debris","Inspect for standing water","Clean before winter"]},
+   winter:["Keep drains and walkways clear."],
+   spring:["Sweep / wash surfaces.","Inspect boards, railings, and drainage."],
+   summer:["Clear debris and check high-traffic areas."],
+   fall:["Clear leaves and debris.","Inspect for standing water.","Clean before winter."]},
   {key:"furniture", icon:"chair", name:"Furniture & decor",
-   winter:["Keep stored cushions dry","Check covers after storms"],
-   spring:["Bring furniture back out","Inspect and wipe down pieces","Set up cushions and decor"],
-   summer:["Clean as needed","Dry cushions after storms"],
-   fall:["Clean and fully dry furniture","Store cushions indoors / dry storage","Move delicate decor and freeze-sensitive planters"]},
+   winter:["Keep stored cushions dry.","Check covers after storms."],
+   spring:["Bring furniture back out.","Inspect and wipe down pieces.","Set up cushions and decor."],
+   summer:["Clean as needed.","Dry cushions after storms."],
+   fall:[
+     "Bring patio cushions into the garage / shed.",
+     "Roll up and store outdoor rugs.",
+     "Store loose pool / fountain accessories and seasonal parts.",
+     "Let the annuals die back for winter and clear them when convenient."
+   ]},
+  {key:"garage", icon:"wrench", name:"Garage",
+   winter:["Keep the garage floor drains clear through freeze season."],
+   spring:["Inspect garage drains and clean out winter debris."],
+   summer:[],
+   fall:[
+     "Confirm the garage floor drains are clear before freeze season.",
+     "Keep the attic pull-down access and winter storage path clear."
+   ]},
   {key:"turf", icon:"leaf", name:"Artificial turf & beds",
-   winter:["Keep heavy debris from accumulating on turf"],
-   spring:["Remove winter debris","Brush matted turf","Check drainage","Clean perennial beds"],
-   summer:["Remove debris","Brush high-traffic areas as needed","Check drainage after heavy rain"],
-   fall:["Remove leaves and debris from turf","Brush matted areas","Keep drainage openings clear","Clean garden tools","Drain and store hoses","Clean fallen rose leaves"]},
+   winter:["Keep heavy debris from accumulating on turf."],
+   spring:["Remove winter debris.","Brush matted turf.","Check drainage.","Clean perennial beds."],
+   summer:["Remove debris.","Brush high-traffic areas as needed.","Check drainage after heavy rain."],
+   fall:["Remove leaves and debris from turf.","Brush matted areas.","Keep drainage openings clear.","Clean garden tools.","Drain and store hoses.","Clean fallen rose leaves."]},
   {key:"hvac", icon:"gear", name:"HVAC / air conditioner",
-   winter:["Keep outdoor unit clear of heavy debris while leaving manufacturer-required clearance"],
-   spring:["Schedule AC inspection / service if due","Clear leaves and debris around outdoor unit"],
-   summer:["Keep outdoor unit unobstructed"],
-   fall:["Schedule furnace / HVAC service","Clear debris around outdoor unit"]}
+   winter:["Keep the outdoor unit clear of heavy debris while maintaining required clearance."],
+   spring:["Schedule AC inspection / service if due.","Clear leaves and debris around the outdoor unit."],
+   summer:["Keep the outdoor unit unobstructed."],
+   fall:["Schedule furnace / HVAC service if due.","Clear debris around the outdoor unit."]}
 ]
 function seasonalSeed(){
   const out = [];
