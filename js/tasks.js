@@ -122,16 +122,9 @@ function openTaskForm(t){
       toast(t ? "Task updated" : "Task added");
     },
     onDelete: t ? ()=>{
-      const builtIn = TASKS_SEED.some(seed=>seed.id===t.id);
-      if(builtIn){
-        t.disabled = true;
-        saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
-        toast("Task removed");
-      }else{
-        tasks = tasks.filter(x=>x.id!==t.id);
-        saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
-        toast("Task deleted");
-      }
+      t.disabled = true;
+      saveTasks(); renderTasks(); renderSystems(); renderHomeDashboard();
+      toast("Task removed");
     } : null
   });
 }
