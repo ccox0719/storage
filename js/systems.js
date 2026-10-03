@@ -192,7 +192,8 @@ function systemTasks(id){
 }
 function systemForTask(t){
   const match=Object.entries(SYSTEM_TASK_IDS).find(([,ids])=>ids.includes(t.id));
-  return match ? match[0] : null;
+  if(!match) return null;
+  return systemPref(match[0]).disabled ? null : match[0];
 }
 function focusSystem(id){
   const el=document.getElementById(`system-${id}`);
