@@ -15,8 +15,10 @@ function saveJSON(key, val){
 let moves = loadJSON("wil-moves", {});
 let subMoves = loadJSON("wil-submoves", {});
 let customItems = loadJSON("wil-custom", []); // [{id,text,origin}]
+let itemOverrides = loadJSON("wil-item-overrides", {}); // seeded item edits/removals by id
 function saveMoves(){ saveJSON("wil-moves", moves); saveJSON("wil-submoves", subMoves); cloudSyncItemsSoon(); }
 function saveCustom(){ saveJSON("wil-custom", customItems); cloudSyncItemsSoon(); }
+function saveItemOverrides(){ saveJSON("wil-item-overrides", itemOverrides); cloudSyncItemsSoon(); }
 function addCustomItem(text, code){
   const id = `custom__${Date.now()}${Math.random().toString(36).slice(2,6)}`;
   customItems.push({id, text, origin:code});
@@ -31,7 +33,10 @@ function rebuild(){
   const map = {};
   RAW_LOCATIONS.forEach(loc=>{ map[loc.code] = {code:loc.code, icon:loc.icon, name:loc.name, job:loc.job, kw:loc.kw, maybe:loc.maybe, items:[]}; });
   itemsById = {};
-  [...RAW_LOCATIONS.flatMap(loc=>loc.items), ...customItems].forEach(it=>{
+  [...RAW_LOCATIONS.flatMap(loc=>loc.items), ...customItems].forEach(source=>{
+    const override = itemOverrides[source.id];
+    if(override?.deleted) return;
+    const it = override?.text ? {...source,text:override.text} : source;
     itemsById[it.id] = it;
     const dest = (moves[it.id] && map[moves[it.id]]) ? moves[it.id] : it.origin;
     (map[dest] || map[it.origin]).items.push(it);
@@ -236,7 +241,7 @@ function openSheet(code, itemId){
           ${subMoves[it.id] && sublocByCode[subMoves[it.id]] ? `<span class="sub-badge">${esc(sublocByCode[subMoves[it.id]].name)}</span>` : ""}
         </button></li>`;
     }).join("")}</ul>
-    <p class="hint">Tap an item to assign its exact shelf, cabinet, or drawer, or move it to another storage area.</p>
+    <p class="hint">Tap an item to move or assign it. Swipe left on any item to edit its wording or remove it.</p>
     ${l.maybe && l.maybe.length ? `
     <div class="also-h"><span>Could also go here</span><span class="rule" aria-hidden="true"></span></div>
     <ul class="also-list">${l.maybe.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : ""}`;
@@ -302,6 +307,74 @@ dlg.addEventListener("click", e=>{
   }
   if(e.target.id==="closeSheet" || !e.target.closest(".sheet")){ pendingFile=null; dlg.close(); }
 });
+
+/* ---------- swipe-to-edit storage items ---------- */
+let swipeItem = null;
+let suppressItemTapUntil = 0;
+
+function openStorageItemEdit(id){
+  const item = itemsById[id];
+  if(!item) return;
+  const isCustom = id.startsWith("custom__");
+  openForm({
+    title:"Edit storage item",
+    fields:[{key:"text",label:"Item",type:"text",value:item.text}],
+    onSave(v){
+      const next=v.text.trim();
+      if(!next) return;
+      if(isCustom){
+        const found=customItems.find(x=>x.id===id);
+        if(found){ found.text=next; saveCustom(); }
+      }else{
+        itemOverrides[id]={...(itemOverrides[id]||{}),text:next,deleted:false};
+        saveItemOverrides();
+      }
+      rebuild();
+      renderTiles();
+      if(currentSheetCode) openSheet(currentSheetCode);
+      if(query) search();
+      toast("Item updated");
+    },
+    onDelete(){
+      if(isCustom){
+        customItems=customItems.filter(x=>x.id!==id);
+        saveCustom();
+      }else{
+        itemOverrides[id]={...(itemOverrides[id]||{}),deleted:true};
+        saveItemOverrides();
+      }
+      delete moves[id];
+      delete subMoves[id];
+      saveMoves();
+      rebuild();
+      renderTiles();
+      if(currentSheetCode) openSheet(currentSheetCode);
+      if(query) search();
+      toast("Item removed");
+    }
+  });
+}
+
+document.addEventListener("touchstart",e=>{
+  const btn=e.target.closest(".item-btn[data-move-id]");
+  if(!btn || e.touches.length!==1){ swipeItem=null; return; }
+  const t=e.touches[0];
+  swipeItem={id:btn.dataset.moveId,x:t.clientX,y:t.clientY,time:Date.now()};
+},{passive:true});
+
+document.addEventListener("touchend",e=>{
+  if(!swipeItem || !e.changedTouches.length) return;
+  const t=e.changedTouches[0];
+  const dx=t.clientX-swipeItem.x;
+  const dy=t.clientY-swipeItem.y;
+  const isSwipeLeft=dx < -48 && Math.abs(dx) > Math.abs(dy)*1.25 && Date.now()-swipeItem.time < 900;
+  const id=swipeItem.id;
+  swipeItem=null;
+  if(!isSwipeLeft) return;
+  suppressItemTapUntil=Date.now()+500;
+  e.preventDefault();
+  openStorageItemEdit(id);
+},{passive:false});
 
 /* ---------- move picker ---------- */
 const picker = $("#picker");
@@ -387,7 +460,10 @@ document.querySelectorAll("dialog").forEach(d=>{
 
 document.addEventListener("click", e=>{
   const mv = e.target.closest("[data-move-id]");
-  if(mv){ openPicker(mv.dataset.moveId, mv.dataset.moveText, mv.dataset.moveFrom); return; }
+  if(mv){
+    if(Date.now() < suppressItemTapUntil) return;
+    openPicker(mv.dataset.moveId, mv.dataset.moveText, mv.dataset.moveFrom); return;
+  }
   const b = e.target.closest("[data-open]");
   if(b && !dlg.contains(b)){
     pendingFile = b.dataset.guess || null;
