@@ -38,7 +38,7 @@ function taskStatus(t){
 function taskRow(t){
   const st = taskStatus(t);
   const loc = t.location_code && byCode[t.location_code] ? byCode[t.location_code] : null;
-  return `<div class="task-row">
+  return `<div class="task-row" data-task-row="${t.id}">
     <button type="button" class="task-main" data-edit-task="${t.id}">
       <b>${esc(t.title)}</b>
       <span class="freq">Every ${t.frequency_months} month${t.frequency_months==1?"":"s"}${t.last_done?` · last done ${fmtDate(t.last_done)}`:""}</span><br>
@@ -61,7 +61,7 @@ function renderTasks(){
   const rows = [...activeTasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const importantCount = activeTasks.filter(t=>t.notify_important).length;
   const notifBox=$("#taskNotifications");
-  if(notifBox) notifBox.innerHTML=`<div class="home-empty" style="margin:10px 0 16px"><b>Important email reminders: ${importantCount} task${importantCount===1?"":"s"}</b><span>Planned cadence: about 7 days before due, again when due/overdue, with repeat nagging suppressed. Email delivery still needs a sender connection before messages can actually go out.</span></div>`;
+  if(notifBox) notifBox.innerHTML=`<div class="home-empty" style="margin:10px 0 16px"><b>Important email reminders: ${importantCount} task${importantCount===1?"":"s"}</b><span>Swipe left on any task to edit or remove it. Important reminders are planned for about 7 days before due and again when due/overdue.</span></div>`;
   const now = rows.filter(t=>taskStatus(t).bucket==="now");
   const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
   const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
@@ -76,6 +76,32 @@ function renderTasks(){
     `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`+
     (removedTasks.length ? `<details class="removed-tasks"><summary>Removed tasks (${removedTasks.length})</summary><div class="removed-task-list">${removedTasks.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-task="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
+let taskSwipe = null;
+let suppressTaskTapUntil = 0;
+
+$("#view-tasks").addEventListener("touchstart", e=>{
+  if(e.target.closest(".task-actions")){ taskSwipe=null; return; }
+  const row=e.target.closest("[data-task-row]");
+  if(!row || e.touches.length!==1){ taskSwipe=null; return; }
+  const t=e.touches[0];
+  taskSwipe={id:row.dataset.taskRow,x:t.clientX,y:t.clientY,time:Date.now()};
+},{passive:true});
+
+$("#view-tasks").addEventListener("touchend", e=>{
+  if(!taskSwipe || !e.changedTouches.length) return;
+  const t=e.changedTouches[0];
+  const dx=t.clientX-taskSwipe.x;
+  const dy=t.clientY-taskSwipe.y;
+  const isSwipeLeft=dx < -48 && Math.abs(dx) > Math.abs(dy)*1.25 && Date.now()-taskSwipe.time < 900;
+  const id=taskSwipe.id;
+  taskSwipe=null;
+  if(!isSwipeLeft) return;
+  suppressTaskTapUntil=Date.now()+500;
+  e.preventDefault();
+  const task=tasks.find(x=>x.id===id);
+  if(task) openTaskForm(task);
+},{passive:false});
+
 $("#view-tasks").addEventListener("click", e=>{
   const restore = e.target.closest("[data-restore-task]");
   if(restore){
@@ -103,7 +129,10 @@ $("#view-tasks").addEventListener("click", e=>{
   const open = e.target.closest("[data-task-open]");
   if(open){ openSheet(open.dataset.taskOpen); return; }
   const edit = e.target.closest("[data-edit-task]");
-  if(edit){ openTaskForm(tasks.find(x=>x.id===edit.dataset.editTask)); return; }
+  if(edit){
+    if(Date.now() < suppressTaskTapUntil) return;
+    openTaskForm(tasks.find(x=>x.id===edit.dataset.editTask)); return;
+  }
   if(e.target.id==="addTaskBtn2"){ openTaskForm(null); }
 });
 $("#addTaskBtn").addEventListener("click", ()=>openTaskForm(null));
