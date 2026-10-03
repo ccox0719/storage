@@ -108,7 +108,7 @@ function cloudRowsTasks(){
   return [...tasks.map(t=>({
     household_id:homeHouseholdId, external_id:t.id, title:t.title,
     frequency_months:Number(t.frequency_months)||1, last_done:t.last_done || null,
-    notes:t.disabled ? `__TASKSTATE__${JSON.stringify({disabled:true,notes:t.notes||""})}` : (t.notes || ""),
+    notes:`__TASKSTATE__${JSON.stringify({disabled:!!t.disabled,notes:t.notes||"",notify_important:!!t.notify_important})}`,
     category:t.category || "General", location_code:t.location_code || null, snoozed_until:t.snoozed_until || null
   })), ...decorItems.map(i=>({
     household_id:homeHouseholdId, external_id:`decor:${i.id}`, title:i.name,
@@ -280,9 +280,10 @@ async function cloudPull(){
           const meta=JSON.parse(String(notes).replace(/^__TASKSTATE__/,""));
           disabled=!!meta.disabled;
           notes=meta.notes||"";
+          var notify_important=!!meta.notify_important;
         }catch{}
       }
-      return {id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes,category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null,disabled};
+      return {id:r.external_id,title:r.title,frequency_months:r.frequency_months,last_done:r.last_done,notes,category:r.category||"General",location_code:r.location_code||null,snoozed_until:r.snoozed_until||null,disabled,notify_important:typeof notify_important==="boolean"?notify_important:false};
     });
     tasks.forEach(t=>{
       const seed = TASKS_SEED.find(x=>x.id===t.id);
@@ -290,6 +291,7 @@ async function cloudPull(){
       if(!t.category || t.category==="General") t.category = seed.category;
       if(!t.location_code) t.location_code = seed.location_code;
       if(!t.notes && seed.notes) t.notes = seed.notes;
+      if(typeof t.notify_important!=="boolean") t.notify_important=!!seed.notify_important;
     });
     mergeNewSeedItems(tasks,TASKS_SEED,()=>{});
     Store.write("wil-tasks",tasks);
