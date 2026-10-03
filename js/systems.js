@@ -500,7 +500,7 @@ function renderSystems(){
   if(!host) return;
   const activeSystems=HOUSE_SYSTEMS.filter(sys=>!systemPref(sys.id).disabled);
   const removedSystems=HOUSE_SYSTEMS.filter(sys=>systemPref(sys.id).disabled);
-  host.innerHTML=renderWinterizeChecklist()+activeSystems.map(sys=>{
+  host.innerHTML=activeSystems.map(sys=>{
     const pref=systemPref(sys.id);
     const displayName=pref.name||sys.name;
     const displaySummary=pref.summary||sys.summary;
@@ -544,7 +544,7 @@ function renderSystems(){
       </div>` : ""}
 
       <div class="system-block">
-        <h4>What to do next</h4>
+        <h4>Operating & reference notes</h4>
         <ul>${sys.next.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
       </div>
 
