@@ -6,10 +6,13 @@ const HOUSE_SYSTEMS = [
     id:"pool",
     name:"Pool",
     icon:"waves",
-    summary:"14,000 gal outdoor pool",
+    summary:"18 × 33 outdoor pool · oxygen-assisted sanitation · Hayward heater",
     facts:[
-      ["Volume","14,000 gallons"],
-      ["Season","Fall closing prep"],
+      ["Size","Approx. 18 × 33 ft"],
+      ["Sanitation","Oxygen generator + Formula O + liquid chlorine as needed"],
+      ["Heater","Hayward pool heater; oversized / fast-heating"],
+      ["Filter valve","Filter · Backwash · Rinse · Recirculate · Waste · Winterize · Closed"],
+      ["Closing antifreeze","Approx. 10–12 gal pink RV/pool antifreeze total"],
       ["Storage","O3 / O4"]
     ],
     supplies:[
@@ -19,9 +22,15 @@ const HOUSE_SYSTEMS = [
       {label:"Winter plugs, hose adapters, fittings, seasonal caps",code:"O4-B"}
     ],
     next:[
-      "Document the owner's exact winterization process before changing valve or equipment positions.",
-      "Photograph pump, filter, heater and valve positions before closing.",
-      "Remove and store loose pool accessories before winter cover installation."
+      "SPRING OPEN: Remove mesh cover; reinstall two return jets; fill to skimmer operating line; reconnect PVC while filling; lubricate O-rings/gaskets with Magic Lube; start system and inspect for leaks.",
+      "SPRING CHEMISTRY: Take oxygen-system information to the Grimes pool store. Historically buy four yellow liquid-chlorine jugs plus Formula O / oxygen-system chemicals; use store dosing guidance. Initial spring cleanup may use 1–2 jugs, then circulate several days.",
+      "VACUUM: Fully prime the vacuum hose with water before connecting. With pump OFF, attach the skimmer vacuum plate/hose, then turn pump ON. For heavy spring debris, switch the multiport to WASTE only while the pump is OFF, vacuum, then refill lost water.",
+      "CLOSE: Lower water as needed, remove return nozzles while holding couplers steady, blow/vacuum lines dry, install expandable winter plugs, and fill return lines with pink antifreeze until it appears at the paired opening before plugging.",
+      "HEATER CLOSE: Fill the heater loop with antifreeze from one side until it appears at the other, then plug both sides. Turn off heater/gas for winter.",
+      "PUMP CLOSE: Remove the two pump drain plugs and leave the pump dry. Store loose drain plugs and small winter parts together in the pump/filter basket.",
+      "SKIMMER FREEZE PROTECTION: Brian places a capped plastic soda bottle about half-full of antifreeze in the skimmer after lines are protected; mesh cover allows precipitation back into the pool over winter.",
+      "HOSES: Blow flexible hoses clear with an air compressor from one end, then reverse and blow from the other end before storage.",
+      "Replace noted O-ring(s) in spring and keep winter plugs, adapters and fittings together in O4-B."
     ]
   },
   {
@@ -128,6 +137,119 @@ const HOUSE_SYSTEMS = [
     ]
   },
   {
+    id:"outdoor-water",
+    name:"Outdoor Water & Ice Maker",
+    icon:"droplet",
+    summary:"Outdoor sink, ice maker, fridge and seasonal water shutoff",
+    facts:[
+      ["Winter","Shut off two basement valves and drain exterior water lines"],
+      ["Ice maker","Bring into garage for winter"],
+      ["Outdoor fridge","Stays outside"],
+      ["Filter","Exterior water / ice-maker filter in basement"]
+    ],
+    supplies:[
+      {label:"Outdoor kitchen and appliance area",code:"O5"},
+      {label:"Outdoor kitchen fridge",code:"O7"},
+      {label:"Outdoor ice maker",code:"O8"}
+    ],
+    next:[
+      "FALL: Shut off the two basement valves serving the exterior water system and drain the outdoor sink/ice-maker line.",
+      "Disconnect ice maker power, water-supply line and garden-hose drain. The garden hose drains under the deck.",
+      "Cover/tape the exposed water-line opening so dirt cannot enter, then store the ice maker in the garage.",
+      "Leave the outdoor refrigerator and grills in place for winter.",
+      "SPRING: Reconnect the water line and drain hose, tighten the clamp, reopen basement shutoffs and check for leaks.",
+      "Replace the exterior water / ice-maker filter when due; Brian noted a spring replacement."
+    ]
+  },
+  {
+    id:"fountain",
+    name:"Fountain",
+    icon:"droplet",
+    summary:"Under-deck fountain, pump, filter and seasonal care",
+    facts:[
+      ["Winter","Drain / vacuum bowl and remove loose components"],
+      ["Filter","Small pond-style filter"],
+      ["Treatment","Small amount of algaecide in bowl as needed"]
+    ],
+    supplies:[
+      {label:"Outdoor / pool accessories and seasonal parts",code:"O3-A"},
+      {label:"Winter plugs, fittings and seasonal caps",code:"O4-B"}
+    ],
+    next:[
+      "At closing, vacuum remaining water from the fountain bowl and drainage pocket.",
+      "Remove fountain pump/filter components, rinse or wipe them down, and store loose pieces in the shed / pool storage.",
+      "Bring the fountain bowl indoors for winter if applicable; prior attempts to leave it out resulted in freeze damage.",
+      "Use only a small label-directed amount of algaecide in the fountain bowl during the season.",
+      "Replace the noted fountain O-ring in spring."
+    ]
+  },
+  {
+    id:"lighting",
+    name:"Lighting & Automation",
+    icon:"plug",
+    summary:"Whole-home lighting scenes, patio transformers and sunrise/sunset effects",
+    facts:[
+      ["Controls","Mix of hardwired and wireless switches / motion sensors"],
+      ["Patio","Black low-voltage transformers on timers"],
+      ["Basement window","LED faux window follows sunrise / sunset"]
+    ],
+    supplies:[
+      {label:"Spare electronics and household tech overflow",code:"B1-C"},
+      {label:"Router, network switch, NVR, UPS and Ethernet accessories",code:"B1-D"}
+    ],
+    next:[
+      "Reconnect the main lighting system to the network and import the programming file from Brian if needed.",
+      "Some rooms use wireless motion sensors; others have motion sensing built into the wall switch.",
+      "Plug-in lamp modules can be scheduled, dimmed and included in scenes.",
+      "Patio/deck lights are powered by black transformer boxes on timers.",
+      "A separate outdoor decorative-light controller has a scannable QR/barcode for its own app and timer setup.",
+      "The faux basement window uses LED tape behind frosted glass and automatically follows local sunrise/sunset."
+    ]
+  },
+  {
+    id:"electrical",
+    name:"Electrical & Heated Floors",
+    icon:"plug",
+    summary:"Panels, surge protection, hot tub and radiant tile heat",
+    facts:[
+      ["Protection","Whole-house SPD / TVSS"],
+      ["Panels","Basement → garage → pool"],
+      ["Heated tile","Laundry, both upstairs baths, basement tile"]
+    ],
+    supplies:[
+      {label:"House-system parts, manuals and maintenance supplies",code:"B2-B"}
+    ],
+    next:[
+      "Document breaker labels and photograph each panel for the house map.",
+      "Whole-house surge protective device is installed at the main electrical equipment.",
+      "Basement panel includes the hot-tub breaker, garage-panel feeder and floor-heat circuits.",
+      "Garage panel feeds downstream equipment including the pool-panel area.",
+      "Reconnect/configure the heated-floor thermostat app for the laundry room, both upstairs bathrooms and basement tile."
+    ]
+  },
+  {
+    id:"entertainment",
+    name:"TV & Entertainment",
+    icon:"plug",
+    summary:"Samsung art display, Roku streaming and distributed media",
+    facts:[
+      ["Streaming","Roku devices used across TVs"],
+      ["Art TV","Samsung account supports photo / art display"],
+      ["Audio","Sonos amps in IT area"]
+    ],
+    supplies:[
+      {label:"Spare electronics and household tech overflow",code:"B1-C"},
+      {label:"Router, network switch, NVR, UPS and Ethernet accessories",code:"B1-D"}
+    ],
+    next:[
+      "Set up the Samsung account on the art-style TV for personal photos/art; optional paid art subscription is available.",
+      "The thin Samsung display uses a separate external control / brain box behind or near the TV.",
+      "Configure Roku devices and sign into preferred streaming services for a consistent interface across TVs.",
+      "Document which Roku remote and external box belongs to each TV.",
+      "Sonos amplifiers and network cabling are located in the IT area."
+    ]
+  },
+  {
     id:"garage",
     name:"Garage Systems",
     icon:"wrench",
@@ -184,7 +306,12 @@ const SYSTEM_TASK_IDS = {
   "water-heater":["t3"],
   network:[],
   appliances:["t4","t6","t11"],
-  garage:["t9"]
+  garage:["t9"],
+  "outdoor-water":[],
+  fountain:[],
+  lighting:[],
+  electrical:[],
+  entertainment:[]
 };
 function systemTasks(id){
   const ids=SYSTEM_TASK_IDS[id]||[];
