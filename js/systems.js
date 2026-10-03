@@ -487,7 +487,10 @@ function systemForTask(t){
   if(!match) return null;
   return systemPref(match[0]).disabled ? null : match[0];
 }
+const systemOpen = new Set();
 function focusSystem(id){
+  systemOpen.add(id);
+  renderSystems();
   const el=document.getElementById(`system-${id}`);
   if(!el) return;
   el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
@@ -506,70 +509,79 @@ function renderSystems(){
     const displaySummary=pref.summary||sys.summary;
     const logs=systemLogFor(sys.id);
     const linkedTasks=systemTasks(sys.id);
-    return `<section class="system-card" id="system-${sys.id}">
+    const open=systemOpen.has(sys.id);
+    return `<section class="system-card" id="system-${sys.id}" data-expanded="${open}">
       <div class="system-head">
-        <span class="system-icon">${icon(sys.icon)}</span>
-        <div><h3>${esc(displayName)}</h3><p>${esc(displaySummary)}</p></div>
+        <button type="button" class="system-summary" data-toggle-system="${sys.id}" aria-expanded="${open}">
+          <span class="system-icon">${icon(sys.icon)}</span>
+          <span class="system-summary-copy"><h3>${esc(displayName)}</h3><p>${esc(displaySummary)}</p></span>
+          ${linkedTasks.length?`<span class="system-mini">${linkedTasks.length} task${linkedTasks.length===1?"":"s"}</span>`:""}
+          <span class="system-chev" aria-hidden="true">›</span>
+        </button>
         <button type="button" class="system-edit-btn" data-edit-system="${sys.id}" aria-label="Edit ${esc(displayName)}">Edit</button>
       </div>
-      <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
+      <div class="system-body" ${open?"":"hidden"}>
+        <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
 
-      <div class="system-block system-equipment">
-        <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
-        ${(()=>{
-          const p=systemProfile(sys.id);
-          const rows=[
-            ["Manufacturer",p.manufacturer],
-            ["Model",p.model],
-            ["Serial",p.serial],
-            ["Installed",p.install_date ? fmtDate(p.install_date) : ""],
-            ["Service",p.service_contact],
-            ["Manual",p.manual_url]
-          ].filter(([,v])=>v);
-          return rows.length
-            ? `<div class="system-profile-grid">${rows.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>`
-            : `<p class="system-empty">No equipment details recorded yet.</p>`;
-        })()}
-      </div>
+        <div class="system-block system-equipment">
+          <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
+          ${(()=>{
+            const p=systemProfile(sys.id);
+            const rows=[
+              ["Manufacturer",p.manufacturer],
+              ["Model",p.model],
+              ["Serial",p.serial],
+              ["Installed",p.install_date ? fmtDate(p.install_date) : ""],
+              ["Service",p.service_contact],
+              ["Manual",p.manual_url]
+            ].filter(([,v])=>v);
+            return rows.length
+              ? `<div class="system-profile-grid">${rows.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>`
+              : `<p class="system-empty">No equipment details recorded yet.</p>`;
+          })()}
+        </div>
 
-      ${linkedTasks.length ? `<div class="system-block">
-        <h4>Recurring maintenance</h4>
-        <div class="system-task-list">${linkedTasks.map(t=>{
-          const st=taskStatus(t);
-          return `<div class="system-task-row">
-            <span><b>${esc(t.title)}</b><small>Every ${t.frequency_months} month${t.frequency_months==1?"":"s"} · ${esc(st.label)}</small></span>
-            <button type="button" data-system-task-done="${t.id}">Done</button>
-          </div>`;
-        }).join("")}</div>
-      </div>` : ""}
+        ${linkedTasks.length ? `<div class="system-block">
+          <h4>Recurring maintenance</h4>
+          <div class="system-task-list">${linkedTasks.map(t=>{
+            const st=taskStatus(t);
+            return `<div class="system-task-row">
+              <span><b>${esc(t.title)}</b><small>Every ${t.frequency_months} month${t.frequency_months==1?"":"s"} · ${esc(st.label)}</small></span>
+              <button type="button" data-system-task-done="${t.id}">Done</button>
+            </div>`;
+          }).join("")}</div>
+        </div>` : ""}
 
-      <div class="system-block">
-        <h4>Operating & reference notes</h4>
-        <ul>${sys.next.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
-      </div>
+        <details class="system-disclosure">
+          <summary>Operating & reference notes <span>${sys.next.length}</span></summary>
+          <div class="system-block system-detail-block"><ul>${sys.next.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+        </details>
 
-      <div class="system-block">
-        <h4>Supplies & locations</h4>
-        <div class="system-supplies">${sys.supplies.map(s=>`<button type="button" data-system-open="${s.code}"><span>${esc(s.label)}</span><b>${esc(s.code)}</b></button>`).join("")}</div>
-      </div>
+        <details class="system-disclosure">
+          <summary>Supplies & locations <span>${sys.supplies.length}</span></summary>
+          <div class="system-block system-detail-block"><div class="system-supplies">${sys.supplies.map(s=>`<button type="button" data-system-open="${s.code}"><span>${esc(s.label)}</span><b>${esc(s.code)}</b></button>`).join("")}</div></div>
+        </details>
 
-      <div class="system-block">
-        <div class="system-log-head"><h4>Maintenance history</h4><button type="button" data-add-system-log="${sys.id}">+ Add</button></div>
-        ${logs.length ? `<div class="system-history">${logs.slice(0,6).map(l=>`<div><b>${esc(fmtDate(l.date))}</b><span>${esc(l.note)}</span></div>`).join("")}</div>` : `<p class="system-empty">No maintenance logged yet.</p>`}
+        <details class="system-disclosure">
+          <summary>Maintenance history <span>${logs.length}</span></summary>
+          <div class="system-block system-detail-block">
+            <div class="system-log-head"><h4>History</h4><button type="button" data-add-system-log="${sys.id}">+ Add</button></div>
+            ${logs.length ? `<div class="system-history">${logs.slice(0,6).map(l=>`<div><b>${esc(fmtDate(l.date))}</b><span>${esc(l.note)}</span></div>`).join("")}</div>` : `<p class="system-empty">No maintenance logged yet.</p>`}
+          </div>
+        </details>
       </div>
     </section>`;
   }).join("") + (removedSystems.length ? `<details class="removed-tasks system-removed"><summary>Removed systems (${removedSystems.length})</summary><div class="removed-task-list">${removedSystems.map(sys=>`<div class="removed-task-row"><span>${esc(systemPref(sys.id).name||sys.name)}</span><button type="button" data-restore-system="${sys.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 
-$("#view-systems").addEventListener("change",e=>{
-  const cb=e.target.closest("[data-winterize-check]");
-  if(cb){
-    winterizeChecks[cb.dataset.winterizeCheck]=cb.checked;
-    saveWinterizeChecks();
-    renderSystems();
-  }
-});
 $("#view-systems").addEventListener("click",e=>{
+  const toggleSystem=e.target.closest("[data-toggle-system]");
+  if(toggleSystem){
+    const id=toggleSystem.dataset.toggleSystem;
+    systemOpen.has(id) ? systemOpen.delete(id) : systemOpen.add(id);
+    renderSystems();
+    return;
+  }
   const reset=e.target.closest("[data-reset-winterize]");
   if(reset){
     if(confirm("Reset all Winterize House checklist items?")){
