@@ -241,7 +241,7 @@ async function cloudPull(){
     const decorRows = tr.data.filter(r=>String(r.external_id).startsWith("decor:") || String(r.notes||"").startsWith("__DECOR__"));
     if(decorRows.length){
       const parsed = decorRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__DECOR__/,""));}catch{return null}}).filter(Boolean);
-      if(parsed.length){decorItems=parsed;Store.write("wil-decor",decorItems);}
+      if(parsed.length){decorItems=parsed;if(typeof applyBasementStyleUpdate==="function") applyBasementStyleUpdate(false);Store.write("wil-decor",decorItems);}
     }
 
     const systemRows = tr.data.filter(r=>String(r.external_id).startsWith("systemlog:") || String(r.notes||"").startsWith("__SYSTEMLOG__"));
