@@ -48,17 +48,21 @@ function renderPlants(){
     (groups[loc] ||= []).push(p);
   });
   const urgent = activePlants.filter(p=>currentSeason()==="fall" && /bring indoors|dig up|first frost/i.test(p.fall_task||"")).length;
-  $("#plantsSummary").innerHTML = `<div class="plant-summary"><b>${urgent}</b> frost-sensitive plant ${urgent===1?"entry":"entries"} need attention this fall. Tap a plant to edit its exact location or care notes.</div>`;
-  $("#plantsList").innerHTML = Object.entries(groups).map(([loc,list])=>`
-    <div class="plant-group-h">${esc(loc)}</div>
-    ${list.map(p=>`
-      <button type="button" class="plant-card" data-edit-plant="${p.id}">
-        <b>${esc(p.name)}</b>
-        <div class="loc">${esc(p.location||"Location not set")}</div>
-        <span class="plant-next">Next: ${esc(plantNextAction(p))}</span>
-        ${plantCycleBadge(p)}
-      </button>`).join("")}
-  `).join("") + (removedPlants.length ? `<details class="removed-tasks"><summary>Removed plants (${removedPlants.length})</summary><div class="removed-task-list">${removedPlants.map(x=>`<div class="removed-task-row"><span>${esc(x.name)}</span><button type="button" data-restore-plant="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
+  $("#plantsSummary").innerHTML = `<div class="quiet-note"><span>♧</span><b>${urgent} frost-sensitive</b><small>${urgent ? "Open the affected area when you are ready." : "No urgent plant care right now."}</small></div>`;
+  $("#plantsList").innerHTML = Object.entries(groups).map(([loc,list])=>{
+    const urgentHere=list.filter(p=>currentSeason()==="fall" && /bring indoors|dig up|first frost/i.test(p.fall_task||"")).length;
+    return `<details class="sleek-disclosure plant-group">
+      <summary><span>${esc(loc)}</span><span class="summary-meta">${list.length} plant${list.length===1?"":"s"}${urgentHere?` · ${urgentHere} needs attention`:""}</span></summary>
+      <div class="disclosure-body">
+        ${list.map(p=>`
+          <button type="button" class="plant-card compact-plant" data-edit-plant="${p.id}">
+            <span><b>${esc(p.name)}</b><small>${esc(plantNextAction(p))}</small></span>
+            ${plantCycleBadge(p)}
+            <span class="home-arrow">›</span>
+          </button>`).join("")}
+      </div>
+    </details>`;
+  }).join("") + (removedPlants.length ? `<details class="removed-tasks"><summary>Removed plants (${removedPlants.length})</summary><div class="removed-task-list">${removedPlants.map(x=>`<div class="removed-task-row"><span>${esc(x.name)}</span><button type="button" data-restore-plant="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
 $("#view-plants").addEventListener("click", e=>{
   const restore=e.target.closest("[data-restore-plant]");
