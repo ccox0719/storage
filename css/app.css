@@ -1017,3 +1017,8 @@ body{background-image:none}
 .shopping-source{margin:12px 0 22px}
 .shopping-source a{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:15px;background:var(--surface);color:var(--ink);text-decoration:none;font-weight:650;border:1px solid var(--line)}
 .shopping-source a span{color:var(--muted);font-size:1.25rem}
+
+.basement-shop-visual{height:145px;border-radius:14px;background:linear-gradient(145deg,#34251d,#6f452d 48%,#c9ad8c);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;font-weight:650;letter-spacing:.02em}
+.basement-swatches{display:flex;gap:7px}
+.basement-swatches i{width:25px;height:25px;border-radius:50%;border:1px solid rgba(255,255,255,.7);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.basement-swatches i:nth-child(1){background:#34251d}.basement-swatches i:nth-child(2){background:#75482d}.basement-swatches i:nth-child(3){background:#9b472d}.basement-swatches i:nth-child(4){background:#d7c4aa}.basement-swatches i:nth-child(5){background:#526771}.basement-swatches i:nth-child(6){background:#626647}
