@@ -61,7 +61,7 @@ function renderTasks(){
   const rows = [...activeTasks].sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const importantCount = activeTasks.filter(t=>t.notify_important).length;
   const notifBox=$("#taskNotifications");
-  if(notifBox) notifBox.innerHTML=`<div class="home-empty" style="margin:10px 0 16px"><b>Important email reminders: ${importantCount} task${importantCount===1?"":"s"}</b><span>Swipe left on any task to edit or remove it. Important reminders are planned for about 7 days before due and again when due/overdue.</span></div>`;
+  if(notifBox) notifBox.innerHTML=`<div class="quiet-note"><span>✉</span><b>${importantCount} important reminder${importantCount===1?"":"s"}</b><small>Swipe left on a task to edit.</small></div>`;
   const now = rows.filter(t=>taskStatus(t).bucket==="now");
   const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
   const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
@@ -72,7 +72,8 @@ function renderTasks(){
       <div class="summary-card"><b>${later.length}</b><span>All good</span></div>
     </div>`;
   const section = (label,list)=> list.length ? `<div class="task-section-h">${label}</div>${list.map(taskRow).join("")}` : "";
-  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+section("All good",later)+
+  const laterSection = later.length ? `<details class="sleek-disclosure task-later"><summary>All good <span>${later.length}</span></summary><div class="disclosure-body">${later.map(taskRow).join("")}</div></details>` : "";
+  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+laterSection+
     `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`+
     (removedTasks.length ? `<details class="removed-tasks"><summary>Removed tasks (${removedTasks.length})</summary><div class="removed-task-list">${removedTasks.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-task="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
