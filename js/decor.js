@@ -34,10 +34,17 @@ function renderDecor(){
   const room=$("#decorRoom").value||"all", q=$("#decorSearch").value.toLowerCase().trim();
   const filtered=active.filter(i=>(room==="all"||i.room===room)&&(!q||(i.name+" "+i.style+" "+i.room).toLowerCase().includes(q)));
   const rooms=[...new Set(filtered.map(i=>i.room))];
-  $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<div class="decor-room-h">${esc(roomName)}</div><div class="decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card">${i.image?`<a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} reference"></a>`:""}<div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">${Number(i.target||0)>0?`Target ${decorMoney(i.target)}`:"Budget TBD"}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div></article>`).join("")}</div>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
+  const autoOpen=!!q || room!=="all";
+  $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<details class="sleek-disclosure shopping-room" ${autoOpen?"open":""}>
+    <summary><span>${esc(roomName)}</span><span class="summary-meta">${filtered.filter(i=>i.room===roomName).length} item${filtered.filter(i=>i.room===roomName).length===1?"":"s"}</span></summary>
+    <div class="disclosure-body decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card compact-shop">
+      ${i.image?`<a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} reference"></a>`:""}
+      <div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">${Number(i.target||0)>0?`Target ${decorMoney(i.target)}`:"Budget TBD"}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div>
+    </article>`).join("")}</div>
+  </details>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
   $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
-  $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row"><img src="${i.image}" alt=""><span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
-    (removed.length?`<details class="removed-tasks"><summary>Removed decor (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
+  $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row">${i.image?`<img src="${i.image}" alt="">`:""}<span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
+    (removed.length?`<details class="removed-tasks"><summary>Removed items (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
   const tab=$("#decorTab"); tab.hidden=false;
 }
 function openDecorForm(item){
