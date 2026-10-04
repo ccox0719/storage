@@ -1013,3 +1013,7 @@ body{background-image:none}
     --soft-shop:color-mix(in srgb,var(--nav-shop) 18%,var(--surface));
   }
 }
+
+.shopping-source{margin:12px 0 22px}
+.shopping-source a{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:15px;background:var(--surface);color:var(--ink);text-decoration:none;font-weight:650;border:1px solid var(--line)}
+.shopping-source a span{color:var(--muted);font-size:1.25rem}
