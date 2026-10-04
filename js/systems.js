@@ -6,11 +6,14 @@ const HOUSE_SYSTEMS = [
     id:"pool",
     name:"Pool",
     icon:"waves",
-    summary:"18 × 33 outdoor pool · oxygen-assisted sanitation · Hayward heater",
+    summary:"14,000 gal · approx. 18 × 33 ft · oxygen system · Hayward heater",
     facts:[
+      ["Capacity","Approx. 14,000 gal"],
       ["Size","Approx. 18 × 33 ft"],
       ["Sanitation","Oxygen generator + Formula O + liquid chlorine as needed"],
-      ["Heater","Hayward pool heater; oversized / fast-heating"],
+      ["Heater","Hayward · model/serial not yet recorded · oversized / fast-heating"],
+      ["Pool light","Lotus Lamp controller"],
+      ["Service","SPS Pools · Grimes"],
       ["Filter valve","Filter · Backwash · Rinse · Recirculate · Waste · Winterize · Closed"],
       ["Closing antifreeze","Approx. 10–12 gal pink RV/pool antifreeze total"],
       ["Storage","O3 / O4"]
@@ -37,8 +40,10 @@ const HOUSE_SYSTEMS = [
     id:"hot-tub",
     name:"Hot Tub",
     icon:"droplet",
-    summary:"Spa care, testing and seasonal maintenance",
+    summary:"Outdoor hot tub · make/model/serial not yet recorded",
     facts:[
+      ["Location","Outdoor pool / patio area"],
+      ["Manufacturer / model","Not yet recorded"],
       ["Chemicals","Conditioned indoor storage"],
       ["Testing","Keep strips and small accessories together"],
       ["Storage","M5"]
@@ -59,8 +64,12 @@ const HOUSE_SYSTEMS = [
     id:"hvac",
     name:"HVAC",
     icon:"gear",
-    summary:"Heating, cooling, filters and seasonal service",
+    summary:"Bryant controls · heating, cooling & whole-house humidifier",
     facts:[
+      ["Controls","Bryant thermostat / app"],
+      ["HVAC equipment","Furnace and A/C make/model not yet recorded"],
+      ["Service history","Bryant of Iowa"],
+      ["Humidifier","Whole-house unit with replaceable pad/filter"],
       ["Supplies","Mechanical Room"],
       ["Filter task","Recurring"],
       ["Storage","B2"]
@@ -81,7 +90,7 @@ const HOUSE_SYSTEMS = [
     id:"water-heater",
     name:"Water Heater",
     icon:"flame",
-    summary:"Hot-water equipment and service history",
+    summary:"Mechanical-room water heater · make/model/serial not yet recorded",
     facts:[
       ["Area","Mechanical Room"],
       ["Maintenance","Annual check / flush task"],
@@ -100,9 +109,12 @@ const HOUSE_SYSTEMS = [
     id:"network",
     name:"Network & Home Assistant",
     icon:"plug",
-    summary:"Internet, NVR, router and smart-home core",
+    summary:"Eero Wi-Fi · basement IT closet · NVR/network core · Home Assistant planned",
     facts:[
+      ["Wi-Fi","Eero mesh Wi-Fi"],
       ["Network shelf","Basement storage / IT closet"],
+      ["IT equipment","Network switch/splitter, camera equipment and Sonos amps"],
+      ["Security","Astra Security cameras"],
       ["Cabling","Gray = Ethernet · purple = speaker wiring"],
       ["Yard conduit","Existing 3/4-inch conduit runs under yard for current cable route"],
       ["Fiber note","Metronet utility access is near neighbor-side utility box; goal is to route fiber to IT closet"],
@@ -197,8 +209,10 @@ const HOUSE_SYSTEMS = [
     id:"lighting",
     name:"Lighting & Automation",
     icon:"plug",
-    summary:"Whole-home lighting scenes, patio transformers and sunrise/sunset effects",
+    summary:"Lutron RA2 · patio LEDs · automated interior/exterior lighting",
     facts:[
+      ["Main lighting","Lutron RA2"],
+      ["Patio LEDs","Mohuan under-counter LEDs"],
       ["Controls","Mix of hardwired and wireless switches / motion sensors"],
       ["Patio","Black low-voltage transformers on timers"],
       ["Basement window","LED faux window follows sunrise / sunset"]
@@ -220,11 +234,11 @@ const HOUSE_SYSTEMS = [
     id:"electrical",
     name:"Electrical & Heated Floors",
     icon:"plug",
-    summary:"Panels, surge protection, hot tub and radiant tile heat",
+    summary:"Nuheat floors · surge protection · basement, garage & pool panels",
     facts:[
       ["Protection","Whole-house SPD / TVSS"],
       ["Panels","Basement → garage → pool"],
-      ["Heated tile","Laundry, both upstairs baths, basement tile"]
+      ["Heated tile","Nuheat · laundry, both upstairs baths, basement tile"]
     ],
     supplies:[
       {label:"House-system parts, manuals and maintenance supplies",code:"B2-B"}
@@ -241,11 +255,11 @@ const HOUSE_SYSTEMS = [
     id:"entertainment",
     name:"TV & Entertainment",
     icon:"plug",
-    summary:"Samsung art display, Roku streaming and distributed media",
+    summary:"Sonos whole-home audio · Samsung display · Roku streaming",
     facts:[
       ["Streaming","Roku devices used across TVs"],
       ["Art TV","Samsung account supports photo / art display"],
-      ["Audio","Sonos amps in IT area"]
+      ["Audio","Sonos whole-home audio · amps in basement IT closet"]
     ],
     supplies:[
       {label:"Spare electronics and household tech overflow",code:"B1-C"},
@@ -305,9 +319,10 @@ const HOUSE_SYSTEMS = [
     id:"garage",
     name:"Garage Systems",
     icon:"wrench",
-    summary:"Doors, heated garage, drains and work area",
+    summary:"3 stalls · MyQ doors · overhead heater · epoxy floor · drains",
     facts:[
       ["Garage","3 stalls"],
+      ["Door control","MyQ"],
       ["Floor","Epoxy; not radiant-heated"],
       ["Insulation","Extra insulation added when garage was built"],
       ["Heat","Overhead blower heater; sufficient for winter use"],
