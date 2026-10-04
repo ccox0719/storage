@@ -886,3 +886,130 @@ body{background-image:none}
 .tabbar{border-top:1px solid var(--line);box-shadow:0 -8px 22px rgba(0,0,0,.04)}
 .tab-btn{font-size:.66rem;padding:7px 1px}
 .tab-btn[aria-current="true"]{background:color-mix(in srgb,var(--focus) 7%,var(--surface));color:var(--focus)}
+
+
+/* ---------- Semantic color + icon system ---------- */
+:root{
+  --nav-home:#4D6BFF;
+  --nav-systems:#2F7D73;
+  --nav-storage:#6D5BD0;
+  --nav-tasks:#D05A47;
+  --nav-seasonal:#C58A2A;
+  --nav-plants:#4E8B57;
+  --nav-shop:#9A5BC7;
+  --soft-home:color-mix(in srgb,var(--nav-home) 10%,var(--surface));
+  --soft-systems:color-mix(in srgb,var(--nav-systems) 10%,var(--surface));
+  --soft-storage:color-mix(in srgb,var(--nav-storage) 10%,var(--surface));
+  --soft-tasks:color-mix(in srgb,var(--nav-tasks) 10%,var(--surface));
+  --soft-seasonal:color-mix(in srgb,var(--nav-seasonal) 11%,var(--surface));
+  --soft-plants:color-mix(in srgb,var(--nav-plants) 10%,var(--surface));
+  --soft-shop:color-mix(in srgb,var(--nav-shop) 10%,var(--surface));
+}
+
+.tab-title h2{display:flex;align-items:center;gap:9px}
+.view-icon{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;font-size:.95rem;font-weight:800}
+.systems-title .view-icon{background:var(--soft-systems);color:var(--nav-systems)}
+.tasks-title .view-icon{background:var(--soft-tasks);color:var(--nav-tasks)}
+.seasonal-title .view-icon{background:var(--soft-seasonal);color:var(--nav-seasonal)}
+.plants-title .view-icon{background:var(--soft-plants);color:var(--nav-plants)}
+.shop-title .view-icon{background:var(--soft-shop);color:var(--nav-shop)}
+
+.tab-btn[data-tab="home"]{--tab-accent:var(--nav-home)}
+.tab-btn[data-tab="systems"]{--tab-accent:var(--nav-systems)}
+.tab-btn[data-tab="storage"]{--tab-accent:var(--nav-storage)}
+.tab-btn[data-tab="tasks"]{--tab-accent:var(--nav-tasks)}
+.tab-btn[data-tab="seasonal"]{--tab-accent:var(--nav-seasonal)}
+.tab-btn[data-tab="plants"]{--tab-accent:var(--nav-plants)}
+.tab-btn[data-tab="decor"]{--tab-accent:var(--nav-shop)}
+.tab-btn[aria-current="true"]{color:var(--tab-accent);background:color-mix(in srgb,var(--tab-accent) 9%,var(--surface))}
+.tab-btn[aria-current="true"] .ti{background:color-mix(in srgb,var(--tab-accent) 12%,transparent)}
+.tab-btn .ti{transition:background .15s,color .15s}
+
+.home-actions button[data-home-tab="systems"]{--action-accent:var(--nav-systems)}
+.home-actions button[data-home-tab="storage"]{--action-accent:var(--nav-storage)}
+.home-actions button[data-home-tab="tasks"]{--action-accent:var(--nav-tasks)}
+.home-actions button[data-home-tab="plants"]{--action-accent:var(--nav-plants)}
+.home-actions button[data-home-tab="decor"]{--action-accent:var(--nav-shop)}
+.home-actions button{position:relative;overflow:hidden}
+.home-actions button::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--action-accent,var(--focus))}
+.home-actions button>span:first-child{color:var(--action-accent,var(--focus))}
+
+#view-systems{--section-accent:var(--nav-systems)}
+#view-storage{--section-accent:var(--nav-storage)}
+#view-tasks{--section-accent:var(--nav-tasks)}
+#view-seasonal{--section-accent:var(--nav-seasonal)}
+#view-plants{--section-accent:var(--nav-plants)}
+#view-decor{--section-accent:var(--nav-shop)}
+.view .view-h .link{color:var(--section-accent,var(--focus))}
+
+#view-tasks .summary-card.hot{border-color:color-mix(in srgb,var(--nav-tasks) 55%,var(--line));background:var(--soft-tasks)}
+#view-tasks .summary-card.soon{border-color:color-mix(in srgb,var(--nav-seasonal) 45%,var(--line));background:var(--soft-seasonal)}
+#view-tasks .quiet-note span{color:var(--nav-tasks);background:var(--soft-tasks)}
+#view-tasks .badge.overdue{background:var(--soft-tasks);color:var(--nav-tasks)}
+#view-tasks .badge.soon{background:var(--soft-seasonal);color:var(--nav-seasonal)}
+
+#view-seasonal .season-now{border-color:color-mix(in srgb,var(--nav-seasonal) 35%,var(--line));background:var(--soft-seasonal)}
+#view-seasonal .season-now .eyebrow{color:var(--nav-seasonal)}
+#view-seasonal .ssn-head .ti{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--soft-seasonal);color:var(--nav-seasonal)}
+#view-seasonal .check-row input{accent-color:var(--nav-seasonal)}
+
+#view-plants .quiet-note span{color:var(--nav-plants);background:var(--soft-plants)}
+#view-plants .sleek-disclosure>summary{background:color-mix(in srgb,var(--nav-plants) 4%,var(--surface))}
+#view-plants .compact-plant{border-left:3px solid color-mix(in srgb,var(--nav-plants) 70%,transparent)}
+
+#view-decor .decor-progress span{background:var(--nav-shop)}
+#view-decor .decor-price{color:var(--nav-shop)}
+#view-decor .shopping-room>summary{background:color-mix(in srgb,var(--nav-shop) 4%,var(--surface))}
+#view-decor .decor-card-actions .bought{background:var(--nav-shop);border-color:var(--nav-shop)}
+
+#view-storage .search:focus-within{border-color:var(--nav-storage);box-shadow:0 0 0 3px color-mix(in srgb,var(--nav-storage) 18%,transparent)}
+#view-storage .moving-icon{color:var(--nav-storage)}
+#view-storage .sticky-code{color:var(--nav-storage)}
+#view-storage .move-open{color:var(--nav-storage)}
+#view-storage .storage-help>summary{background:color-mix(in srgb,var(--nav-storage) 4%,var(--surface))}
+
+.system-card[id="system-pool"]{--sys:#2B83B8}
+.system-card[id="system-hot-tub"]{--sys:#4D8FA8}
+.system-card[id="system-hvac"]{--sys:#C27D2C}
+.system-card[id="system-water-heater"]{--sys:#C65D43}
+.system-card[id="system-network"]{--sys:#6A5ACD}
+.system-card[id="system-appliances"]{--sys:#6B7280}
+.system-card[id="system-outdoor-water"]{--sys:#2E8B77}
+.system-card[id="system-fountain"]{--sys:#3A8EAC}
+.system-card[id="system-lighting"]{--sys:#B8860B}
+.system-card[id="system-electrical"]{--sys:#C28B16}
+.system-card[id="system-entertainment"]{--sys:#8B5FBF}
+.system-card[id="system-exterior"]{--sys:#5F8A4D}
+.system-card[id="system-central-vac"]{--sys:#7A7F87}
+.system-card[id="system-garage"]{--sys:#59636F}
+.system-card{border-left:4px solid var(--sys,var(--nav-systems))}
+.system-card .system-icon{background:color-mix(in srgb,var(--sys,var(--nav-systems)) 12%,var(--surface));color:var(--sys,var(--nav-systems))}
+.system-card .system-edit-btn,.system-card .system-log-head button{color:var(--sys,var(--nav-systems))}
+
+.ssn-card[data-sec="pool"]{--season-card:#2B83B8}
+.ssn-card[data-sec="kitchen"]{--season-card:#A96E2D}
+.ssn-card[data-sec="fountain"]{--season-card:#3A8EAC}
+.ssn-card[data-sec="hot-tub"]{--season-card:#4D8FA8}
+.ssn-card[data-sec="irrigation"]{--season-card:#4E8B57}
+.ssn-card[data-sec="deck"]{--season-card:#8B6C4A}
+.ssn-card[data-sec="furniture"]{--season-card:#9A5BC7}
+.ssn-card[data-sec="garage"]{--season-card:#59636F}
+.ssn-card[data-sec="turf"]{--season-card:#4E8B57}
+.ssn-card[data-sec="hvac"]{--season-card:#C27D2C}
+.ssn-card{border-left:4px solid var(--season-card,var(--nav-seasonal))}
+.ssn-card .ssn-head .ti{background:color-mix(in srgb,var(--season-card,var(--nav-seasonal)) 11%,var(--surface));color:var(--season-card,var(--nav-seasonal))}
+
+.home-card[data-home-tab="seasonal"] .home-card-icon{color:var(--nav-seasonal);background:var(--soft-seasonal)}
+.home-card[data-home-tab="tasks"] .home-card-icon,.home-card[data-home-system] .home-card-icon{color:var(--nav-tasks);background:var(--soft-tasks)}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --soft-home:color-mix(in srgb,var(--nav-home) 18%,var(--surface));
+    --soft-systems:color-mix(in srgb,var(--nav-systems) 18%,var(--surface));
+    --soft-storage:color-mix(in srgb,var(--nav-storage) 18%,var(--surface));
+    --soft-tasks:color-mix(in srgb,var(--nav-tasks) 18%,var(--surface));
+    --soft-seasonal:color-mix(in srgb,var(--nav-seasonal) 18%,var(--surface));
+    --soft-plants:color-mix(in srgb,var(--nav-plants) 18%,var(--surface));
+    --soft-shop:color-mix(in srgb,var(--nav-shop) 18%,var(--surface));
+  }
+}
