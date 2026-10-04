@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261004-0740";
+  const CURRENT_BUILD="20261004-0755";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -157,6 +157,8 @@
   <main id="view-decor" class="view" hidden>
     <div class="view-h tab-title shop-title"><h2><span class="view-icon">⌑</span>Shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
     <div id="decorSummary"></div>
+    <div class="shopping-source"><a href="https://www.amazon.com/hz/wishlist/dl/invite/AQICAHild4Vpadjqcz7bdgUf6Qu6-OaRt7P_FJRNNbyMlg-OQwFFEigtFSmnMF69wAScnLFGAAAAkTCBjgYJKoZIhvcNAQcGoIGAMH4CAQAweQYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAzvL_VDElvwuG8UT7wCARCATLWETocSjX5cpMBY_j2d7heJ-kvnm2v7MK14dXHVf2975Wd5zB1MxUXcYccyhtoW0Dd43zqDngtSu7nx6pVg9S8W--h9-9BgJ4NU0lg?ref_=wl_share" target="_blank" rel="noopener">Amazon List <span>›</span></a></div>
+    <div class="home-section-head"><h2>Future purchases</h2></div>
     <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search home purchases…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
     <div id="decorList"></div>
     <details class="decor-history" id="decorHistory"><summary id="decorHistoryTitle">Purchased items</summary><div id="decorPurchased"></div></details>
