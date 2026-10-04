@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261003-2225";
+  const CURRENT_BUILD="20261003-2245";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -78,22 +78,12 @@
     <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Seasonal board</button></div>
     <div id="homeSeasonal" class="home-stack"></div>
 
-    <div class="home-section-head"><h2>Quick access</h2></div>
-    <div class="home-actions">
-      <button type="button" data-home-tab="systems">⚙︎<span><b>Systems</b><small>Pool, spa & house equipment</small></span></button>
-      <button type="button" data-home-tab="storage">▣<span><b>Storage</b><small>Find or file an item</small></span></button>
-      <button type="button" data-home-tab="tasks">✓<span><b>Tasks</b><small>Maintenance & reminders</small></span></button>
-      <button type="button" data-home-tab="plants">♧<span><b>Plants & yard</b><small>Seasonal plant care</small></span></button>
-      <button type="button" data-home-tab="decor">🛒<span><b>Home shopping</b><small>Furniture, storage & house needs</small></span></button>
-    </div>
-
     <div class="home-section-head"><h2>Neighbors</h2><button type="button" id="addNeighborBtn">+ Add</button></div>
     <div id="homeNeighbors" class="home-stack"></div>
   </main>
 
   <main id="view-systems" class="view" hidden>
     <div class="view-h tab-title systems-title"><h2><span class="view-icon">⚙︎</span>House systems</h2></div>
-    <p class="view-sub">Your house reference manual: equipment, operating notes, supplies, and maintenance history. Seasonal action checklists live under Seasonal.</p>
     <div id="systemsList" class="systems-list"></div>
   </main>
 
@@ -108,14 +98,6 @@
     </label>
     <div class="quick" id="quick" aria-label="Popular searches"></div>
   </div>
-  <header class="app-hero">
-    <div>
-      <span class="app-kicker">Cox Home</span>
-      <h1>Where it lives</h1>
-      <p>Find it fast. Put it back exactly where it belongs.</p>
-    </div>
-    <span class="hero-mark" aria-hidden="true"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>
-  </header>
   <section id="movingMode" class="moving-mode" aria-labelledby="movingModeTitle">
     <button type="button" class="moving-toggle" id="movingToggle" aria-expanded="false">
       <span class="moving-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
@@ -155,7 +137,6 @@
 
   <main id="view-tasks" class="view" hidden>
     <div class="view-h tab-title tasks-title"><h2><span class="view-icon">✓</span>Tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Act on what matters now. Everything that is fine stays collapsed.</p>
     <div id="tasksSummary"></div>
     <div id="taskNotifications"></div>
     <div id="tasksList"></div>
@@ -163,21 +144,18 @@
 
   <main id="view-seasonal" class="view" hidden>
     <div class="view-h tab-title seasonal-title"><h2><span class="view-icon">◒</span>Seasonal</h2></div>
-    <p class="view-sub">Calendar-driven action checklists for opening, closing, winterizing, and other season changes.</p>
     <div id="seasonalNow"></div>
     <div id="seasonalList"></div>
   </main>
 
   <main id="view-plants" class="view" hidden>
     <div class="view-h tab-title plants-title"><h2><span class="view-icon">♧</span>Plants & yard</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Open a yard area when you need care instructions. Keep the rest out of the way.</p>
     <div id="plantsSummary"></div>
     <div id="plantsList"></div>
   </main>
 
   <main id="view-decor" class="view" hidden>
     <div class="view-h tab-title shop-title"><h2><span class="view-icon">⌑</span>Shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Shopping grouped by room. Open only the room you are working on.</p>
     <div id="decorSummary"></div>
     <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search home purchases…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
     <div id="decorList"></div>
