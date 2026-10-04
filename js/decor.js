@@ -31,9 +31,16 @@ const BASEMENT_STYLE_UPDATE={
   "Lamp #1":"Warm cream, taupe or dark textured ceramic base · linen shade · soft amber light",
   "Lamp #2":"Coordinate with lamp #1 · warm neutral ceramic/stone look"
 };
-let basementStyleChanged=false;
-decorItems.forEach(i=>{if(i.room==="Basement TV Room"&&BASEMENT_STYLE_UPDATE[i.name]&&i.style!==BASEMENT_STYLE_UPDATE[i.name]){i.style=BASEMENT_STYLE_UPDATE[i.name];basementStyleChanged=true;}});
-if(basementStyleChanged) saveDecor();
+function applyBasementStyleUpdate(sync=true){
+  let changed=false;
+  decorItems.forEach(i=>{if(i.room==="Basement TV Room"&&BASEMENT_STYLE_UPDATE[i.name]&&i.style!==BASEMENT_STYLE_UPDATE[i.name]){i.style=BASEMENT_STYLE_UPDATE[i.name];changed=true;}});
+  if(changed){
+    Store.write("wil-decor",decorItems);
+    if(sync) cloudSyncTasksSoon();
+  }
+  return changed;
+}
+applyBasementStyleUpdate();
 function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();if(typeof refreshDecorRooms==="function")refreshDecorRooms();}
 function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
 function renderDecor(){
