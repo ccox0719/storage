@@ -9,7 +9,7 @@ const DECOR_RAW = [
 ["Elsie’s Room","5×7 or 6×9 rug",80,"Cream with soft floral pink/blue accents"],["Elsie’s Room","Small lamp",25,"Cream base and warm linen shade"],
 ["Boys’ Room","Shared nightstand",60,"Warm wood with simple drawer"],["Boys’ Room","Under-bed storage #1",25,"Low-profile woven bin or drawer"],["Boys’ Room","Under-bed storage #2",25,"Matching bin or drawer"],["Boys’ Room","Twin bed #1",200,"Simple wood frame with storage"],["Boys’ Room","Twin bed #2",200,"Match bed #1"],
 ["Game Room","Shelf greenery #1",10,"Small pothos in cream stone pot"],["Game Room","Shelf greenery #2",10,"Eucalyptus in white ceramic pot"],["Game Room","Shelf greenery #3",10,"Small trailing plant"],["Game Room","Basket/bin #1",20,"Woven storage basket"],["Game Room","Basket/bin #2",20,"Coordinating woven storage bin"],["Game Room","Bar stool #1",60,"Brown faux leather + black metal"],["Game Room","Bar stool #2",60,"Match stool #1"],["Game Room","Bar stool #3",60,"Match stool #1"],["Game Room","Bar stool #4",60,"Match stool #1"],
-["Basement TV Room","9×12 rug",175,"Warm vintage cream/rust/taupe pattern"],["Basement TV Room","Coffee table",150,"Warm wood top + black metal base"],["Basement TV Room","End table #1",60,"Round wood/black metal"],["Basement TV Room","End table #2",60,"Coordinate with first"],["Basement TV Room","Lamp #1",35,"Warm textured ceramic base"],["Basement TV Room","Lamp #2",35,"Coordinate with first"]
+["Basement TV Room","9×12 rug",175,"Vintage Persian-style rug · warm cream/tan base with rust, muted blue and faded brown"],["Basement TV Room","Coffee table",150,"Medium-to-dark walnut top · simple black metal base · substantial rectangular shape"],["Basement TV Room","End table #1",60,"Dark walnut or espresso wood · black metal accents · simple profile"],["Basement TV Room","End table #2",60,"Coordinate with walnut/espresso end table #1"],["Basement TV Room","Lamp #1",35,"Warm cream, taupe or dark textured ceramic base · linen shade · soft amber light"],["Basement TV Room","Lamp #2",35,"Coordinate with lamp #1 · warm neutral ceramic/stone look"]
 ];
 const DECOR_IMAGE_GROUPS=[["living",8],["dining",5],["entry",5],["primary",6],["elsie",2],["boys",5],["game",9],["basement",6]];
 const DECOR_IMAGES=DECOR_IMAGE_GROUPS.flatMap(([name,count])=>Array.from({length:count},(_,i)=>`assets/decor/${name}-${i+1}.jpg`));
@@ -23,6 +23,17 @@ DECOR_SEED.push(
 );
 let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
 mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
+const BASEMENT_STYLE_UPDATE={
+  "9×12 rug":"Vintage Persian-style rug · warm cream/tan base with rust, muted blue and faded brown",
+  "Coffee table":"Medium-to-dark walnut top · simple black metal base · substantial rectangular shape",
+  "End table #1":"Dark walnut or espresso wood · black metal accents · simple profile",
+  "End table #2":"Coordinate with walnut/espresso end table #1",
+  "Lamp #1":"Warm cream, taupe or dark textured ceramic base · linen shade · soft amber light",
+  "Lamp #2":"Coordinate with lamp #1 · warm neutral ceramic/stone look"
+};
+let basementStyleChanged=false;
+decorItems.forEach(i=>{if(i.room==="Basement TV Room"&&BASEMENT_STYLE_UPDATE[i.name]&&i.style!==BASEMENT_STYLE_UPDATE[i.name]){i.style=BASEMENT_STYLE_UPDATE[i.name];basementStyleChanged=true;}});
+if(basementStyleChanged) saveDecor();
 function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();if(typeof refreshDecorRooms==="function")refreshDecorRooms();}
 function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
 function renderDecor(){
