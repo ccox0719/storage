@@ -143,16 +143,20 @@
 
     <div id="tiles"></div>
 
-    <div class="section-h"><h2>New item, no home yet?</h2></div>
-    <p class="tip" style="margin-top:-4px;margin-bottom:10px;border:0;padding:0;background:none">Match it to the job, not the nearest open box.</p>
-    <div class="rules" id="rules"></div>
-    <p class="tip"><b>No junk drawers or misc bins.</b> If a bin mixes different kinds of things, split it and send each piece to its own home. The basement storage room (B1) is only for seasonal, sentimental, and genuinely long-term items.</p>
+    <details class="sleek-disclosure storage-help">
+      <summary><span>Need help deciding where something belongs?</span><span class="summary-meta">Guide</span></summary>
+      <div class="disclosure-body">
+        <p class="tip" style="margin-top:0">Match it to the job, not the nearest open box.</p>
+        <div class="rules" id="rules"></div>
+        <p class="tip"><b>No junk drawers or misc bins.</b> Split mixed categories and give each thing a real home. Use B1 for seasonal, sentimental, and genuinely long-term storage.</p>
+      </div>
+    </details>
   </div>
   </main>
 
   <main id="view-tasks" class="view" hidden>
     <div class="view-h"><h2>Home today</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
-    <p class="view-sub">What needs attention now, what is coming up, and where the supplies live.</p>
+    <p class="view-sub">Act on what matters now. Everything that is fine stays collapsed.</p>
     <div id="tasksSummary"></div>
     <div id="taskNotifications"></div>
     <div id="tasksList"></div>
@@ -167,14 +171,14 @@
 
   <main id="view-plants" class="view" hidden>
     <div class="view-h"><h2>Plants & yard</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Grouped by where you see them, with the next thing each plant needs.</p>
+    <p class="view-sub">Open a yard area when you need care instructions. Keep the rest out of the way.</p>
     <div id="plantsSummary"></div>
     <div id="plantsList"></div>
   </main>
 
   <main id="view-decor" class="view" hidden>
     <div class="view-h"><h2>Home shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
-    <p class="view-sub">Furniture, storage, systems and other things the house still needs. Mark an item bought and it leaves the active list.</p>
+    <p class="view-sub">Shopping grouped by room. Open only the room you are working on.</p>
     <div id="decorSummary"></div>
     <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search home purchases…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
     <div id="decorList"></div>
