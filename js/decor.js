@@ -56,7 +56,7 @@ function renderDecor(){
   $("#decorList").innerHTML=filtered.length?rooms.map(roomName=>`<details class="sleek-disclosure shopping-room" ${autoOpen?"open":""}>
     <summary><span>${esc(roomName)}</span><span class="summary-meta">${filtered.filter(i=>i.room===roomName).length} item${filtered.filter(i=>i.room===roomName).length===1?"":"s"}</span></summary>
     <div class="disclosure-body decor-grid">${filtered.filter(i=>i.room===roomName).map(i=>`<article class="decor-card compact-shop">
-      ${i.image?`<a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} reference"></a>`:""}
+      ${i.room==="Basement TV Room"?`<div class="basement-shop-visual"><div class="basement-swatches"><i></i><i></i><i></i><i></i><i></i><i></i></div><span>Basement palette</span></div>`:(i.image?`<a href="${i.image}" target="_blank"><img src="${i.image}" alt="${esc(i.name)} reference"></a>`:"")}
       <div><h3>${esc(i.name)}</h3><p>${esc(i.style)}</p><div class="decor-price">${Number(i.target||0)>0?`Target ${decorMoney(i.target)}`:"Budget TBD"}</div><div class="decor-card-actions"><button data-decor-edit="${i.id}">Edit</button><button class="bought" data-decor-bought="${i.id}">Bought ✓</button></div></div>
     </article>`).join("")}</div>
   </details>`).join(""):`<div class="decor-empty">No active items match this view.</div>`;
