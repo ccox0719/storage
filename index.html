@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=10">
+<link rel="stylesheet" href="css/app.css?v=11">
 
 </head>
 <body>
@@ -93,7 +93,7 @@
   </main>
 
   <main id="view-systems" class="view" hidden>
-    <div class="view-h"><h2>House systems</h2></div>
+    <div class="view-h tab-title systems-title"><h2><span class="view-icon">⚙︎</span>House systems</h2></div>
     <p class="view-sub">Your house reference manual: equipment, operating notes, supplies, and maintenance history. Seasonal action checklists live under Seasonal.</p>
     <div id="systemsList" class="systems-list"></div>
   </main>
@@ -155,7 +155,7 @@
   </main>
 
   <main id="view-tasks" class="view" hidden>
-    <div class="view-h"><h2>Tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
+    <div class="view-h tab-title tasks-title"><h2><span class="view-icon">✓</span>Tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
     <p class="view-sub">Act on what matters now. Everything that is fine stays collapsed.</p>
     <div id="tasksSummary"></div>
     <div id="taskNotifications"></div>
@@ -163,21 +163,21 @@
   </main>
 
   <main id="view-seasonal" class="view" hidden>
-    <div class="view-h"><h2>Seasonal</h2></div>
+    <div class="view-h tab-title seasonal-title"><h2><span class="view-icon">◒</span>Seasonal</h2></div>
     <p class="view-sub">Calendar-driven action checklists for opening, closing, winterizing, and other season changes.</p>
     <div id="seasonalNow"></div>
     <div id="seasonalList"></div>
   </main>
 
   <main id="view-plants" class="view" hidden>
-    <div class="view-h"><h2>Plants & yard</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
+    <div class="view-h tab-title plants-title"><h2><span class="view-icon">♧</span>Plants & yard</h2><button class="link" id="addPlantBtn" type="button">+ Add</button></div>
     <p class="view-sub">Open a yard area when you need care instructions. Keep the rest out of the way.</p>
     <div id="plantsSummary"></div>
     <div id="plantsList"></div>
   </main>
 
   <main id="view-decor" class="view" hidden>
-    <div class="view-h"><h2>Shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
+    <div class="view-h tab-title shop-title"><h2><span class="view-icon">⌑</span>Shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
     <p class="view-sub">Shopping grouped by room. Open only the room you are working on.</p>
     <div id="decorSummary"></div>
     <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search home purchases…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
@@ -197,7 +197,7 @@
   <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
   <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
   <button class="tab-btn" type="button" data-tab="plants"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span>Plants</button>
-  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti">🛒</span>Shop</button>
+  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti">⌑</span>Shop</button>
 </nav>
 
 
@@ -243,17 +243,17 @@
 </dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js"></script>
-<script src="js/cloud.js?v=10"></script>
-<script src="js/data.js?v=10"></script>
-<script src="js/moving.js?v=10"></script>
-<script src="js/storage.js?v=10"></script>
-<script src="js/utils.js?v=10"></script>
-<script src="js/tasks.js?v=10"></script>
-<script src="js/seasonal.js?v=10"></script>
-<script src="js/plants.js?v=10"></script>
-<script src="js/decor.js?v=10"></script>
-<script src="js/systems.js?v=10"></script>
-<script src="js/dashboard.js?v=10"></script>
-<script src="js/ui.js?v=10"></script>
+<script src="js/cloud.js?v=11"></script>
+<script src="js/data.js?v=11"></script>
+<script src="js/moving.js?v=11"></script>
+<script src="js/storage.js?v=11"></script>
+<script src="js/utils.js?v=11"></script>
+<script src="js/tasks.js?v=11"></script>
+<script src="js/seasonal.js?v=11"></script>
+<script src="js/plants.js?v=11"></script>
+<script src="js/decor.js?v=11"></script>
+<script src="js/systems.js?v=11"></script>
+<script src="js/dashboard.js?v=11"></script>
+<script src="js/ui.js?v=11"></script>
 </body>
 </html>
