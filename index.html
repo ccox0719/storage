@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261003-2200";
+  const CURRENT_BUILD="20261003-2215";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -58,9 +58,7 @@
   <main id="view-home" class="view">
     <section class="home-hero">
       <div>
-        <span class="app-kicker">Cox Home</span>
-        <h1>Home command center</h1>
-        <p>What needs attention, what is coming up, and where everything lives.</p>
+        <h1>Home</h1>
       </div>
       <span class="hero-mark" aria-hidden="true">⌂</span>
     </section>
