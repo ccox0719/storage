@@ -227,6 +227,7 @@ $("#view-seasonal").addEventListener("change", e=>{
   const cb = e.target.closest("[data-ssn-id]");
   if(!cb) return;
   const item = seasonalItems.find(i=>i.id===cb.dataset.ssnId);
+  if(!item){ cb.checked=!cb.checked; toast("Could not update that task. Refresh and try again."); return; }
   const year = new Date().getFullYear();
   item.done_year = cb.checked ? year : null;
   saveSeasonal(); renderSeasonal();
