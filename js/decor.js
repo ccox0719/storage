@@ -43,7 +43,22 @@ function applyBasementStyleUpdate(sync=true){
 applyBasementStyleUpdate();
 function saveDecor(){Store.write("wil-decor",decorItems);cloudSyncTasksSoon();if(typeof refreshDecorRooms==="function")refreshDecorRooms();}
 function decorMoney(n){return "$"+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2})}
+// Illustrative colors derived from the existing decor notes, not paint specifications.
+const ROOM_PALETTES = [
+  {room:"Living Room", notes:"Cream and taupe base, olive greenery, muted rust or sage accents, warm oak or walnut, and black metal.", colors:[["Cream","#eee7da"],["Taupe","#b6a595"],["Olive","#747953"],["Muted rust","#a96f55"],["Warm wood","#967047"],["Black metal","#333331"]]},
+  {room:"Dining Room", notes:"Cream and taupe, warm wood, black hardware, and greenery. Keep the rug pattern subtle.", colors:[["Cream","#eee7da"],["Taupe","#b6a595"],["Warm wood","#967047"],["Black","#333331"],["Greenery","#747953"]]},
+  {room:"Entry", notes:"Warm wood, cream, taupe, and muted rust, with olive or eucalyptus greenery and black or aged brass accents.", colors:[["Cream","#eee7da"],["Taupe","#b6a595"],["Muted rust","#a96f55"],["Greenery","#747953"],["Aged brass","#a58c53"]]},
+  {room:"Primary Bedroom", notes:"Cream and blue-gray with wood, linen, stone textures, soft green foliage, and muted art.", colors:[["Cream","#eee7da"],["Blue-gray","#8f9fa9"],["Warm wood","#967047"],["Soft green","#899578"]]},
+  {room:"Elsie’s Room", notes:"Cream with soft floral pink and blue accents, a cream lamp, and warm linen.", colors:[["Cream","#eee7da"],["Soft pink","#d9aeb8"],["Soft blue","#a5bccf"]]},
+  {room:"Boys’ Room", notes:"Warm wood and woven storage. Accent colors have not been specified in the current plan.", colors:[["Warm wood","#967047"],["Woven natural","#c1a680"]]},
+  {room:"Game Room", notes:"Greenery, cream or white pots, woven baskets, brown faux leather, and black metal.", colors:[["Greenery","#747953"],["Cream","#eee7da"],["White","#f5f4ef"],["Brown leather","#895b3d"],["Black metal","#333331"]]},
+  {room:"Basement TV Room", notes:"Warm cream and tan, rust, muted blue, and faded brown. Pair walnut or espresso furniture with black metal and warm amber light.", colors:[["Walnut","#34251d"],["Brown","#75482d"],["Rust","#9b472d"],["Warm tan","#d7c4aa"],["Muted blue","#526771"]]}
+];
+function renderRoomPalettes(){
+  $("#roomPalettes").innerHTML=ROOM_PALETTES.map(p=>`<article class="room-palette"><h3>${esc(p.room)}</h3><p>${esc(p.notes)}</p><div class="room-swatches">${p.colors.map(([label,color])=>`<div><span style="background:${color}" aria-hidden="true"></span><small>${esc(label)}</small></div>`).join("")}</div></article>`).join("");
+}
 function renderDecor(){
+  renderRoomPalettes();
   const active=decorItems.filter(i=>!i.disabled && !i.purchased_at), bought=decorItems.filter(i=>!i.disabled && i.purchased_at), removed=decorItems.filter(i=>i.disabled);
   const planned=active.reduce((s,i)=>s+Number(i.target||0),0), spent=bought.reduce((s,i)=>s+Number(i.actual||0),0);
   const visibleTotal=active.length+bought.length;

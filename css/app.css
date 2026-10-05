@@ -1022,3 +1022,15 @@ body{background-image:none}
 .basement-swatches{display:flex;gap:7px}
 .basement-swatches i{width:25px;height:25px;border-radius:50%;border:1px solid rgba(255,255,255,.7);box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .basement-swatches i:nth-child(1){background:#34251d}.basement-swatches i:nth-child(2){background:#75482d}.basement-swatches i:nth-child(3){background:#9b472d}.basement-swatches i:nth-child(4){background:#d7c4aa}.basement-swatches i:nth-child(5){background:#526771}.basement-swatches i:nth-child(6){background:#626647}
+
+/* Secondary household tools stay available without crowding primary navigation. */
+.home-more{margin-top:24px}
+.home-tool-links{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
+.home-tool-links button{padding:14px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.home-tool-links button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.room-palettes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin:18px 0 26px}
+.room-palette{padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.room-palette h3{margin:0 0 8px}.room-palette p{color:var(--muted);line-height:1.5}
+.room-swatches{display:flex;flex-wrap:wrap;gap:12px}.room-swatches div{width:72px;display:flex;flex-direction:column;gap:6px}
+.room-swatches span{height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.12)}.room-swatches small{font-size:.75rem;color:var(--ink)}
