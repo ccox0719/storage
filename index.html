@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261005-0735";
+  const CURRENT_BUILD="20261005-navigation";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=13">
+<link rel="stylesheet" href="css/app.css?v=14">
 <link rel="stylesheet" href="css/apple-home.css?v=3">
 
 </head>
@@ -72,14 +72,24 @@
 
     <div id="homeStats" class="home-stats"></div>
 
-    <div class="home-section-head"><h2>Needs attention</h2><button type="button" data-home-tab="tasks">See tasks</button></div>
+    <div class="home-section-head"><h2>Maintenance needs</h2><button type="button" data-home-tab="tasks">See records</button></div>
     <div id="homeAttention" class="home-stack"></div>
 
-    <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Seasonal board</button></div>
-    <div id="homeSeasonal" class="home-stack"></div>
-
-    <div class="home-section-head"><h2>Neighbors</h2><button type="button" id="addNeighborBtn">+ Add</button></div>
-    <div id="homeNeighbors" class="home-stack"></div>
+    <details class="sleek-disclosure home-more">
+      <summary><span>⋯ More household tools</span><span class="summary-meta">Records &amp; reference</span></summary>
+      <div class="disclosure-body">
+        <p class="tip">Use Todoist for actions and Notion for plans and reference. Your existing household records remain available here.</p>
+        <div class="home-tool-links">
+          <button type="button" data-home-tab="tasks">✓ Maintenance records</button>
+          <button type="button" data-home-tab="seasonal">◒ Seasonal checklists</button>
+          <button type="button" data-home-tab="decor" id="decorTab">⌑ Shopping records</button>
+        </div>
+        <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Open checklist</button></div>
+        <div id="homeSeasonal" class="home-stack"></div>
+        <div class="home-section-head"><h2>Neighbors</h2><button type="button" id="addNeighborBtn">+ Add</button></div>
+        <div id="homeNeighbors" class="home-stack"></div>
+      </div>
+    </details>
   </main>
 
   <main id="view-systems" class="view" hidden>
@@ -98,17 +108,7 @@
     </label>
     <div class="quick" id="quick" aria-label="Popular searches"></div>
   </div>
-  <section id="movingMode" class="moving-mode" aria-labelledby="movingModeTitle">
-    <button type="button" class="moving-toggle" id="movingToggle" aria-expanded="false">
-      <span class="moving-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
-      <span><b id="movingModeTitle">Moving Mode</b><small id="movingModeSub">Exactly what to set up next</small></span>
-      <span class="moving-chev">›</span>
-    </button>
-    <div id="movingBody">
-      <div id="movingNext"></div>
-      <div id="movingSteps"></div>
-    </div>
-  </section>
+
 
   <div id="searchView" hidden>
     <p class="count-note" id="countNote"></p>
@@ -133,6 +133,17 @@
       </div>
     </details>
   </div>
+  <section id="movingMode" class="moving-mode" aria-labelledby="movingModeTitle">
+    <button type="button" class="moving-toggle" id="movingToggle" aria-expanded="false">
+      <span class="moving-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
+      <span><b id="movingModeTitle">Moving &amp; unpacking guide</b><small id="movingModeSub">Exactly what to set up next</small></span>
+      <span class="moving-chev">›</span>
+    </button>
+    <div id="movingBody">
+      <div id="movingNext"></div>
+      <div id="movingSteps"></div>
+    </div>
+  </section>
   </main>
 
   <main id="view-tasks" class="view" hidden>
@@ -170,13 +181,10 @@
 </div>
 
 <nav class="tabbar" aria-label="Sections">
-  <button class="tab-btn" type="button" data-tab="home" aria-current="true"><span class="ti">⌂</span>Home</button>
-  <button class="tab-btn" type="button" data-tab="systems"><span class="ti">⚙︎</span>Systems</button>
-  <button class="tab-btn" type="button" data-tab="storage"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg></span>Storage</button>
-  <button class="tab-btn" type="button" data-tab="tasks"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Tasks</button>
-  <button class="tab-btn" type="button" data-tab="seasonal"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M5 21c9 0 14-5 14-16C8 5 3 10 3 19"/><path d="M5 21c3-6 6-10 14-16"/></svg></span>Seasonal</button>
-  <button class="tab-btn" type="button" data-tab="plants"><span class="ti"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em" aria-hidden="true"><path d="M12 22v-9"/><path d="M12 13c-4 0-7-3-7-7 4 0 7 3 7 7z"/><path d="M12 13c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></span>Plants</button>
-  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti">⌑</span>Shop</button>
+  <button class="tab-btn" type="button" data-tab="home" aria-current="true"><span class="ti" aria-hidden="true">⌂</span>Home</button>
+  <button class="tab-btn" type="button" data-tab="storage"><span class="ti" aria-hidden="true">▣</span>Storage</button>
+  <button class="tab-btn" type="button" data-tab="systems"><span class="ti" aria-hidden="true">⚙︎</span>Systems</button>
+  <button class="tab-btn" type="button" data-tab="plants"><span class="ti" aria-hidden="true">♧</span>Plants &amp; Yard</button>
 </nav>
 
 
@@ -233,6 +241,6 @@
 <script src="js/decor.js?v=14"></script>
 <script src="js/systems.js?v=13"></script>
 <script src="js/dashboard.js?v=11"></script>
-<script src="js/ui.js?v=11"></script>
+<script src="js/ui.js?v=12"></script>
 </body>
 </html>

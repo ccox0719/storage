@@ -45,12 +45,14 @@ formDlg.addEventListener("click", e=>{
    ================================================================== */
 const TABS = ["home","systems","storage","tasks","seasonal","plants","decor"];
 function switchTab(name){
+  if(!TABS.includes(name)) return;
+  const primaryTab = ["tasks","seasonal","decor"].includes(name) ? "home" : name;
   if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   TABS.forEach(t=>{
     $(`#view-${t}`).hidden = t!==name;
   });
   document.querySelectorAll(".tab-btn").forEach(b=>{
-    b.setAttribute("aria-current", b.dataset.tab===name ? "true" : "false");
+    b.setAttribute("aria-current", b.dataset.tab===primaryTab ? "true" : "false");
   });
 }
 document.querySelectorAll(".tab-btn").forEach(b=>{
