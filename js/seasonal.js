@@ -125,12 +125,12 @@ const SEASONAL_SECTIONS = [
    winter:["Keep heavy debris from accumulating on turf."],
    spring:["Remove winter debris.","Brush matted turf.","Check drainage.","Clean perennial beds."],
    summer:["Remove debris.","Brush high-traffic areas as needed.","Check drainage after heavy rain."],
-   fall:["Remove leaves and debris from turf.","Brush matted areas.","Keep drainage openings clear.","Clean garden tools.","Drain and store hoses.","Clean fallen rose leaves."]},
+   fall:["Remove leaves and debris from turf.","Brush matted areas.","Keep drainage openings clear.","Clean garden tools.","Drain and store hoses."]},
   {key:"hvac", icon:"gear", name:"HVAC / air conditioner",
    winter:["Keep the outdoor unit clear of heavy debris while maintaining required clearance."],
-   spring:["Schedule AC inspection / service if due.","Clear leaves and debris around the outdoor unit."],
+   spring:["Clear leaves and debris around the outdoor unit."],
    summer:["Keep the outdoor unit unobstructed."],
-   fall:["Schedule furnace / HVAC service if due.","Clear debris around the outdoor unit."]}
+   fall:["Clear debris around the outdoor unit."]}
 ]
 function seasonalSeed(){
   const out = [];
