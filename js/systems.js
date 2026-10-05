@@ -349,19 +349,6 @@ let systemLog = loadJSON("wil-system-log", []);
 let systemProfiles = loadJSON("wil-system-profiles", {});
 let systemPrefs = loadJSON("wil-system-prefs", {});
 
-function winterizeSections(){
-  const saved=systemPrefs["winterize-checklist"]?.sections;
-  return Array.isArray(saved) && saved.length ? saved : WINTERIZE_STEPS.map(s=>({section:s.section,items:[...s.items]}));
-}
-function saveWinterizeSections(sections){
-  systemPrefs["winterize-checklist"]={...(systemPrefs["winterize-checklist"]||{}),sections};
-  saveSystemPrefs();
-}
-function resetWinterizeChecksForEdit(){
-  winterizeChecks={};
-  saveWinterizeChecks();
-}
-
 function saveSystemLog(){
   saveJSON("wil-system-log",systemLog);
   cloudSyncTasksSoon();
@@ -503,16 +490,6 @@ $("#view-systems").addEventListener("click",e=>{
     const id=toggleSystem.dataset.toggleSystem;
     systemOpen.has(id) ? systemOpen.delete(id) : systemOpen.add(id);
     renderSystems();
-    return;
-  }
-  const reset=e.target.closest("[data-reset-winterize]");
-  if(reset){
-    if(confirm("Reset all Winterize House checklist items?")){
-      winterizeChecks={};
-      saveWinterizeChecks();
-      renderSystems();
-      toast("Winterize checklist reset");
-    }
     return;
   }
   const restoreSystem=e.target.closest("[data-restore-system]");
