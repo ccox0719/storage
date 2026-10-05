@@ -78,11 +78,18 @@ async function startCloud(session){
 }
 
 async function cloudReplace(table, rows){
-  const del = await db.from(table).delete().eq("household_id",homeHouseholdId);
-  if(del.error) throw del.error;
+  // Keep the existing snapshot until the replacement is safely inserted.
+  const current = await db.from(table).select("id").eq("household_id",homeHouseholdId);
+  if(current.error) throw current.error;
+  const oldIds = (current.data || []).map(r=>r.id).filter(Boolean);
+
   if(rows.length){
     const ins = await db.from(table).insert(rows);
     if(ins.error) throw ins.error;
+  }
+  if(oldIds.length){
+    const del = await db.from(table).delete().in("id",oldIds);
+    if(del.error) throw del.error;
   }
 }
 
@@ -311,16 +318,16 @@ async function cloudPull(){
     const seedNow = seasonalSeed();
     const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
     const removedById = Object.fromEntries((removedSeasonal||[]).map(i=>[i.id,i]));
-    const builtInPattern = /^(pool|kitchen|fountain|hot-tub|irrigation|deck|furniture|garage|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
+    const builtInIds = new Set(seedNow.map(i=>i.id));
     seasonalItems = seedNow.map(seed=>{
       const old = cloudById[seed.id];
       const removed = removedById[seed.id];
       return {...seed, ...(removed||{}), disabled:!!removed, done_year:removed ? null : (old ? old.done_year : null)};
     });
-    sr.data.filter(r=>!builtInPattern.test(r.external_id)).forEach(r=>{
+    sr.data.filter(r=>!builtInIds.has(r.external_id)).forEach(r=>{
       if(!removedById[r.external_id]) seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year,disabled:false});
     });
-    (removedSeasonal||[]).filter(i=>!builtInPattern.test(i.id)).forEach(i=>seasonalItems.push({...i,disabled:true,done_year:null}));
+    (removedSeasonal||[]).filter(i=>!builtInIds.has(i.id)).forEach(i=>seasonalItems.push({...i,disabled:true,done_year:null}));
     Store.write("wil-seasonal",seasonalItems);
   }
   if(mr.data.length){
