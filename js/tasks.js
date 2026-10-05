@@ -117,12 +117,14 @@ $("#view-tasks").addEventListener("click", e=>{
   const done = e.target.closest("[data-done-task]");
   if(done){
     const t = tasks.find(x=>x.id===done.dataset.doneTask);
+    if(!t){ toast("That task is no longer available. Refresh and try again."); return; }
     t.last_done = todayISO(); t.snoozed_until = null;
     saveTasks(); renderTasks(); toast(`Marked “${t.title}” done today`); return;
   }
   const snooze = e.target.closest("[data-snooze-task]");
   if(snooze){
     const t = tasks.find(x=>x.id===snooze.dataset.snoozeTask);
+    if(!t){ toast("That task is no longer available. Refresh and try again."); return; }
     const d = new Date(); d.setDate(d.getDate()+7);
     t.snoozed_until = d.toISOString().slice(0,10);
     saveTasks(); renderTasks(); toast(`Snoozed “${t.title}” for 7 days`); return;
@@ -132,7 +134,9 @@ $("#view-tasks").addEventListener("click", e=>{
   const edit = e.target.closest("[data-edit-task]");
   if(edit){
     if(Date.now() < suppressTaskTapUntil) return;
-    openTaskForm(tasks.find(x=>x.id===edit.dataset.editTask)); return;
+    const t=tasks.find(x=>x.id===edit.dataset.editTask);
+    if(!t){ toast("That task is no longer available. Refresh and try again."); return; }
+    openTaskForm(t); return;
   }
   if(e.target.id==="addTaskBtn2"){ openTaskForm(null); }
 });
