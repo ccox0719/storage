@@ -1028,3 +1028,9 @@ body{background-image:none}
 .home-tool-links{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
 .home-tool-links button{padding:14px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
 .home-tool-links button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.room-palettes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin:18px 0 26px}
+.room-palette{padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.room-palette h3{margin:0 0 8px}.room-palette p{color:var(--muted);line-height:1.5}
+.room-swatches{display:flex;flex-wrap:wrap;gap:12px}.room-swatches div{width:72px;display:flex;flex-direction:column;gap:6px}
+.room-swatches span{height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.12)}.room-swatches small{font-size:.75rem;color:var(--ink)}

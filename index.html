@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261005-navigation";
+  const CURRENT_BUILD="20261005-palettes";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=14">
+<link rel="stylesheet" href="css/app.css?v=15">
 <link rel="stylesheet" href="css/apple-home.css?v=3">
 
 </head>
@@ -82,7 +82,6 @@
         <div class="home-tool-links">
           <button type="button" data-home-tab="tasks">✓ Maintenance records</button>
           <button type="button" data-home-tab="seasonal">◒ Seasonal checklists</button>
-          <button type="button" data-home-tab="decor" id="decorTab">⌑ Shopping records</button>
         </div>
         <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Open checklist</button></div>
         <div id="homeSeasonal" class="home-stack"></div>
@@ -166,13 +165,17 @@
   </main>
 
   <main id="view-decor" class="view" hidden>
-    <div class="view-h tab-title shop-title"><h2><span class="view-icon">⌑</span>Shopping</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
+    <div class="view-h tab-title shop-title"><h2><span class="view-icon">🎨</span>Room Palettes</h2><button class="link" id="addDecorBtn" type="button">+ Add</button></div>
+    <p class="tip">Color and style references for each room. Swatches illustrate the existing room plans; they are not exact paint matches.</p>
+    <div id="roomPalettes" class="room-palettes"></div>
+    <details class="sleek-disclosure"><summary><span>Shopping &amp; purchase records</span></summary><div class="disclosure-body">
     <div id="decorSummary"></div>
     <div class="shopping-source"><a href="https://www.amazon.com/hz/wishlist/dl/invite/AQICAHild4Vpadjqcz7bdgUf6Qu6-OaRt7P_FJRNNbyMlg-OQwFFEigtFSmnMF69wAScnLFGAAAAkTCBjgYJKoZIhvcNAQcGoIGAMH4CAQAweQYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAzvL_VDElvwuG8UT7wCARCATLWETocSjX5cpMBY_j2d7heJ-kvnm2v7MK14dXHVf2975Wd5zB1MxUXcYccyhtoW0Dd43zqDngtSu7nx6pVg9S8W--h9-9BgJ4NU0lg?ref_=wl_share" target="_blank" rel="noopener">Amazon List <span>›</span></a></div>
     <div class="home-section-head"><h2>Future purchases</h2></div>
     <div class="decor-tools"><input id="decorSearch" type="search" placeholder="Search home purchases…"><select id="decorRoom"><option value="all">All rooms</option></select></div>
     <div id="decorList"></div>
     <details class="decor-history" id="decorHistory"><summary id="decorHistoryTitle">Purchased items</summary><div id="decorPurchased"></div></details>
+    </div></details>
   </main>
   <div id="cloudBottomBar" class="cloud-bottom-bar" hidden>
     <span id="cloudStateText"><b>Cloud</b> · connecting…</span>
@@ -185,6 +188,7 @@
   <button class="tab-btn" type="button" data-tab="storage"><span class="ti" aria-hidden="true">▣</span>Storage</button>
   <button class="tab-btn" type="button" data-tab="systems"><span class="ti" aria-hidden="true">⚙︎</span>Systems</button>
   <button class="tab-btn" type="button" data-tab="plants"><span class="ti" aria-hidden="true">♧</span>Plants &amp; Yard</button>
+  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti" aria-hidden="true">🎨</span>Palettes</button>
 </nav>
 
 
@@ -238,9 +242,9 @@
 <script src="js/tasks.js?v=12"></script>
 <script src="js/seasonal.js?v=14"></script>
 <script src="js/plants.js?v=11"></script>
-<script src="js/decor.js?v=14"></script>
+<script src="js/decor.js?v=15"></script>
 <script src="js/systems.js?v=13"></script>
 <script src="js/dashboard.js?v=11"></script>
-<script src="js/ui.js?v=12"></script>
+<script src="js/ui.js?v=13"></script>
 </body>
 </html>
