@@ -311,7 +311,7 @@ async function cloudPull(){
     const seedNow = seasonalSeed();
     const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
     const removedById = Object.fromEntries((removedSeasonal||[]).map(i=>[i.id,i]));
-    const builtInPattern = /^(pool|kitchen|fountain|deck|furniture|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
+    const builtInPattern = /^(pool|kitchen|fountain|hot-tub|irrigation|deck|furniture|garage|landscaping|turf|hvac)-(winter|spring|summer|fall)-\d+$/;
     seasonalItems = seedNow.map(seed=>{
       const old = cloudById[seed.id];
       const removed = removedById[seed.id];
