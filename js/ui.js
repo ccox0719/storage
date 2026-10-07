@@ -43,10 +43,10 @@ formDlg.addEventListener("click", e=>{
 /* ==================================================================
    Tab navigation
    ================================================================== */
-const TABS = ["home","storage","care","systems","more","tasks","seasonal","plants","decor"];
+const TABS = ["home","systems","storage","tasks","seasonal","plants","decor"];
 function switchTab(name){
   if(!TABS.includes(name)) return;
-  const primaryTab = ["tasks","seasonal","plants"].includes(name) ? "care" : (name==="decor" ? "more" : name);
+  const primaryTab = ["tasks","seasonal"].includes(name) ? "home" : name;
   if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   TABS.forEach(t=>{
     $(`#view-${t}`).hidden = t!==name;
@@ -57,12 +57,6 @@ function switchTab(name){
 }
 document.querySelectorAll(".tab-btn").forEach(b=>{
   b.addEventListener("click", ()=>switchTab(b.dataset.tab));
-});
-document.addEventListener("click",e=>{
-  const care=e.target.closest("[data-care-tab]");
-  if(care){ switchTab(care.dataset.careTab); return; }
-  const more=e.target.closest("[data-more-tab]");
-  if(more){ switchTab(more.dataset.moreTab); }
 });
 
 /* ---------- init ---------- */
