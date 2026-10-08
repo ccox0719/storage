@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261007-restore";
+  const CURRENT_BUILD="20261007-safe-nav";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=17">
+<link rel="stylesheet" href="css/app.css?v=18">
 <link rel="stylesheet" href="css/apple-home.css?v=3">
 
 </head>
@@ -145,6 +145,24 @@
   </section>
   </main>
 
+  <main id="view-care" class="view" hidden>
+    <div class="view-h tab-title care-title"><h2><span class="view-icon">✓</span>Care</h2></div>
+    <p class="view-sub">Maintenance, seasonal work, and yard care.</p>
+    <div class="hub-grid">
+      <button type="button" class="hub-card" data-care-tab="tasks"><span>✓</span><b>Maintenance</b><small>Recurring tasks and service records</small></button>
+      <button type="button" class="hub-card" data-care-tab="seasonal"><span>◒</span><b>Seasonal</b><small>Current and future seasonal checklists</small></button>
+      <button type="button" class="hub-card" data-care-tab="plants"><span>♧</span><b>Plants & yard</b><small>Plant records and outdoor care</small></button>
+    </div>
+  </main>
+
+  <main id="view-more" class="view" hidden>
+    <div class="view-h tab-title more-title"><h2><span class="view-icon">•••</span>More</h2></div>
+    <p class="view-sub">Reference tools you use less often.</p>
+    <div class="hub-grid">
+      <button type="button" class="hub-card" data-more-tab="decor"><span>🎨</span><b>Room palettes</b><small>Room style and shopping references</small></button>
+    </div>
+  </main>
+
   <main id="view-tasks" class="view" hidden>
     <div class="view-h tab-title tasks-title"><h2><span class="view-icon">✓</span>Tasks</h2><button class="link" id="addTaskBtn" type="button">+ Add</button></div>
     <div id="tasksSummary"></div>
@@ -187,8 +205,8 @@
   <button class="tab-btn" type="button" data-tab="home" aria-current="true"><span class="ti" aria-hidden="true">⌂</span>Home</button>
   <button class="tab-btn" type="button" data-tab="storage"><span class="ti" aria-hidden="true">▣</span>Storage</button>
   <button class="tab-btn" type="button" data-tab="systems"><span class="ti" aria-hidden="true">⚙︎</span>Systems</button>
-  <button class="tab-btn" type="button" data-tab="plants"><span class="ti" aria-hidden="true">♧</span>Plants &amp; Yard</button>
-  <button class="tab-btn" type="button" data-tab="decor" id="decorTab"><span class="ti" aria-hidden="true">🎨</span>Palettes</button>
+  <button class="tab-btn" type="button" data-tab="care"><span class="ti" aria-hidden="true">✓</span>Care</button>
+  <button class="tab-btn" type="button" data-tab="more"><span class="ti" aria-hidden="true">•••</span>More</button>
 </nav>
 
 
@@ -245,6 +263,6 @@
 <script src="js/decor.js?v=15"></script>
 <script src="js/systems.js?v=13"></script>
 <script src="js/dashboard.js?v=13"></script>
-<script src="js/ui.js?v=15"></script>
+<script src="js/ui.js?v=16"></script>
 </body>
 </html>
