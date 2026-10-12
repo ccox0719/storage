@@ -173,11 +173,11 @@ function renderSeasonal(){
     const open = seasonalOpen.has(sec.key);
     const group = (season,label)=>{
       const list = items.filter(i=>i.season===season);
-      if(!list.length) return "";
+      if(!list.length) return `<button type="button" class="add-row subtle-add" data-ssn-add="${sec.key}|${season}">+ Add ${season} task</button>`;
       return `<p class="ssn-sub">${label}</p><ul class="check-list">${list.map(i=>`
         <li><label class="check-row ${i.done_year===year?"checked":""}">
           <input type="checkbox" data-ssn-id="${i.id}" ${i.done_year===year?"checked":""}>
-          <span data-ssn-edit="${i.id}">${esc(i.title)}</span>
+          <span>${esc(i.title)}</span><button type="button" class="mini-btn secondary" data-ssn-edit="${i.id}" aria-label="Edit ${esc(i.title)}">Edit</button>
         </label></li>`).join("")}</ul>
         <button type="button" class="add-row subtle-add" data-ssn-add="${sec.key}|${season}">+ Add task</button>`;
     };
@@ -195,7 +195,7 @@ function renderSeasonal(){
         <span class="chev" aria-hidden="true">›</span>
       </button>
       <div class="ssn-body" ${open?"":"hidden"}>
-        ${current.length ? group(active,"This "+active) : `<p class="hint">Nothing scheduled here for ${active}.</p>`}
+        ${current.length ? group(active,"This "+active) : `<p class="hint">Nothing scheduled here for ${active}.</p><button type="button" class="add-row subtle-add" data-ssn-add="${sec.key}|${active}">+ Add task</button>`}
         ${future ? `<div class="future-seasons"><div class="future-label">Other seasons</div>${future}</div>` : ""}
       </div>
     </div>`;
@@ -216,7 +216,7 @@ $("#view-seasonal").addEventListener("click", e=>{
     return;
   }
   const editSpan = e.target.closest("[data-ssn-edit]");
-  if(editSpan){ openSeasonalItemForm(seasonalItems.find(i=>i.id===editSpan.dataset.ssnEdit)); return; }
+  if(editSpan){ const item=seasonalItems.find(i=>i.id===editSpan.dataset.ssnEdit); if(item) openSeasonalItemForm(item); return; }
   const add = e.target.closest("[data-ssn-add]");
   if(add){
     const [section,season] = add.dataset.ssnAdd.split("|");
@@ -235,10 +235,10 @@ $("#view-seasonal").addEventListener("change", e=>{
 function openSeasonalItemForm(item){
   openForm({
     title: "Edit task",
-    fields: [{key:"title", label:"Task", type:"text", value:item.title}],
+    fields: [{key:"title", label:"Task", type:"text", value:item.title},{key:"season",label:"Season",type:"select",value:item.season,options:[{value:"winter",label:"Winter"},{value:"spring",label:"Spring"},{value:"summer",label:"Summer"},{value:"fall",label:"Fall"}]}],
     onSave(v){
       if(!v.title.trim()) return;
-      item.title = v.title.trim();
+      item.title = v.title.trim();\n      if(["winter","spring","summer","fall"].includes(v.season)) item.season=v.season;
       saveSeasonal(); renderSeasonal();
       toast("Task updated");
     },
