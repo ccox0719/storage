@@ -58,6 +58,49 @@ const RULES = [
   ["box","Seasonal & sentimental",["B1"]]
 ];
 
+/* Household-category fallback for things that are not already named in inventory. */
+const STORAGE_INTENT_RULES = [
+  {codes:["G1"], words:"tool tools hardware screw screws bolt bolts nut nuts nail nails hook hooks bracket brackets fastener fasteners glue adhesive tape caulk repair fix drill bit bits blade blades wrench socket pliers hammer staple staples"},
+  {codes:["G3","G1"], words:"garage quick grab cord cords extension cable shop vac vacuum bag bags garage supply work glove gloves"},
+  {codes:["B2"], words:"filter filters furnace hvac humidifier water heater mechanical thermostat detector smoke carbon monoxide manual manuals warranty replacement part parts"},
+  {codes:["M5"], words:"clean cleaning cleaner cleaners mop broom detergent laundry stain rag rags towel towels trash bag bags refill refills sponge sponges paper towel towels"},
+  {codes:["M1"], words:"kitchen everyday cooking baking bake bread container containers rubbermaid rubberware tupperware lid lids utensil utensils pan pans pot pots dish dishes cutting board boards foil parchment"},
+  {codes:["B4","B5"], words:"kitchen extra overflow specialty appliance appliances entertaining serve serving platter platters tray trays party disposable food storage container containers"},
+  {codes:["M2"], words:"food foods pantry snack snacks spice spices canned pasta rice flour sugar oil coffee tea bulk consumable consumables"},
+  {codes:["M3"], words:"coat coats jacket jackets shoe shoes boot boots hat hats glove gloves scarf scarves umbrella umbrellas backpack backpacks bag bags leash leashes sunglasses sunscreen"},
+  {codes:["U2","U6","M4"], words:"bath bathroom toiletry toiletries shampoo conditioner soap grooming razor razors hair dryer skincare makeup towel towels linen linens first aid"},
+  {codes:["U3"], words:"charger chargers charging usb cable cables cord cords headphone headphones earbuds tablet tablets kindle laptop laptops phone phones camera controller controllers electronics tech"},
+  {codes:["U4"], words:"sheet sheets bedding blanket blankets comforter comforters pillow pillows mattress linen linens throw throws"},
+  {codes:["U7","U1","U8"], words:"clothing clothes shirt shirts pants dress dresses suit suits uniform uniforms shoe shoes seasonal clothing closet"},
+  {codes:["M6"], words:"game games boardgame boardgames puzzle puzzles toy toys lego legos card cards pokemon book books costume costumes craft kids recreation indoor"},
+  {codes:["B1"], words:"memory memories keepsake keepsakes sentimental photo photos album albums office paper papers craft crafts gift gifts wrapping holiday christmas easter halloween decoration decorations decor seasonal candle candles light bulb bulbs battery batteries spare backup long term"},
+  {codes:["B6"], words:"travel trip camping camp luggage suitcase suitcases duffel duffels sleeping bag bags tent tents cot cots packing hiking backpack backpacks travel pillow pillows"},
+  {codes:["G2"], words:"fishing fish tackle rod rods reel reels sports helmet helmets life jacket jackets hunting archery bow arrow arrows recreation outdoor gear"},
+  {codes:["G5","G6"], words:"bulky large awkward tarp tarps cover covers ladder ladders car automotive seasonal inflatable inflatables artificial tree empty bin bins tote totes long item items"},
+  {codes:["O1"], words:"yard lawn garden gardening rake rakes shovel shovels hose hoses mower trimmer blower wheelbarrow outdoor game games garden tool tools"},
+  {codes:["O2"], words:"fertilizer weed killer herbicide insecticide pesticide grass seed ice melt chemical chemicals lawn treatment stain motor oil"},
+  {codes:["O3","O4"], words:"pool hot tub spa float floatie floaties skimmer vacuum pool toy toys pool filter filters pool cover covers test testing hose fitting fittings"},
+  {codes:["O5","O6"], words:"grill grilling bbq barbecue outdoor kitchen tongs spatula spatulas skewer skewers thermometer thermometers charcoal serving outdoor plate plates cup cups"},
+  {codes:["B7"], words:"passport passports birth certificate certificates social security will wills deed deeds title titles checkbook checkbooks jewelry cash valuable valuables important document documents spare key keys"}
+];
+
+function storageIntentGuesses(qTokens){
+  const scored=new Map();
+  STORAGE_INTENT_RULES.forEach(rule=>{
+    const hay=toks(rule.words);
+    let score=0;
+    qTokens.forEach(q=>{if(hay.some(h=>h.startsWith(q)||(q.startsWith(h)&&h.length>2))) score++;});
+    if(!score) return;
+    rule.codes.forEach((code,idx)=>{
+      const loc=byCode[code];
+      if(!loc) return;
+      const weighted=score-(idx*.15);
+      if(!scored.has(code)||scored.get(code).score<weighted) scored.set(code,{l:loc,score:weighted});
+    });
+  });
+  return [...scored.values()].sort((a,b)=>b.score-a.score).slice(0,3);
+}
+
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -168,14 +211,16 @@ function search(){
 
   if(!results.length){
     $("#countNote").textContent = "";
-    let guesses = LOCATIONS.map(l=>({l,score:guessScore(l,q)})).filter(g=>g.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
+    let guesses = storageIntentGuesses(q);
+    let intentMatched = guesses.length>0;
+    if(!guesses.length) guesses = LOCATIONS.map(l=>({l,score:guessScore(l,q)})).filter(g=>g.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
     let loose = false;
     if(!guesses.length){
       guesses = LOCATIONS.map(l=>({l,score:guessScoreLoose(l,q)})).filter(g=>g.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
       loose = guesses.length>0;
     }
     if(guesses.length){
-      const lead = loose ? `Nothing close by name — closest category matches for` : `No exact match — here's where`;
+      const lead = intentMatched ? `Not in the inventory yet — best home for` : (loose ? `Nothing close by name — closest category matches for` : `No exact match — here's where`);
       $("#results").innerHTML = `<p class="hint" style="margin:0 2px 10px">${lead} “${esc(query)}” probably belongs. Tap one to file it there.</p>` +
         guesses.map(({l})=>`
         <button type="button" class="result guess" data-open="${l.code}" data-guess="${esc(query)}" style="${zc(l.code)}">
