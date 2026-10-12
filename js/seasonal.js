@@ -235,7 +235,7 @@ $("#view-seasonal").addEventListener("change", e=>{
 function openSeasonalItemForm(item){
   openForm({
     title: "Edit task",
-    fields: [{key:"title", label:"Task", type:"text", value:item.title},{key:"season",label:"Season",type:"select",value:item.season,options:[{value:"winter",label:"Winter"},{value:"spring",label:"Spring"},{value:"summer",label:"Summer"},{value:"fall",label:"Fall"}]}],
+    fields: [{key:"title", label:"Task", type:"text", value:item.title}],
     onSave(v){
       if(!v.title.trim()) return;
       item.title = v.title.trim();\n      if(["winter","spring","summer","fall"].includes(v.season)) item.season=v.season;
