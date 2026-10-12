@@ -322,7 +322,7 @@ async function cloudPull(){
     seasonalItems = seedNow.map(seed=>{
       const old = cloudById[seed.id];
       const removed = removedById[seed.id];
-      return {...seed, ...(removed||{}), disabled:!!removed, done_year:removed ? null : (old ? old.done_year : null)};
+      return {...seed, ...(old ? {title:old.title,done_year:old.done_year} : {}), ...(removed||{}), disabled:!!removed, done_year:removed ? null : (old ? old.done_year : null)};
     });
     sr.data.filter(r=>!builtInIds.has(r.external_id)).forEach(r=>{
       if(!removedById[r.external_id]) seasonalItems.push({id:r.external_id,section:r.section,season:r.season,title:r.title,done_year:r.done_year,disabled:false});
