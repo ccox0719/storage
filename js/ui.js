@@ -44,19 +44,32 @@ formDlg.addEventListener("click", e=>{
    Tab navigation
    ================================================================== */
 const TABS = ["home","systems","storage","tasks","seasonal","plants","decor"];
+function closeTransientUI(){
+  document.querySelectorAll("dialog[open]").forEach(d=>{
+    try{ d.close(); }catch{}
+  });
+  if(typeof syncTabbarVisibility==="function") syncTabbarVisibility();
+}
 function switchTab(name){
   if(!TABS.includes(name)) return;
+  closeTransientUI();
   const primaryTab = ["tasks","seasonal"].includes(name) ? "home" : name;
-  if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   TABS.forEach(t=>{
-    $(`#view-${t}`).hidden = t!==name;
+    const view=$(`#view-${t}`);
+    if(view) view.hidden = t!==name;
   });
   document.querySelectorAll(".tab-btn").forEach(b=>{
     b.setAttribute("aria-current", b.dataset.tab===primaryTab ? "true" : "false");
   });
+  if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
+  requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"auto"}));
 }
 document.querySelectorAll(".tab-btn").forEach(b=>{
-  b.addEventListener("click", ()=>switchTab(b.dataset.tab));
+  b.addEventListener("click", e=>{
+    e.preventDefault();
+    if(b.getAttribute("aria-current")==="true") return;
+    switchTab(b.dataset.tab);
+  });
 });
 
 /* ---------- init ---------- */
