@@ -1034,3 +1034,27 @@ body{background-image:none}
 .room-palette h3{margin:0 0 8px}.room-palette p{color:var(--muted);line-height:1.5}
 .room-swatches{display:flex;flex-wrap:wrap;gap:12px}.room-swatches div{width:72px;display:flex;flex-direction:column;gap:6px}
 .room-swatches span{height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.12)}.room-swatches small{font-size:.75rem;color:var(--ink)}
+
+
+/* ---------- iPhone-safe bottom tab bar ---------- */
+.tabbar{
+  left:0;
+  right:0;
+  bottom:0;
+  max-width:none;
+  margin:0;
+  border:0;
+  border-top:1px solid var(--line);
+  border-radius:0;
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
+  background:var(--surface);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:0 -8px 20px rgba(24,37,63,.08);
+  transform:translateZ(0);
+}
+.tab-btn{
+  min-height:48px;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
