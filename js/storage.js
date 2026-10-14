@@ -301,6 +301,7 @@ function openSubSheet(subCode){
   const planned = plannedItemsForSub(subCode);
   const suggested = suggestedItemsForSub(subCode).filter(item=>!planned.some(p=>norm(p)===norm(item)));
   const assigned = l.items.filter(it=>subMoves[it.id]===subCode);
+  const grouping = (typeof SUBLOCATION_GROUPINGS!=="undefined" && SUBLOCATION_GROUPINGS[subCode]) || [];
   const review = (SUBLOCATION_REVIEW && SUBLOCATION_REVIEW[subCode]) || [];
   $("#sheetBody").setAttribute("style", zc(sub.location));
   $("#sheetBody").innerHTML = `
@@ -314,6 +315,16 @@ function openSubSheet(subCode){
       <p class="area">${esc(l.name)} · ${ZONES[z(sub.location)].name}</p></div>
     </div>
     <p class="job">${esc(sub.notes)}</p>
+
+    ${grouping.length ? `
+      <div class="subdetail-h"><span>Suggested grouping</span><small>Keep like items together</small></div>
+      <div class="shelf-grouping">${grouping.map(g=>`
+        <section class="shelf-group">
+          <div class="shelf-group-head"><b>${esc(g.name)}</b><span>${esc(g.allocation)}</span></div>
+          <p>${esc(g.examples.join(" · "))}</p>
+        </section>`).join("")}</div>
+      <p class="hint shelf-group-note">These are category zones, not tote assignments. Use the space flexibly and keep each category together.</p>
+    ` : ""}
 
     <div class="subdetail-h"><span>From your inventory</span><small>Items you already own</small></div>
     ${planned.length ? `<ul class="planned-list inventory-list">${planned.map(item=>`<li>${esc(item)}</li>`).join("")}</ul>`
