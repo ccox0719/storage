@@ -78,7 +78,7 @@ async function startCloud(session){
     }else{
       await withCloudTimeout(cloudPull(),25000,"Inventory download");
       cloudReady = true;
-      await cloudSyncAll(true); // also adds any new built-in defaults
+      // Cloud records are authoritative. Never rewrite them during startup.
     }
     setCloudState("synced");
   }catch(err){
@@ -90,19 +90,20 @@ async function startCloud(session){
 }
 
 async function cloudReplace(table, rows){
-  // Keep the existing snapshot until the replacement is safely inserted.
-  const current = await db.from(table).select("id").eq("household_id",homeHouseholdId);
-  if(current.error) throw current.error;
-  const oldIds = (current.data || []).map(r=>r.id).filter(Boolean);
-
-  if(rows.length){
-    const ins = await db.from(table).insert(rows);
-    if(ins.error) throw ins.error;
-  }
-  if(oldIds.length){
-    const del = await db.from(table).delete().in("id",oldIds);
-    if(del.error) throw del.error;
-  }
+  // Non-destructive keyed upsert: never delete the database snapshot.
+  const keys={
+    home_locations:"household_id,code",
+    home_sub_locations:"household_id,sub_code",
+    home_items:"household_id,item_key",
+    home_tasks:"household_id,external_id",
+    home_seasonal_tasks:"household_id,external_id",
+    home_plants:"household_id,external_id",
+    home_moving_progress:"household_id,step_id"
+  };
+  if(!keys[table]) throw new Error("Unsupported cloud table");
+  if(!rows.length) return;
+  const {error}=await withCloudTimeout(db.from(table).upsert(rows,{onConflict:keys[table]}),20000,"Save "+table);
+  if(error) throw error;
 }
 
 function cloudRowsLocations(){
