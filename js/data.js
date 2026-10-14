@@ -292,6 +292,53 @@ const SUBLOCATIONS = [
   {code:"O6-C",location:"O6",name:"Drawer 3",notes:"Foil and grilling backups"}
 ];
 
+const SUBLOCATION_GROUPINGS = {
+  "B1-E":[
+    {
+      name:"Christmas & seasonal décor",
+      allocation:"About 4 shallow shelves",
+      examples:["Ornaments","Christmas lights","Stockings","Nativity","Village pieces","Wreaths & garlands","Small seasonal décor"]
+    },
+    {
+      name:"Family memories & keepsakes",
+      allocation:"About 4 shallow shelves",
+      examples:["Photo albums","Kids memories","School projects","Baby photos","Childhood artwork","Journals","Family notes"]
+    },
+    {
+      name:"Office, crafts & gift supplies",
+      allocation:"About 4 shallow shelves",
+      examples:["Paper & folders","Craft paints","Markers","Gift bags","Tissue paper","Treat bags","Postcards","Small craft tools"]
+    },
+    {
+      name:"Electronics & household backups",
+      allocation:"About 4 shallow shelves",
+      examples:["Power cords","HDMI cords","Older laptops","Small electronics","Lightbulbs","Vacuum bags","Space-saver bags","Small household backups"]
+    }
+  ],
+  "B1-F":[
+    {
+      name:"Bulky seasonal & holiday",
+      allocation:"About 1 deep shelf",
+      examples:["Large seasonal décor","Holiday inflatables","Bulky climate-sensitive decorations","Large seasonal bins"]
+    },
+    {
+      name:"Large family keepsakes",
+      allocation:"About 1 deep shelf",
+      examples:["Large keepsake collections","Memory boxes","Bulky sentimental items","Oversized photo or school-project storage"]
+    },
+    {
+      name:"Party, gift & craft overflow",
+      allocation:"About 1 deep shelf",
+      examples:["Party supplies","Gift-wrap overflow","Large craft supplies","Extra serving or event supplies"]
+    },
+    {
+      name:"Household backup & overflow",
+      allocation:"About 1 deep shelf",
+      examples:["Bulk household backups","Extra bags","Larger spare household items","Overflow that belongs indoors"]
+    }
+  ]
+};
+
 const SUBLOCATION_ITEMS = {
   "B2-A":["Air filter","Humidifier filter","Miscellaneous house filter"],
   "B2-B":["House-system replacement parts","Appliance maintenance pieces"],
