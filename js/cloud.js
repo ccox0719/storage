@@ -354,7 +354,7 @@ async function cloudPull(){
     Store.write("wil-tasks",tasks);
   }
   {
-    const seedNow = typeof seasonalSeed === "function" ? seasonalSeed() : (Array.isArray(seasonalItems) ? seasonalItems.filter(i=>!i.disabled) : []);
+    const seedNow = Array.isArray(globalThis.seasonalItems) ? globalThis.seasonalItems.filter(i=>!i.disabled) : (typeof seasonalItems !== "undefined" && Array.isArray(seasonalItems) ? seasonalItems.filter(i=>!i.disabled) : []);
     const cloudById = Object.fromEntries(sr.data.map(r=>[r.external_id,r]));
     const removedById = Object.fromEntries((removedSeasonal||[]).map(i=>[i.id,i]));
     const builtInIds = new Set(seedNow.map(i=>i.id));
