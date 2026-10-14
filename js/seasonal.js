@@ -238,7 +238,8 @@ function openSeasonalItemForm(item){
     fields: [{key:"title", label:"Task", type:"text", value:item.title}],
     onSave(v){
       if(!v.title.trim()) return;
-      item.title = v.title.trim();\n      if(["winter","spring","summer","fall"].includes(v.season)) item.season=v.season;
+      item.title = v.title.trim();
+      if(["winter","spring","summer","fall"].includes(v.season)) item.season=v.season;
       saveSeasonal(); renderSeasonal();
       toast("Task updated");
     },
