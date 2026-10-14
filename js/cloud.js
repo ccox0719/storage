@@ -9,6 +9,11 @@ let cloudReady = false;
 let cloudLoading = false;
 let cloudAuthListenerRegistered = false;
 const cloudTimers = {};
+let cloudPhase = "initializing";
+// Independent watchdog: report a stuck auth startup even if its promise never settles.
+setTimeout(()=>{ if(!cloudReady && !document.getElementById("authGate")?.hidden && !cloudLoading) return;
+  if(!cloudReady){ setCloudState("stalled at "+cloudPhase+"; tap Retry",true); }
+},18000);
 
 function setCloudState(message, isError=false){
   const box = $("#cloudBottomBar");
@@ -40,6 +45,8 @@ async function withCloudTimeout(request,ms=15000,label="Cloud request"){
 }
 
 async function initCloud(){
+  cloudPhase="checking saved session";
+  setCloudState("checking session…");
   // Supabase auth callbacks must return synchronously. Awaiting database
   // requests inside them can deadlock the auth lock on Safari.
   if(!cloudAuthListenerRegistered){
@@ -56,6 +63,7 @@ async function initCloud(){
   try{
     const {data,error}=await withCloudTimeout(db.auth.getSession(),12000,"Session check");
     if(error) throw error;
+    cloudPhase="session resolved";
     if(data?.session){
       if(!cloudReady && !cloudLoading) await startCloud(data.session);
     }else showAuth();
@@ -68,6 +76,7 @@ async function initCloud(){
 
 async function startCloud(session){
   cloudLoading = true;
+  cloudPhase="looking up household";
   showSignedInApp();
   setCloudState("connecting…");
   try{
@@ -80,6 +89,7 @@ async function startCloud(session){
     if(!membership?.household_id) throw new Error("No family household is linked to this login.");
     homeHouseholdId = membership.household_id;
 
+    cloudPhase="checking locations";
     const {count,error} = await withCloudTimeout(db.from("home_locations")
       .select("id",{count:"exact",head:true})
       .eq("household_id",homeHouseholdId),15000,"Inventory lookup");
@@ -90,10 +100,12 @@ async function startCloud(session){
       setCloudState("setting up house data…");
       // Do not automatically overwrite cloud records with local defaults.
     }else{
+      cloudPhase="downloading records";
       await withCloudTimeout(cloudPull(),25000,"Inventory download");
       cloudReady = true;
       // Cloud records are authoritative. Never rewrite them during startup.
     }
+    cloudPhase="synced";
     setCloudState("synced");
   }catch(err){
     console.error(err);
