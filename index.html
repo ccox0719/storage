@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261013-startup-9";
+  const CURRENT_BUILD="20261013-diagnostics-10";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -233,6 +233,17 @@
   </div>
 </dialog>
 
+<script>
+window.addEventListener("error",function(e){
+  const el=document.getElementById("cloudStateText");
+  if(el) el.textContent="Cloud · JS error: "+(e.message||"script failed")+" ("+(e.filename||"unknown").split("/").pop()+":"+(e.lineno||"?")+")";
+  const retry=document.getElementById("cloudRetry"); if(retry)retry.hidden=false;
+});
+window.addEventListener("unhandledrejection",function(e){
+  const el=document.getElementById("cloudStateText");
+  if(el)el.textContent="Cloud · Promise error: "+String(e.reason?.message||e.reason).slice(0,160);
+});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js"></script>
 <script src="js/data.js?v=11"></script>
 <script src="js/moving.js?v=11"></script>
@@ -245,6 +256,20 @@
 <script src="js/systems.js?v=13"></script>
 <script src="js/dashboard.js?v=13"></script>
 <script src="js/cloud.js?v=23"></script>
-<script src="js/ui.js?v=19"></script>
+<script src="js/ui.js?v=20"></script>
+<script>
+// Independent bootstrap: diagnose if the UI initializer failed before initCloud.
+setTimeout(function(){
+  try {
+    if(typeof initCloud!=="function") throw Error("cloud.js did not load");
+    if(typeof cloudPhase!=="undefined" && cloudPhase==="initializing") {
+      initCloud().catch(function(e){document.getElementById("cloudStateText").textContent="Cloud · Bootstrap: "+e.message;});
+    }
+  } catch(e) {
+    const el=document.getElementById("cloudStateText");
+    if(el)el.textContent="Cloud · Bootstrap: "+e.message;
+  }
+},250);
+</script>
 </body>
 </html>
