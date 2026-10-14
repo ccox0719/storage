@@ -73,6 +73,14 @@ document.querySelectorAll(".tab-btn").forEach(b=>{
 });
 
 /* ---------- init ---------- */
-renderDirectory(); renderTiles(); search(); renderMoving();
-renderTasks(); renderSeasonal(); renderPlants(); renderDecor(); renderSystems(); renderHomeDashboard();
-initCloud();
+// Start cloud independently of individual tab rendering errors.
+try { initCloud(); } catch (err) { console.error("Cloud startup",err); setCloudState("startup: "+err.message,true); }
+for (const [name,render] of [
+  ["directory",()=>renderDirectory()],["tiles",()=>renderTiles()],
+  ["search",()=>search()],["moving",()=>renderMoving()],
+  ["tasks",()=>renderTasks()],["seasonal",()=>renderSeasonal()],
+  ["plants",()=>renderPlants()],["decor",()=>renderDecor()],
+  ["systems",()=>renderSystems()],["dashboard",()=>renderHomeDashboard()]
+]) {
+  try { render(); } catch(err) { console.error("Render "+name,err); }
+}
