@@ -7,6 +7,7 @@ let homeHouseholdId = null;
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let cloudReady = false;
 let cloudLoading = false;
+let cloudAuthListenerRegistered = false;
 const cloudTimers = {};
 
 function setCloudState(message, isError=false){
@@ -46,6 +47,8 @@ async function initCloud(){
     else showAuth();
   } catch(err) { console.error(err); showSignedInApp(); setCloudState(err.message||"Connection failed",true); }
 
+  if(cloudAuthListenerRegistered) return;
+  cloudAuthListenerRegistered = true;
   db.auth.onAuthStateChange(async (_event, session)=>{
     if(session && !cloudReady && !cloudLoading) await startCloud(session);
     if(!session){ cloudReady=false; showAuth(); }
