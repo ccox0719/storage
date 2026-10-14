@@ -40,19 +40,30 @@ async function withCloudTimeout(request,ms=15000,label="Cloud request"){
 }
 
 async function initCloud(){
-  try {
-    const {data:{session},error:sessionError} = await withCloudTimeout(db.auth.getSession(),12000,"Session check");
-    if(sessionError) throw sessionError;
-    if(session) await startCloud(session);
-    else showAuth();
-  } catch(err) { console.error(err); showSignedInApp(); setCloudState(err.message||"Connection failed",true); }
-
-  if(cloudAuthListenerRegistered) return;
-  cloudAuthListenerRegistered = true;
-  db.auth.onAuthStateChange(async (_event, session)=>{
-    if(session && !cloudReady && !cloudLoading) await startCloud(session);
-    if(!session){ cloudReady=false; showAuth(); }
-  });
+  // Supabase auth callbacks must return synchronously. Awaiting database
+  // requests inside them can deadlock the auth lock on Safari.
+  if(!cloudAuthListenerRegistered){
+    cloudAuthListenerRegistered=true;
+    db.auth.onAuthStateChange((_event,session)=>{
+      if(!session){
+        if(_event==="SIGNED_OUT"){cloudReady=false;showAuth();}
+        return;
+      }
+      if(cloudReady || cloudLoading) return;
+      setTimeout(()=>{ if(!cloudReady && !cloudLoading) startCloud(session); },0);
+    });
+  }
+  try{
+    const {data,error}=await withCloudTimeout(db.auth.getSession(),12000,"Session check");
+    if(error) throw error;
+    if(data?.session){
+      if(!cloudReady && !cloudLoading) await startCloud(data.session);
+    }else showAuth();
+  }catch(err){
+    console.error(err);
+    showSignedInApp();
+    setCloudState(err.message||"Connection failed",true);
+  }
 }
 
 async function startCloud(session){
