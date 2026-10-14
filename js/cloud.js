@@ -14,6 +14,9 @@ function setCloudState(message, isError=false){
   if(!box) return;
   box.hidden = false;
   $("#cloudStateText").innerHTML = `<b>Cloud</b> · ${esc(message)}`;
+  let retry=document.getElementById("cloudRetry");
+  if(!retry){retry=document.createElement("button");retry.id="cloudRetry";retry.type="button";retry.textContent="Retry";retry.onclick=async()=>{if(cloudLoading)return;await initCloud();};box.appendChild(retry);}
+  retry.hidden=!isError;
   box.style.borderColor = isError ? "#B4394C" : "";
 }
 
@@ -29,10 +32,19 @@ function showSignedInApp(){
   $(".tabbar").style.display = "";
 }
 
+async function withCloudTimeout(request,ms=15000,label="Cloud request"){
+  let timer;
+  try { return await Promise.race([Promise.resolve(request),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(label+" timed out. Please retry.")),ms);})]); }
+  finally { clearTimeout(timer); }
+}
+
 async function initCloud(){
-  const {data:{session}} = await db.auth.getSession();
-  if(session) await startCloud(session);
-  else showAuth();
+  try {
+    const {data:{session},error:sessionError} = await withCloudTimeout(db.auth.getSession(),12000,"Session check");
+    if(sessionError) throw sessionError;
+    if(session) await startCloud(session);
+    else showAuth();
+  } catch(err) { console.error(err); showSignedInApp(); setCloudState(err.message||"Connection failed",true); }
 
   db.auth.onAuthStateChange(async (_event, session)=>{
     if(session && !cloudReady && !cloudLoading) await startCloud(session);
@@ -45,26 +57,26 @@ async function startCloud(session){
   showSignedInApp();
   setCloudState("connecting…");
   try{
-    const {data:memberships,error:membershipError} = await db.from("household_members")
+    const {data:memberships,error:membershipError} = await withCloudTimeout(db.from("household_members")
       .select("household_id")
       .eq("user_id",session.user.id)
-      .limit(1);
+      .limit(1),15000,"Household lookup");
     if(membershipError) throw membershipError;
     const membership = memberships && memberships[0];
     if(!membership?.household_id) throw new Error("No family household is linked to this login.");
     homeHouseholdId = membership.household_id;
 
-    const {count,error} = await db.from("home_locations")
+    const {count,error} = await withCloudTimeout(db.from("home_locations")
       .select("id",{count:"exact",head:true})
-      .eq("household_id",homeHouseholdId);
+      .eq("household_id",homeHouseholdId),15000,"Inventory lookup");
     if(error) throw error;
 
     if(!count){
       cloudReady = true;
       setCloudState("setting up house data…");
-      await cloudSyncAll(true);
+      // Do not automatically overwrite cloud records with local defaults.
     }else{
-      await cloudPull();
+      await withCloudTimeout(cloudPull(),25000,"Inventory download");
       cloudReady = true;
       await cloudSyncAll(true); // also adds any new built-in defaults
     }
@@ -206,13 +218,13 @@ function cloudSyncPlantsSoon(){ cloudSyncSoon("plants"); }
 function cloudSyncMovingSoon(){ cloudSyncSoon("moving"); }
 
 async function cloudPull(){
-  const [ir,tr,sr,pr,mr] = await Promise.all([
+  const [ir,tr,sr,pr,mr] = await withCloudTimeout(Promise.all([
     db.from("home_items").select("*").eq("household_id",homeHouseholdId),
     db.from("home_tasks").select("*").eq("household_id",homeHouseholdId),
     db.from("home_seasonal_tasks").select("*").eq("household_id",homeHouseholdId),
     db.from("home_plants").select("*").eq("household_id",homeHouseholdId),
     db.from("home_moving_progress").select("*").eq("household_id",homeHouseholdId)
-  ]);
+  ]),22000,"Inventory download");
   for(const r of [ir,tr,sr,pr,mr]) if(r.error) throw r.error;
 
   if(ir.data.length){
