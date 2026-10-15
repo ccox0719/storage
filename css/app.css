@@ -1276,3 +1276,49 @@ body{background:#fcfaf8;color:var(--ink);letter-spacing:-.005em}
   .summary-grid{gap:6px}
   .summary-card{padding:10px}
 }
+
+
+/* ---------- Gather contrast lock ----------
+   The app uses a deliberately light Gather palette even when iOS is in dark mode. */
+:root[data-theme="dark"],
+@media (prefers-color-scheme: dark){
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"]{
+    --paper:#fcfaf8;
+    --surface:#ffffff;
+    --ink:#140f1f;
+    --muted:#7b7480;
+    --line:#f0eae2;
+    --focus:#b88919;
+    --hl:#fedb71;
+    --shadow:0 5px 22px rgba(43,27,8,.035);
+    --shadow-lg:0 8px 26px rgba(43,27,8,.06);
+    --nav-home:#b88919;
+    --nav-systems:#b88919;
+    --nav-storage:#b88919;
+    --nav-tasks:#b88919;
+    --nav-seasonal:#b88919;
+    --nav-plants:#b88919;
+    --nav-shop:#b88919;
+    --soft-home:#fff2cd;
+    --soft-systems:#fff2cd;
+    --soft-storage:#fff2cd;
+    --soft-tasks:#fff2cd;
+    --soft-seasonal:#fff2cd;
+    --soft-plants:#fff2cd;
+    --soft-shop:#fff2cd;
+    color-scheme:light;
+  }
+}
+
+/* Keep storage copy readable regardless of legacy zone/theme variables. */
+#view-storage .section-h h2,
+#view-storage .group-h,
+#view-storage .floor-btn b,
+#view-storage .tile b,
+#view-storage .result b{color:#140f1f}
+#view-storage .floor-btn small,
+#view-storage .tile-meta,
+#view-storage .result .where{color:#7b7480}
+#view-storage .floor-btn .chev{color:#9e968c}
