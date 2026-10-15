@@ -78,7 +78,7 @@ function renderDecor(){
   $("#decorHistoryTitle").textContent=`Purchased items (${bought.length})`;
   $("#decorPurchased").innerHTML=bought.map(i=>`<div class="decor-history-row">${i.image?`<img src="${i.image}" alt="">`:""}<span><b>${esc(i.name)}</b><br>${esc(i.room)}${i.actual?` · ${decorMoney(i.actual)}`:""}</span><button data-decor-restore="${i.id}">Restore</button></div>`).join("")+
     (removed.length?`<details class="removed-tasks"><summary>Removed items (${removed.length})</summary><div class="removed-task-list">${removed.map(i=>`<div class="removed-task-row"><span>${esc(i.name)}</span><button data-decor-unremove="${i.id}">Restore</button></div>`).join("")}</div></details>`:"");
-  const tab=$("#decorTab"); tab.hidden=false;
+  // Palettes navigation was intentionally removed; no tab to reveal.
 }
 function openDecorForm(item){
   const isNew=!item;
