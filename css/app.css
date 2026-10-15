@@ -1068,3 +1068,211 @@ body{background-image:none}
 .shelf-group-head span{font-size:.7rem;color:var(--muted);white-space:nowrap}
 .shelf-group p{margin:5px 0 0;color:var(--muted);font-size:.76rem;line-height:1.45}
 .shelf-group-note{margin-top:8px}
+
+
+/* ---------- Gather-inspired Home App skin ---------- */
+:root{
+  --paper:#fcfaf8;
+  --surface:#ffffff;
+  --ink:#140f1f;
+  --muted:#7b7480;
+  --line:#f0eae2;
+  --focus:#b88919;
+  --hl:#fedb71;
+  --shadow:0 5px 22px rgba(43,27,8,.035);
+  --shadow-lg:0 8px 26px rgba(43,27,8,.06);
+  --display:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --nav-home:#b88919;
+  --nav-systems:#b88919;
+  --nav-storage:#b88919;
+  --nav-tasks:#b88919;
+  --nav-seasonal:#b88919;
+  --nav-plants:#b88919;
+  --nav-shop:#b88919;
+  --soft-home:#fff2cd;
+  --soft-systems:#fff2cd;
+  --soft-storage:#fff2cd;
+  --soft-tasks:#fff2cd;
+  --soft-seasonal:#fff2cd;
+  --soft-plants:#fff2cd;
+  --soft-shop:#fff2cd;
+  color-scheme:light;
+}
+body{background:#fcfaf8;color:var(--ink);letter-spacing:-.005em}
+.wrap{max-width:760px;padding-left:12px;padding-right:12px}
+.view-h{margin:18px 2px 8px}
+.view-h h2{font-size:1.35rem;font-weight:800;letter-spacing:-.04em}
+.view-sub{font-size:.82rem;color:var(--muted)}
+
+.finder{
+  background:#fcfaf8;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  padding:10px 0 9px;
+}
+.search{
+  background:#fff;
+  border:1px solid #f0eae2;
+  border-radius:15px;
+  box-shadow:0 4px 16px rgba(43,27,8,.035);
+}
+.search:focus-within{border-color:#fedb71;box-shadow:0 0 0 3px #fff2cd}
+.search input{font-size:1rem}
+.clear{background:#fff2cd;color:#493b15}
+.quick{gap:6px}
+.chip{background:#fff;border:1px solid #f0eae2;box-shadow:none;color:#4c4550}
+
+.directory{
+  border:1px solid #f0eae2;
+  border-radius:18px;
+  box-shadow:0 5px 22px rgba(43,27,8,.035);
+  overflow:hidden;
+}
+.floor-btn{background:#fff;padding:14px 15px}
+.floor-btn[aria-pressed="true"]{background:#fff6de}
+.floor-btn .tab{background:#fedb71}
+.floor-btn .chev{color:#a39a8d}
+.ground-mark{background:#f0eae2;border:0;height:5px}
+
+.tiles{gap:8px}
+.tile{
+  background:#fff;
+  border:1px solid #f2ece4;
+  border-radius:16px;
+  box-shadow:0 5px 22px rgba(43,27,8,.025);
+  min-height:112px;
+  padding:12px;
+}
+.tile::before{background:#fedb71;width:3px}
+.tile b{font-size:.92rem;font-weight:750}
+.tile-meta{border-top:1px solid #f4efe8;color:#8f8790}
+.code{background:#fff2cd;color:#493b15}
+
+.result,.rule,.tip,.sub-card,.shelf-group{
+  background:#fff;
+  border-color:#f2ece4;
+  box-shadow:none;
+}
+.result{border-radius:15px}
+.shelf-group{border-radius:15px}
+.shelf-group-head span{color:#9b8d72}
+.shelf-group-note{background:#fff9ed}
+
+.moving-mode{
+  border:1px solid #f2ece4;
+  background:#fff;
+  border-radius:17px;
+  box-shadow:0 5px 22px rgba(43,27,8,.025);
+}
+.moving-toggle{background:#fff}
+.moving-icon{background:#fff2cd;color:#9a7415}
+.moving-next{background:#fff6de}
+.move-step{background:#fff;border-color:#f0eae2}
+
+.summary-card,.task-row,.ssn-card,.plant-card,.system-card,.decor-card,.sleek-disclosure,.room-palette{
+  background:#fff;
+  border:1px solid #f2ece4;
+  box-shadow:0 5px 22px rgba(43,27,8,.025);
+}
+.summary-card,.task-row,.ssn-card,.plant-card,.system-card,.decor-card{border-radius:16px}
+.summary-card.hot,.summary-card.soon{background:#fff9ed;border-color:#fedb71}
+.badge.ok,.badge.soon,.badge.overdue,.badge.never{
+  background:#fff2cd;
+  color:#493b15;
+}
+.mini-btn,.system-task-row button{
+  border:1px solid #efebe6;
+  background:#fff;
+  color:#493b15;
+  border-radius:12px;
+}
+.mini-btn:active,.system-task-row button:active{background:#fff2cd}
+
+.system-card{
+  border-left:1px solid #f2ece4 !important;
+}
+.system-card .system-icon,.view-icon,.ssn-head .ti{
+  background:#fff2cd !important;
+  color:#9a7415 !important;
+}
+.system-card .system-edit-btn,.system-card .system-log-head button,.view .view-h .link{
+  color:#9a7415 !important;
+}
+.system-facts{border-bottom-color:#f0eae2}
+.system-facts div{border-color:#f0eae2}
+.system-detail-block,.system-equipment{background:#fffdf8}
+.system-task-row{background:#fff;border-color:#f0eae2}
+.system-disclosure{border-color:#f0eae2}
+
+.ssn-card{border-left:1px solid #f2ece4 !important}
+.season-now{background:#fff6de !important;border-color:#fedb71 !important}
+#view-seasonal .check-row input{accent-color:#d8a72a}
+.compact-plant{border-left:3px solid #fedb71 !important}
+#view-plants .sleek-disclosure>summary,#view-storage .storage-help>summary,#view-decor .shopping-room>summary{
+  background:#fffdf8;
+}
+
+.home-tool-links button,.shopping-source a{
+  background:#fff;
+  border:1px solid #f2ece4;
+  border-radius:15px;
+  box-shadow:none;
+}
+.shopping-source a span{color:#b88919}
+.decor-price{color:#9a7415 !important}
+.decor-card-actions .bought,.form-actions .save{
+  background:#fedb71 !important;
+  border-color:#fedb71 !important;
+  color:#140f1f !important;
+}
+.decor-progress span{background:#fedb71 !important}
+
+.field input,.field textarea,.decor-tools input,.decor-tools select{
+  background:#fff;
+  border:1px solid #f0eae2;
+  border-radius:13px;
+  color:#140f1f;
+}
+.field input:focus,.field textarea:focus,.decor-tools input:focus,.decor-tools select:focus{
+  border-color:#fedb71;
+  box-shadow:0 0 0 3px #fff2cd;
+}
+.sheet{
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -10px 35px rgba(43,27,8,.09);
+}
+.auth-gate{background:#fcfaf8}
+.auth-card{background:#fff;border:1px solid #f0eae2;border-radius:20px;box-shadow:0 8px 30px rgba(43,27,8,.06)}
+.auth-card input{background:#fff;border-color:#f0eae2}
+.auth-card .primary{background:#fedb71;color:#140f1f}
+.auth-card .secondary{background:#fff;border-color:#f0eae2}
+
+.tabbar{
+  background:#fff;
+  border-top:1px solid #f1eae1;
+  box-shadow:0 -5px 22px rgba(20,15,31,.03);
+  padding:7px 8px calc(7px + env(safe-area-inset-bottom,0px));
+}
+.tab-btn{
+  color:#867f88;
+  border-radius:15px;
+  min-height:47px;
+  font-size:.68rem;
+  font-weight:700;
+}
+.tab-btn[aria-current="true"]{
+  background:#fedb71 !important;
+  color:#140f1f !important;
+}
+.tab-btn[aria-current="true"] .ti{background:transparent !important;color:#140f1f}
+.tab-btn .ti{font-size:1.12rem}
+
+@media(max-width:430px){
+  .wrap{padding-left:12px;padding-right:12px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile{min-height:104px}
+  .summary-grid{gap:6px}
+  .summary-card{padding:10px}
+}
