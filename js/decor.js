@@ -21,8 +21,6 @@ DECOR_SEED.push(
   {id:"d-home-4",room:"Home protection",name:"Water leak protection",target:0,style:"Leak sensors / water protection for high-risk locations such as water heater, washers, kitchen sink, basement kitchenette and other plumbing points. Coordinate with the Home Assistant plan.",image:"",actual:null,store:"",link:"",status:"Choose system",purchased_at:null},
   {id:"d-home-5",room:"Lighting",name:"Govee / accent lamps",target:0,style:"Accent lighting for rooms that need warmth or indirect light. Consider Govee floor lamps or other compact accent lamps after furniture placement so each light has a clear purpose.",image:"",actual:null,store:"",link:"",status:"Choose rooms after move-in",purchased_at:null}
 );
-let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
-mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
 const BASEMENT_STYLE_UPDATE={
   "9×12 rug":"Vintage Persian-style rug · warm cream/tan base with rust, muted blue and faded brown",
   "Coffee table":"Medium-to-dark walnut top · simple black metal base · substantial rectangular shape",
@@ -31,6 +29,8 @@ const BASEMENT_STYLE_UPDATE={
   "Lamp #1":"Warm cream, taupe or dark textured ceramic base · linen shade · soft amber light",
   "Lamp #2":"Coordinate with lamp #1 · warm neutral ceramic/stone look"
 };
+let decorItems=Store.read("wil-decor",null)||DECOR_SEED.map(x=>({...x}));
+mergeNewSeedItems(decorItems,DECOR_SEED,saveDecor);
 function applyBasementStyleUpdate(sync=true){
   let changed=false;
   decorItems.forEach(i=>{if(i.room==="Basement TV Room"&&BASEMENT_STYLE_UPDATE[i.name]&&i.style!==BASEMENT_STYLE_UPDATE[i.name]){i.style=BASEMENT_STYLE_UPDATE[i.name];changed=true;}});
