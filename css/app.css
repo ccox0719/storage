@@ -1075,8 +1075,8 @@ body{background-image:none}
   --paper:#fcfaf8;
   --surface:#ffffff;
   --ink:#140f1f;
-  --muted:#7b7480;
-  --line:#f0eae2;
+  --muted:#5f5962;
+  --line:#e8e1d8;
   --focus:#b88919;
   --hl:#fedb71;
   --shadow:0 5px 22px rgba(43,27,8,.035);
@@ -1279,28 +1279,51 @@ body{background:#fcfaf8;color:var(--ink);letter-spacing:-.005em}
 
 
 /* ---------- Gather contrast lock ----------
-   The app uses a deliberately light Gather palette even when iOS is in dark mode. */
-:root[data-theme="dark"],
+   Keep the Gather skin readable even when iOS uses dark appearance. */
+:root[data-theme="dark"]{
+  --paper:#fcfaf8;
+  --surface:#ffffff;
+  --ink:#140f1f;
+  --muted:#5f5962;
+  --line:#e8e1d8;
+  --focus:#9a7415;
+  --hl:#fedb71;
+  --shadow:0 5px 22px rgba(43,27,8,.035);
+  --shadow-lg:0 8px 26px rgba(43,27,8,.06);
+  --nav-home:#9a7415;
+  --nav-systems:#9a7415;
+  --nav-storage:#9a7415;
+  --nav-tasks:#9a7415;
+  --nav-seasonal:#9a7415;
+  --nav-plants:#9a7415;
+  --nav-shop:#9a7415;
+  --soft-home:#fff2cd;
+  --soft-systems:#fff2cd;
+  --soft-storage:#fff2cd;
+  --soft-tasks:#fff2cd;
+  --soft-seasonal:#fff2cd;
+  --soft-plants:#fff2cd;
+  --soft-shop:#fff2cd;
+  color-scheme:light;
+}
 @media (prefers-color-scheme: dark){
-  :root,
-  :root:not([data-theme="light"]),
-  :root[data-theme="dark"]{
+  :root:not([data-theme="light"]){
     --paper:#fcfaf8;
     --surface:#ffffff;
     --ink:#140f1f;
-    --muted:#7b7480;
-    --line:#f0eae2;
-    --focus:#b88919;
+    --muted:#5f5962;
+    --line:#e8e1d8;
+    --focus:#9a7415;
     --hl:#fedb71;
     --shadow:0 5px 22px rgba(43,27,8,.035);
     --shadow-lg:0 8px 26px rgba(43,27,8,.06);
-    --nav-home:#b88919;
-    --nav-systems:#b88919;
-    --nav-storage:#b88919;
-    --nav-tasks:#b88919;
-    --nav-seasonal:#b88919;
-    --nav-plants:#b88919;
-    --nav-shop:#b88919;
+    --nav-home:#9a7415;
+    --nav-systems:#9a7415;
+    --nav-storage:#9a7415;
+    --nav-tasks:#9a7415;
+    --nav-seasonal:#9a7415;
+    --nav-plants:#9a7415;
+    --nav-shop:#9a7415;
     --soft-home:#fff2cd;
     --soft-systems:#fff2cd;
     --soft-storage:#fff2cd;
@@ -1312,13 +1335,34 @@ body{background:#fcfaf8;color:var(--ink);letter-spacing:-.005em}
   }
 }
 
-/* Keep storage copy readable regardless of legacy zone/theme variables. */
-#view-storage .section-h h2,
-#view-storage .group-h,
-#view-storage .floor-btn b,
-#view-storage .tile b,
-#view-storage .result b{color:#140f1f}
-#view-storage .floor-btn small,
-#view-storage .tile-meta,
-#view-storage .result .where{color:#7b7480}
-#view-storage .floor-btn .chev{color:#9e968c}
+/* Strong, consistent type hierarchy across the app. */
+body,.view,.sheet,.tabbar{color:#140f1f}
+.view h1,.view h2,.view h3,
+.section-h h2,.group-h,
+.floor-btn b,.tile b,.result b,
+.system-summary-copy h3,.task-main b,.plant-card b,
+.ssn-title b,.shelf-group-head b,.sub-card b,
+.home-card b,.home-search b{color:#140f1f !important}
+
+.view-sub,.floor-btn small,.tile small,.tile-meta,
+.result .where,.count-note,.hint,.tip,
+.sub-card small,.sub-count,.subdetail-h small,
+.shelf-group p,.shelf-group-head span,
+.system-summary-copy p,.system-mini,.system-task-row small,
+.task-main .freq,.meta-chip,.summary-card span,
+.plant-card .loc,.compact-plant small,
+.ssn-title small,.ssn-progress,.sheet .area,
+.home-card small,.home-stat span,.home-search small,
+.cloud-bottom-bar{color:#5f5962 !important}
+
+.search input::placeholder,
+.decor-tools input::placeholder,
+.field input::placeholder,
+.field textarea::placeholder{color:#8a838c;opacity:1}
+
+.tab-btn{color:#625c66 !important;opacity:1}
+.tab-btn[aria-current="true"]{color:#140f1f !important}
+.floor-btn,.tile,.result,.system-card,.plant-card,.task-row,.ssn-card{opacity:1}
+
+#view-storage .floor-btn .chev,
+#view-storage .home-arrow{color:#7a736f !important}
