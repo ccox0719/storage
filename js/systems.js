@@ -234,20 +234,78 @@ const HOUSE_SYSTEMS = [
     id:"electrical",
     name:"Electrical & Heated Floors",
     icon:"plug",
-    summary:"Nuheat floors · surge protection · basement, garage & pool panels",
+    summary:"Two basement breaker panels · Nuheat floors · surge protection · downstream garage/pool panels",
     facts:[
       ["Protection","Whole-house SPD / TVSS"],
-      ["Panels","Basement → garage → pool"],
+      ["Basement panels","Panel A in furnace / mechanical room · Panel B in basement gym"],
+      ["Panel chain","Gym panel → furnace-room panel → garage panel → downstream equipment / pool area"],
       ["Heated tile","Nuheat · laundry, both upstairs baths, basement tile"]
+    ],
+    panels:[
+      {
+        name:"Panel A · Furnace / Mechanical Room",
+        location:"Basement furnace / mechanical room",
+        circuits:[
+          ["1–3","Hot tub"],
+          ["2–4","Garage panel feeder"],
+          ["5","Upstairs bathroom"],
+          ["6","Kitchen upper / island · verify exact handwritten label"],
+          ["7","Basement bathroom"],
+          ["8","Basement living room"],
+          ["9–11","Kitchen microwave / upper · verify exact handwritten label"],
+          ["10","Bar west counter"],
+          ["12","Basement fireplace"],
+          ["13","Basement bath lights"],
+          ["14","Bar north counter"],
+          ["15","Bar microwave"],
+          ["16","Bar east wall"],
+          ["17","Bar fridge"],
+          ["18","Basement bath · crossed/unclear label, verify"],
+          ["19","Basement living-room lights"],
+          ["20","Floor heat"]
+        ]
+      },
+      {
+        name:"Panel B · Basement Gym",
+        location:"Basement gym",
+        circuits:[
+          ["1","Office up"],
+          ["2","Furnace"],
+          ["3","Outside GFI"],
+          ["4","Laundry room"],
+          ["5","Living room"],
+          ["6","Master bed"],
+          ["7","GFI"],
+          ["8","Master bath"],
+          ["9","Laundry room"],
+          ["10","Garage lights"],
+          ["11","Master bathroom"],
+          ["12","Kitchen / laundry lights"],
+          ["13","Kitchen"],
+          ["14","Hallway / guest bath"],
+          ["15","Kitchen"],
+          ["16","Dining room"],
+          ["17–19","A/C"],
+          ["18","Dishwasher"],
+          ["20","Garage · remainder of handwritten label unclear, verify"],
+          ["21","IT closet"],
+          ["22","Sump"],
+          ["23–25","SPD / TVSS surge protection"],
+          ["24","Kitchen / dining · verify exact handwritten label"],
+          ["26","Office down"],
+          ["27–29","Panel feeder to furnace room"],
+          ["28–30","Dryer down"]
+        ]
+      }
     ],
     supplies:[
       {label:"House-system parts, manuals and maintenance supplies",code:"B2-B"}
     ],
     next:[
-      "Document breaker labels and photograph each panel for the house map.",
+      "Breaker directories were mapped from the handwritten panel schedules on Oct. 17, 2026. Verify any circuit marked unclear before relying on it for service work.",
       "Whole-house surge protective device is installed at the main electrical equipment.",
-      "Basement panel includes the hot-tub breaker, garage-panel feeder and floor-heat circuits.",
-      "Garage panel feeds downstream equipment including the pool-panel area.",
+      "Furnace-room panel includes the hot-tub breaker, garage-panel feeder and floor-heat circuits.",
+      "Gym panel feeds the furnace-room panel and includes the SPD / TVSS.",
       "Reconnect/configure the heated-floor thermostat app for the laundry room, both upstairs bathrooms and basement tile."
     ]
   },
@@ -432,6 +490,16 @@ function renderSystems(){
       </div>
       <div class="system-body" ${open?"":"hidden"}>
         <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
+
+        ${sys.panels?.length ? `<details class="system-disclosure">
+          <summary>Breaker directory <span>${sys.panels.length} panels</span></summary>
+          <div class="system-block system-detail-block">
+            <div class="breaker-panels">${sys.panels.map(panel=>`<section class="breaker-panel">
+              <div class="breaker-panel-head"><h4>${esc(panel.name)}</h4><small>${esc(panel.location)}</small></div>
+              <div class="breaker-list">${panel.circuits.map(([num,label])=>`<div class="breaker-row"><b>${esc(num)}</b><span>${esc(label)}</span></div>`).join("")}</div>
+            </section>`).join("")}</div>
+          </div>
+        </details>` : ""}
 
         <div class="system-block system-equipment">
           <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
