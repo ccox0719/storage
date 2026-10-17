@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  const CURRENT_BUILD="20261017-storage-sheet-polish";
+  const CURRENT_BUILD="20261017-action-first-home";
   fetch("build.json?t="+Date.now(),{cache:"no-store"})
     .then(r=>r.ok?r.json():null)
     .then(b=>{
@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css?v=26">
-<link rel="stylesheet" href="css/apple-home.css?v=5">
+<link rel="stylesheet" href="css/apple-home.css?v=6">
 
 </head>
 <body>
@@ -105,7 +105,6 @@
       <input id="q" type="search" placeholder="Search for anything…" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="clear" type="button" hidden>Clear</button>
     </label>
-    <div class="quick" id="quick" aria-label="Popular searches"></div>
   </div>
 
 
@@ -247,14 +246,14 @@ window.addEventListener("unhandledrejection",function(e){
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js"></script>
 <script src="js/data.js?v=14"></script>
 <script src="js/moving.js?v=11"></script>
-<script src="js/storage.js?v=14"></script>
+<script src="js/storage.js?v=15"></script>
 <script src="js/utils.js?v=11"></script>
 <script src="js/tasks.js?v=12"></script>
 <script src="js/seasonal.js?v=16"></script>
 <script src="js/plants.js?v=11"></script>
 <script src="js/decor.js?v=16"></script>
 <script src="js/systems.js?v=13"></script>
-<script src="js/dashboard.js?v=13"></script>
+<script src="js/dashboard.js?v=14"></script>
 <script src="js/cloud.js?v=23"></script>
 <script src="js/ui.js?v=20"></script>
 <script>
