@@ -237,8 +237,8 @@ const HOUSE_SYSTEMS = [
     summary:"Two basement breaker panels · Nuheat floors · surge protection · downstream garage/pool panels",
     facts:[
       ["Protection","Whole-house SPD / TVSS"],
-      ["Basement panels","Panel A in furnace / mechanical room · Panel B in basement gym"],
-      ["Panel chain","Gym panel → furnace-room panel → garage panel → downstream equipment / pool area"],
+      ["Electrical panels","Panel A in furnace / mechanical room · Panel B in garage"],
+      ["Panel chain","Furnace-room panel → garage panel → downstream equipment / pool area"],
       ["Heated tile","Nuheat · laundry, both upstairs baths, basement tile"]
     ],
     panels:[
@@ -266,8 +266,8 @@ const HOUSE_SYSTEMS = [
         ]
       },
       {
-        name:"Panel B · Basement Gym",
-        location:"Basement gym",
+        name:"Panel B · Garage",
+        location:"Garage",
         circuits:[
           ["1","Office up"],
           ["2","Furnace"],
@@ -305,7 +305,7 @@ const HOUSE_SYSTEMS = [
       "Breaker directories were mapped from the handwritten panel schedules on Oct. 17, 2026. Verify any circuit marked unclear before relying on it for service work.",
       "Whole-house surge protective device is installed at the main electrical equipment.",
       "Furnace-room panel includes the hot-tub breaker, garage-panel feeder and floor-heat circuits.",
-      "Gym panel feeds the furnace-room panel and includes the SPD / TVSS.",
+      "Garage panel includes the SPD / TVSS and serves garage/downstream circuits shown in its directory.",
       "Reconnect/configure the heated-floor thermostat app for the laundry room, both upstairs bathrooms and basement tile."
     ]
   },
