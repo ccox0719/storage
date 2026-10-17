@@ -50,6 +50,7 @@ const QUICK = ["Passports","Christmas décor","Chargers","Toilet paper","Suitcas
 const RULES = [
   ["wrench","Tools & hardware",["G1"]],
   ["droplet","Cleaning & laundry",["M5"]],
+  ["plug","Keys & everyday drop zone",["M7"]],
   ["pot","Extra kitchen stuff",["B4","B5"]],
   ["suitcase","Camping & luggage",["B6"]],
   ["waves","Pool gear & chemicals",["O3","O4"]],
@@ -67,7 +68,8 @@ const STORAGE_INTENT_RULES = [
   {codes:["M1"], words:"kitchen everyday cooking baking bake bread container containers rubbermaid rubberware tupperware lid lids utensil utensils pan pans pot pots dish dishes cutting board boards foil parchment"},
   {codes:["B4","B5"], words:"kitchen extra overflow specialty appliance appliances entertaining serve serving platter platters tray trays party disposable food storage container containers"},
   {codes:["M2"], words:"food foods pantry snack snacks spice spices canned pasta rice flour sugar oil coffee tea bulk consumable consumables"},
-  {codes:["M3"], words:"coat coats jacket jackets shoe shoes boot boots hat hats glove gloves scarf scarves umbrella umbrellas backpack backpacks bag bags leash leashes sunglasses sunscreen"},
+  {codes:["M7"], words:"key keys keychain keychains wallet wallets everyday carry drop zone entry garage entry charger charging outlet small electronics sunglasses"},
+  {codes:["M3"], words:"coat coats jacket jackets shoe shoes boot boots hat hats glove gloves scarf scarves umbrella umbrellas backpack backpacks bag bags leash leashes sunscreen"},
   {codes:["U2","U6","M4"], words:"bath bathroom toiletry toiletries shampoo conditioner soap grooming razor razors hair dryer skincare makeup towel towels linen linens first aid"},
   {codes:["U3"], words:"charger chargers charging usb cable cables cord cords headphone headphones earbuds tablet tablets kindle laptop laptops phone phones camera controller controllers electronics tech"},
   {codes:["U4"], words:"sheet sheets bedding blanket blankets comforter comforters pillow pillows mattress linen linens throw throws"},
