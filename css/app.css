@@ -1366,3 +1366,68 @@ body,.view,.sheet,.tabbar{color:#140f1f}
 
 #view-storage .floor-btn .chev,
 #view-storage .home-arrow{color:#7a736f !important}
+
+
+/* ---------- Gather storage identity, without color rails ---------- */
+#view-storage .floor-btn .tab,
+#view-storage .group-h .tab{
+  width:9px;
+  height:9px;
+  min-width:9px;
+  align-self:auto;
+  border-radius:50%;
+  background:#fedb71 !important;
+}
+#view-storage .floor-btn .tab{flex:0 0 9px}
+#view-storage .tile::before,
+#view-storage .result::before{
+  display:none !important;
+}
+#view-storage .tile{
+  padding-left:13px;
+}
+#view-storage .tile-top{
+  margin-left:0;
+  align-items:center;
+}
+#view-storage .tile .emo{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#fff6de;
+  color:#8c6610;
+  font-size:1.15rem;
+}
+#view-storage .tile b,
+#view-storage .tile small{
+  margin-left:0;
+}
+#view-storage .code{
+  min-width:0;
+  padding:4px 9px;
+  border:0 !important;
+  border-radius:999px;
+  background:#fff2cd !important;
+  color:#493b15 !important;
+  font-size:.78rem;
+  font-weight:800;
+}
+#view-storage .group-h{
+  gap:8px;
+}
+#view-storage .result{
+  padding-left:14px;
+}
+#view-storage .result .emo{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#fff6de;
+  color:#8c6610;
+  font-size:1.15rem;
+  margin-left:0;
+}
