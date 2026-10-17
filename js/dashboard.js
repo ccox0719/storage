@@ -43,9 +43,6 @@ function openNeighborForm(n){
 }
 
 function renderHomeDashboard(){
-  const totalItems = Object.keys(itemsById || {}).length;
-  const totalLocations = Array.isArray(LOCATIONS) ? LOCATIONS.length : 0;
-
   const taskRows = tasks.filter(t=>!t.disabled).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const urgentTasks = taskRows.filter(t=>taskStatus(t).bucket==="now");
   const soonTasks = taskRows.filter(t=>taskStatus(t).bucket==="soon");
@@ -57,14 +54,14 @@ function renderHomeDashboard(){
   const stats = $("#homeStats");
   if(stats){
     stats.innerHTML = `
-      <div class="home-stat"><b>${totalItems}</b><span>Items mapped</span></div>
-      <div class="home-stat"><b>${totalLocations}</b><span>Storage spots</span></div>
-      <div class="home-stat ${urgentTasks.length?"warn":""}"><b>${urgentTasks.length}</b><span>Need attention</span></div>`;
+      <button type="button" class="home-stat home-attention-stat ${urgentTasks.length?"warn":""}" data-home-tab="tasks">
+        <b>${urgentTasks.length}</b><span>Need attention</span><small>${urgentTasks.length ? "Open maintenance tasks" : "Nothing overdue"}</small>
+      </button>`;
   }
 
   const attention = $("#homeAttention");
   if(attention){
-    const list = urgentTasks.slice(0,4);
+    const list = urgentTasks;
     attention.innerHTML = list.length ? list.map(t=>{
       const st = taskStatus(t);
       const loc = t.location_code && byCode[t.location_code] ? byCode[t.location_code] : null;
