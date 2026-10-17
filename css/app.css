@@ -1431,3 +1431,40 @@ body,.view,.sheet,.tabbar{color:#140f1f}
   font-size:1.15rem;
   margin-left:0;
 }
+
+
+/* ---------- Storage detail sheet polish ---------- */
+#sheetBody .job{
+  margin:16px 0 12px;
+  padding:12px 14px;
+  border:1px solid #f0eae2;
+  border-left:1px solid #f0eae2;
+  border-radius:14px;
+  background:#fff9ed;
+  color:#3f3942;
+  font-weight:650;
+  line-height:1.4;
+}
+#sheetBody .item-btn{
+  flex-wrap:wrap;
+  align-items:flex-start;
+  row-gap:2px;
+  border-radius:12px;
+  padding:8px 11px;
+}
+#sheetBody .item-btn .sub-badge{
+  flex:0 0 100%;
+  width:100%;
+  margin:0;
+  color:#8c6610;
+  font-size:.68rem;
+  font-weight:700;
+  line-height:1.2;
+}
+#sheetBody .item-btn.hit{
+  border-color:#fedb71 !important;
+  background:#fff9ed !important;
+}
+#sheetBody .item-btn .pin{
+  color:#9a7415 !important;
+}
