@@ -308,7 +308,7 @@ const HOUSE_SYSTEMS = [
       "Gym panel feeds the furnace-room panel and includes the SPD / TVSS.",
       "Reconnect/configure the heated-floor thermostat app for the laundry room, both upstairs bathrooms and basement tile."
     ]
-  }
+  },
   {
     id:"entertainment",
     name:"TV & Entertainment",
@@ -490,6 +490,16 @@ function renderSystems(){
       </div>
       <div class="system-body" ${open?"":"hidden"}>
         <div class="system-facts">${sys.facts.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>
+
+        ${sys.panels?.length ? `<details class="system-disclosure">
+          <summary>Breaker directory <span>${sys.panels.length} panels</span></summary>
+          <div class="system-block system-detail-block">
+            <div class="breaker-panels">${sys.panels.map(panel=>`<section class="breaker-panel">
+              <div class="breaker-panel-head"><h4>${esc(panel.name)}</h4><small>${esc(panel.location)}</small></div>
+              <div class="breaker-list">${panel.circuits.map(([num,label])=>`<div class="breaker-row"><b>${esc(num)}</b><span>${esc(label)}</span></div>`).join("")}</div>
+            </section>`).join("")}</div>
+          </div>
+        </details>` : ""}
 
         <div class="system-block system-equipment">
           <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
