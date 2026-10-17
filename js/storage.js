@@ -131,13 +131,6 @@ function guessScoreLoose(loc, qTokens){
 let area = null;
 let query = "";
 
-/* ---------- quick chips ---------- */
-$("#quick").innerHTML = QUICK.map(t=>`<button class="chip" type="button" data-q="${esc(t)}">${esc(t)}</button>`).join("");
-$("#quick").addEventListener("click", e=>{
-  const b = e.target.closest("[data-q]"); if(!b) return;
-  setQuery(b.dataset.q);
-});
-
 /* ---------- directory (floor-plan bands) ---------- */
 function renderDirectory(){
   const count = k => LOCATIONS.filter(l=>z(l.code)===k).length;
