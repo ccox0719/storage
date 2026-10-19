@@ -501,6 +501,8 @@ function renderSystems(){
           </div>
         </details>` : ""}
 
+        ${sys.id==="lighting" && typeof renderLutronReference==="function" ? renderLutronReference() : ""}
+
         <div class="system-block system-equipment">
           <div class="system-log-head"><h4>Equipment record</h4><button type="button" data-edit-system-profile="${sys.id}">Edit</button></div>
           ${(()=>{

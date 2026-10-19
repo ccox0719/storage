@@ -1481,3 +1481,14 @@ body,.view,.sheet,.tabbar{color:#140f1f}
 .breaker-row b{font-size:.75rem;color:#8c6610}
 .breaker-row span{font-size:.76rem;line-height:1.3;color:#3f3942}
 @media(max-width:430px){.breaker-list{grid-template-columns:1fr}}
+
+/* Read-only dealer reference inside Lighting & Automation. */
+.lutron-reference { overflow-wrap:anywhere; }
+.lutron-reference details { margin:12px 0; }
+.lutron-reference summary { cursor:pointer; padding:8px 0; }
+.lutron-reference p { line-height:1.6; }
+.lutron-reference li { margin:8px 0; }
+.lutron-entry { border-bottom:1px solid var(--line,#ddd); padding:12px 0; }
+.lutron-entry p { margin:6px 0; white-space:pre-line; }
+.lutron-reference small { opacity:.75; }
+.lutron-reference [hidden] { display:none !important; }
