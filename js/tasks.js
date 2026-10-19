@@ -62,18 +62,23 @@ function renderTasks(){
   const importantCount = activeTasks.filter(t=>t.notify_important).length;
   const notifBox=$("#taskNotifications");
   if(notifBox) notifBox.innerHTML=`<div class="quiet-note"><span>✉</span><b>${importantCount} important reminder${importantCount===1?"":"s"}</b><small>Swipe left on a task to edit.</small></div>`;
-  const now = rows.filter(t=>taskStatus(t).bucket==="now");
-  const soon = rows.filter(t=>taskStatus(t).bucket==="soon");
-  const later = rows.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
+  // Keep the first-time 1994-home inspection audit together rather than
+  // burying regular maintenance under 25 separate "Never done" alerts.
+  const baseline = rows.filter(t=>String(t.id).startsWith("maint2026_") && !t.last_done);
+  const routine = rows.filter(t=>!baseline.includes(t));
+  const now = routine.filter(t=>taskStatus(t).bucket==="now");
+  const soon = routine.filter(t=>taskStatus(t).bucket==="soon");
+  const later = routine.filter(t=>!["now","soon"].includes(taskStatus(t).bucket));
   $("#tasksSummary").innerHTML = `
     <div class="summary-grid">
-      <div class="summary-card hot"><b>${now.length}</b><span>Need attention</span></div>
+      <div class="summary-card hot"><b>${now.length+baseline.length}</b><span>Need attention</span></div>
       <div class="summary-card soon"><b>${soon.length}</b><span>Next 30 days</span></div>
       <div class="summary-card"><b>${later.length}</b><span>All good</span></div>
     </div>`;
   const section = (label,list)=> list.length ? `<div class="task-section-h">${label}</div>${list.map(taskRow).join("")}` : "";
   const laterSection = later.length ? `<details class="sleek-disclosure task-later"><summary>All good <span>${later.length}</span></summary><div class="disclosure-body">${later.map(taskRow).join("")}</div></details>` : "";
-  $("#tasksList").innerHTML = section("Due now",now)+section("Coming up",soon)+laterSection+
+  const baselineSection = baseline.length ? `<details class="sleek-disclosure task-later" open><summary>1994 home · Initial inspections <span>${baseline.length}</span></summary><div class="disclosure-body">${baseline.map(taskRow).join("")}</div></details>` : "";
+  $("#tasksList").innerHTML = baselineSection+section("Due now",now)+section("Coming up",soon)+laterSection+
     `<button type="button" class="add-row" id="addTaskBtn2">+ Add task</button>`+
     (removedTasks.length ? `<details class="removed-tasks"><summary>Removed tasks (${removedTasks.length})</summary><div class="removed-task-list">${removedTasks.map(x=>`<div class="removed-task-row"><span>${esc(x.title)}</span><button type="button" data-restore-task="${x.id}">Restore</button></div>`).join("")}</div></details>` : "");
 }
