@@ -1,0 +1,76 @@
+// Run with Playwright installed: node tests/contacts.cjs (serve repository on port 8765).
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:chromium.executablePath()});
+ const page=await browser.newPage({viewport:{width:390,height:844}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/supabase.min.js',route=>route.fulfill({contentType:'text/javascript',body:`
+ window.testRows=[{household_id:'test-house',external_id:'contact:fixture',title:'Example Company',notes:'__TASKSTATE__'+JSON.stringify({disabled:true,contact:{category:'Utility',phone:'555-0100',email:'test@example.com',notes:'<script>unsafe</script>'}}),last_done:null}];
+ window.testFail=false;
+ window.supabase={createClient:()=>({auth:{onAuthStateChange:fn=>{window.authChange=fn},getSession:async()=>({data:{session:{user:{id:'test-user'}}}})},from(table){
+ let filters=[];let write=null;let ignore=false;
+ const q={select(){return q},eq(k,v){filters.push(r=>r[k]===v);return q},like(k,v){filters.push(r=>String(r[k]).startsWith(v.slice(0,-1)));return q},limit(){return q},upsert(rows,opts){write=Array.isArray(rows)?rows:[rows];ignore=opts.ignoreDuplicates;return q},then(resolve,reject){return Promise.resolve().then(()=>{
+ if(table==='household_members')return {data:[{household_id:'test-house'}]};
+ if(table==='home_locations')return {count:1,data:[]};
+ if(write){if(window.testFail)return {error:{message:'Fixture save failed'}}; for(const row of write){const i=window.testRows.findIndex(r=>r.external_id===row.external_id);if(i<0)window.testRows.push(row);else if(!ignore)window.testRows[i]=row;}return {error:null};}
+ return {data:table==='home_tasks'?window.testRows.filter(r=>filters.every(fn=>fn(r))):[],error:null};
+ }).then(resolve,reject)} };return q;
+ }})};` }));
+ await page.goto('http://localhost:8765');
+ await page.waitForFunction(()=>typeof cloudReady!=='undefined' && cloudReady);
+ await page.locator('[data-home-tab="contacts"]').click();
+ await page.getByText('Example Company',{exact:true}).waitFor();
+ assert.equal(await page.locator('#contactsList script').count(),0);
+ assert.equal(await page.evaluate(()=>tasks.some(t=>t.id.startsWith('contact:'))),false);
+ await page.locator('[data-edit-contact="contact:fixture"]').click();
+ await page.locator('#f-phone').fill('555-0199');
+ await page.locator('#formSave').click();
+ await page.waitForFunction(()=>!document.querySelector('#formSheet').open);
+ assert.equal(await page.evaluate(()=>window.testRows.find(r=>r.external_id==='contact:fixture').notes.includes('555-0199')),true);
+ assert.equal(await page.evaluate(()=>cloudRowsTasks().some(r=>r.external_id.startsWith('contact:'))),false);
+ await page.locator('#addContactBtn').click();
+ await page.locator('#formSave').click();
+ await page.locator('#formError').waitFor();
+ assert.equal(await page.locator('#formSheet').evaluate(e=>e.open),true);
+ await page.locator('#f-name').fill('Example Neighbor');
+ await page.locator('#f-category').fill('neighbor');
+ await page.locator('#f-email').fill('invalid');
+ await page.locator('#formSave').click();
+ await page.getByText('Enter a valid email or leave it blank.',{exact:true}).first().waitFor();
+ await page.locator('#f-email').fill('neighbor@example.com');
+ await page.evaluate(()=>window.testFail=true);
+ await page.locator('#formSave').click();
+ await page.locator('#formError').filter({hasText:'Fixture save failed'}).waitFor();
+ assert.equal(await page.locator('#f-name').inputValue(),'Example Neighbor');
+ await page.evaluate(()=>window.testFail=false);
+ await page.locator('#formSave').click();
+ await page.waitForFunction(()=>!document.querySelector('#formSheet').open);
+ await page.getByRole('heading',{name:'Neighbors',exact:true}).waitFor();
+ await page.evaluate(()=>loadContacts());
+ await page.getByText('Example Neighbor',{exact:true}).waitFor();
+ await page.locator('#contactSearch').fill('no match');
+ await page.getByText('No matching contacts.',{exact:true}).waitFor();
+ await page.locator('#contactSearch').fill('');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ await page.screenshot({path:'/tmp/home-contacts-check/mobile.png',fullPage:true});
+ await page.evaluate(()=>{Store.write('wil-neighbors',[{id:'legacy-test',names:'Legacy Neighbor',relation:'Next door',notes:'Keep this note'}]);return migrateLocalNeighbors()});
+ await page.getByText('Legacy Neighbor',{exact:true}).waitFor();
+ await page.evaluate(()=>migrateLocalNeighbors());
+ assert.equal(await page.evaluate(()=>contacts.filter(c=>c.name==='Legacy Neighbor').length),1);
+ await page.locator('[data-tab="storage"]').click();
+ assert.equal(await page.locator('#view-storage').isVisible(),true);
+ await page.locator('[data-tab="systems"]').click();
+ assert.equal(await page.locator('#view-systems').isVisible(),true);
+ await page.setViewportSize({width:1280,height:900});
+ await page.evaluate(()=>switchTab('contacts'));
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ await page.locator('[data-edit-contact="contact:fixture"]').click();
+ await page.evaluate(()=>window.authChange('SIGNED_OUT',null));
+ assert.equal(await page.locator('#formSheet').evaluate(e=>e.open),false);
+ assert.equal(await page.locator('#formFields').textContent(),'');
+ assert.equal(await page.evaluate(()=>contacts.length),0);
+ assert.equal(await page.evaluate(()=>Object.keys(localStorage).some(k=>/contacts/.test(k))),false);
+ assert.deepEqual(errors,[]);
+ await browser.close();console.log('PASS: contacts, neighbors, reload, validation, failed saves, migration, navigation, mobile, sign out');
+})().catch(e=>{console.error(e);process.exit(1)});

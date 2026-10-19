@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=27">
+<link rel="stylesheet" href="css/app.css?v=28">
 <link rel="stylesheet" href="css/apple-home.css?v=6">
 
 </head>
@@ -70,6 +70,8 @@
       <span class="home-arrow">›</span>
     </button>
 
+    <button type="button" class="home-search" data-home-tab="contacts"><span><b>Important Contacts</b><small>Neighbors, contractors, vendors, utilities &amp; support</small></span><span class="home-arrow">›</span></button>
+
     <div id="homeStats" class="home-stats"></div>
 
     <div class="home-section-head"><h2>Maintenance needs</h2><button type="button" data-home-tab="tasks">See records</button></div>
@@ -85,10 +87,16 @@
         </div>
         <div class="home-section-head"><h2>This season</h2><button type="button" data-home-tab="seasonal">Open checklist</button></div>
         <div id="homeSeasonal" class="home-stack"></div>
-        <div class="home-section-head"><h2>Neighbors</h2><button type="button" id="addNeighborBtn">+ Add</button></div>
-        <div id="homeNeighbors" class="home-stack"></div>
+
       </div>
     </details>
+  </main>
+
+  <main id="view-contacts" class="view" hidden>
+    <div class="view-h tab-title"><h2>Important Contacts</h2><button class="link" id="addContactBtn" type="button" disabled>+ Add</button></div>
+    <p class="tip">Household contacts sync securely when you are signed in. Unknown details are marked incomplete.</p>
+    <label class="search"><span class="sr">Search contacts</span><input id="contactSearch" type="search" placeholder="Search contacts…"></label>
+    <div id="contactsList" class="home-stack" aria-live="polite"></div>
   </main>
 
   <main id="view-systems" class="view" hidden>
@@ -253,9 +261,10 @@ window.addEventListener("unhandledrejection",function(e){
 <script src="js/plants.js?v=11"></script>
 <script src="js/decor.js?v=16"></script>
 <script src="js/systems.js?v=20"></script>
-<script src="js/dashboard.js?v=14"></script>
-<script src="js/cloud.js?v=23"></script>
-<script src="js/ui.js?v=20"></script>
+<script src="js/dashboard.js?v=15"></script>
+<script src="js/contacts.js?v=1"></script>
+<script src="js/cloud.js?v=24"></script>
+<script src="js/ui.js?v=21"></script>
 <script>
 // Independent bootstrap: diagnose if the UI initializer failed before initCloud.
 setTimeout(function(){

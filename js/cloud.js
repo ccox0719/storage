@@ -53,7 +53,7 @@ async function initCloud(){
     cloudAuthListenerRegistered=true;
     db.auth.onAuthStateChange((_event,session)=>{
       if(!session){
-        if(_event==="SIGNED_OUT"){cloudReady=false;showAuth();}
+        if(_event==="SIGNED_OUT"){cloudReady=false;clearContacts();showAuth();}
         return;
       }
       if(cloudReady || cloudLoading) return;
@@ -105,6 +105,9 @@ async function startCloud(session){
       cloudReady = true;
       // Cloud records are authoritative. Never rewrite them during startup.
     }
+    if(!contactsLoaded) await loadContacts();
+    await migrateLocalNeighbors();
+    renderContacts();
     cloudPhase="synced";
     setCloudState("synced");
   }catch(err){
@@ -244,6 +247,12 @@ function cloudSyncSeasonalSoon(){ cloudSyncSoon("seasonal"); }
 function cloudSyncPlantsSoon(){ cloudSyncSoon("plants"); }
 function cloudSyncMovingSoon(){ cloudSyncSoon("moving"); }
 
+async function loadContacts(){
+  const {data,error}=await withCloudTimeout(db.from("home_tasks").select("*").eq("household_id",homeHouseholdId).like("external_id","contact:%"),15000,"Contact download");
+  if(error) throw error;
+  loadContactRows(data);
+}
+
 async function cloudPull(){
   const [ir,tr,sr,pr,mr] = await withCloudTimeout(Promise.all([
     db.from("home_items").select("*").eq("household_id",homeHouseholdId),
@@ -282,6 +291,7 @@ async function cloudPull(){
     rebuild();
   }
 
+  loadContactRows(tr.data);
   let removedSeasonal = [];
   if(tr.data.length){
     const decorRows = tr.data.filter(r=>String(r.external_id).startsWith("decor:") || String(r.notes||"").startsWith("__DECOR__"));
@@ -320,6 +330,7 @@ async function cloudPull(){
     removedSeasonal = seasonalStateRows.map(r=>{try{return JSON.parse(String(r.notes).replace(/^__SEASONALSTATE__/,""));}catch{return null}}).filter(Boolean);
 
     tasks = tr.data.filter(r=>
+      !isContactRow(r) &&
       !String(r.external_id).startsWith("decor:") &&
       !String(r.notes||"").startsWith("__DECOR__") &&
       !String(r.external_id).startsWith("systemlog:") &&
@@ -429,5 +440,6 @@ document.getElementById("cloudSignOut").addEventListener("click", async ()=>{
   await db.auth.signOut();
   cloudReady=false;
   homeHouseholdId=null;
+  clearContacts();
   showAuth();
 });
