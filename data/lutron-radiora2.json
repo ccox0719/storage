@@ -1,0 +1,5565 @@
+{
+  "schema_version": 1,
+  "project": "DREYHOUSE",
+  "report_date": "2026-10-19",
+  "filename_version_hint": "12.10.0",
+  "version_verified": false,
+  "verification": "Dealer documentation only; no physical or network verification.",
+  "sources": [
+    {
+      "id": "installation",
+      "filename": "Device Installation Report - Radio Ra2 7-12-26-12.10.0.pdf",
+      "pages": 80,
+      "sha256": "192581a0d745fc45fe267765b94d7d9bdb78f3afebc963c0be8573a24de5b8dd"
+    },
+    {
+      "id": "keypads",
+      "filename": "Keypad Programming Report - Radio Ra2 7-12-26-12.10.0.pdf",
+      "pages": 9,
+      "sha256": "77eb1588c52346276d9df38773e207fe0387ce8fdb73440f788d8df4e7ac10ac"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "install-02-1",
+      "source": "installation",
+      "page": 2,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "LIVINF ROOM SW WALL",
+      "model": "RRD-6D-WH",
+      "zone": "LIVING ROOM BOOKC\u2026",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LIVING ROOM BOOKC\u2026"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-03-1",
+      "source": "installation",
+      "page": 3,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "LIVING ROOM NE WALL",
+      "model": "RRD-10ND-WH",
+      "zone": "LIVING ROOM LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LIVING ROOM LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-03-2",
+      "source": "installation",
+      "page": 3,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "LIVING ROOM NE WALL",
+      "model": "RD-RD-WH",
+      "zone": "*CHANDELIER",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nFOYER > MAIN ENTRY >\nCHANDELIER",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-03-3",
+      "source": "installation",
+      "page": 3,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "LIVING ROOM NE WALL",
+      "model": "RRD-2ANF-WH",
+      "zone": "LIVING ROOM FAN",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "LIVING ROOM FAN"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-04-1",
+      "source": "installation",
+      "page": 4,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "LIVING ROOM LAMP",
+      "model": "RRD-3LD-SW",
+      "zone": "LIVING UP LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LIVING UP LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-05-1",
+      "source": "installation",
+      "page": 5,
+      "area": "LIVING ROOM 1ST FLOOR",
+      "position": "MOVIE SCENES",
+      "model": "PJ2-4B-GWH-L31",
+      "zone": "",
+      "description": "4 Button Scene with\nLight Icon - Pico Keypad",
+      "notes": "Device Name: SCENE\nCONTROLS",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-06-1",
+      "source": "installation",
+      "page": 6,
+      "area": "KITCHEN",
+      "position": "PANTRY",
+      "model": "RRD-8ANS-WH",
+      "zone": "PANTRY",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "PANTRY"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-07-1",
+      "source": "installation",
+      "page": 7,
+      "area": "KITCHEN",
+      "position": "WEST WALL KITCHEN",
+      "model": "RRD-10ND-WH",
+      "zone": "KITCHEN LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "2 Maestro Remote is\nattached.",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "KITCHEN LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-08-1",
+      "source": "installation",
+      "page": 8,
+      "area": "KITCHEN",
+      "position": "PANTRY/GARAGE DOOR",
+      "model": "RRD-6D-WH",
+      "zone": "GARAGE DOOR",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "GARAGE DOOR"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-08-2",
+      "source": "installation",
+      "page": 8,
+      "area": "KITCHEN",
+      "position": "PANTRY/GARAGE DOOR",
+      "model": "RD-RD-WH",
+      "zone": "*KITCHEN LIGHTS",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nKITCHEN > WEST WALL\nKITCHEN > KITCHEN\nLIGHTS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-09-1",
+      "source": "installation",
+      "page": 9,
+      "area": "KITCHEN",
+      "position": "PANTRY OCC",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-10-1",
+      "source": "installation",
+      "page": 10,
+      "area": "KITCHEN",
+      "position": "NE WALL",
+      "model": "RRD-10ND-WH",
+      "zone": "UN LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "UN LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-10-2",
+      "source": "installation",
+      "page": 10,
+      "area": "KITCHEN",
+      "position": "NE WALL",
+      "model": "RRD-10ND-WH",
+      "zone": "CAB UP LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "CAB UP LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-11-1",
+      "source": "installation",
+      "page": 11,
+      "area": "KITCHEN",
+      "position": "SE WALL",
+      "model": "RRD-10ND-WH",
+      "zone": "KITCHEN PENDANTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "KITCHEN PENDANTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-11-2",
+      "source": "installation",
+      "page": 11,
+      "area": "KITCHEN",
+      "position": "SE WALL",
+      "model": "RD-RD-WH",
+      "zone": "*KITCHEN LIGHTS",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nKITCHEN > WEST WALL\nKITCHEN > KITCHEN\nLIGHTS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-12-1",
+      "source": "installation",
+      "page": 12,
+      "area": "KITCHEN",
+      "position": "PERGOLA LIGHTS",
+      "model": "PJ2-2B-GWH-L01",
+      "zone": "",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: PATIO\nLIGHTS",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-13-1",
+      "source": "installation",
+      "page": 13,
+      "area": "PATIO",
+      "position": "PATIO",
+      "model": "RRD-8ANS-WH",
+      "zone": "POOL PUMP",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-4-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "POOL PUMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-13-2",
+      "source": "installation",
+      "page": 13,
+      "area": "PATIO",
+      "position": "PATIO",
+      "model": "RRD-8ANS-WH",
+      "zone": "PERGOLA LIGHTS",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-4-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "PERGOLA LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-13-3",
+      "source": "installation",
+      "page": 13,
+      "area": "PATIO",
+      "position": "PATIO",
+      "model": "RRD-10ND-WH",
+      "zone": "DECK LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-4-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "DECK LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-13-4",
+      "source": "installation",
+      "page": 13,
+      "area": "PATIO",
+      "position": "PATIO",
+      "model": "RRD-10ND-WH",
+      "zone": "PATIO LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-4-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "PATIO LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-14-1",
+      "source": "installation",
+      "page": 14,
+      "area": "PATIO",
+      "position": "SHED",
+      "model": "RRD-10ND-WH",
+      "zone": "SHED",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "SHED"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-15-1",
+      "source": "installation",
+      "page": 15,
+      "area": "PATIO",
+      "position": "STORAGE ROOM",
+      "model": "LMJ-16R-DV-B",
+      "zone": "POOL LIGHTS DECK",
+      "description": "RF Softswitch Module mounted in an electrical junction box",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "POOL LIGHTS DECK"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-16-1",
+      "source": "installation",
+      "page": 16,
+      "area": "PATIO",
+      "position": "FENCE",
+      "model": "PJ2-2B-GWH-L01",
+      "zone": "N/A",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: POOL\nPUMP",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-16-2",
+      "source": "installation",
+      "page": 16,
+      "area": "PATIO",
+      "position": "FENCE",
+      "model": "PJ2-2B-GWH-L01",
+      "zone": "N/A",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: POOL\nPUMP DECK",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-16-3",
+      "source": "installation",
+      "page": 16,
+      "area": "PATIO",
+      "position": "FENCE",
+      "model": "RRD-8ANS-WH",
+      "zone": "POOL LIGHTS",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "POOL LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-17-1",
+      "source": "installation",
+      "page": 17,
+      "area": "PATIO",
+      "position": "Patio Fans up High",
+      "model": "RRD-2ANF-WH",
+      "zone": "North Fan",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "North Fan"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-17-2",
+      "source": "installation",
+      "page": 17,
+      "area": "PATIO",
+      "position": "Patio Fans up High",
+      "model": "RRD-2ANF-WH",
+      "zone": "South Fan",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "South Fan"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-18-1",
+      "source": "installation",
+      "page": 18,
+      "area": "BASEMENT",
+      "position": "BASEMENT",
+      "model": "RRD-PRO-WH",
+      "zone": "STAIR LIGHTS",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "STAIR LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-19-1",
+      "source": "installation",
+      "page": 19,
+      "area": "BASEMENT",
+      "position": "STAIR BOTTOM",
+      "model": "RD-RD-WH",
+      "zone": "*BAR LIGHTS",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nBASEMENT > BAR > BAR\nLIGHTS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-19-2",
+      "source": "installation",
+      "page": 19,
+      "area": "BASEMENT",
+      "position": "STAIR BOTTOM",
+      "model": "PJ2-3BRL-GWH-L01",
+      "zone": "N/A",
+      "description": "3 Button with Raise/\nLower and Light Icon -\nPico Keypad",
+      "notes": "Device Name: STAIR\nLIGHTS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-20-1",
+      "source": "installation",
+      "page": 20,
+      "area": "BASEMENT",
+      "position": "LIVING ROOM",
+      "model": "RRD-PRO-WH",
+      "zone": "LIVING ROOM REAR LI\u2026",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LIVING ROOM REAR LI\u2026"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-20-2",
+      "source": "installation",
+      "page": 20,
+      "area": "BASEMENT",
+      "position": "LIVING ROOM",
+      "model": "RRD-PRO-WH",
+      "zone": "LIVING ROOM FRONT \u2026",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LIVING ROOM FRONT \u2026"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-21-1",
+      "source": "installation",
+      "page": 21,
+      "area": "BASEMENT",
+      "position": "OFFICE",
+      "model": "RRD-PRO-WH",
+      "zone": "OFFICE LIGHTS",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "OFFICE LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-22-1",
+      "source": "installation",
+      "page": 22,
+      "area": "BASEMENT",
+      "position": "IT CLOSET",
+      "model": "RRD-8ANS-WH",
+      "zone": "IT CLOSET LIGHTS",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "IT CLOSET LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-22-2",
+      "source": "installation",
+      "page": 22,
+      "area": "BASEMENT",
+      "position": "IT CLOSET",
+      "model": "RRD-PRO-WH",
+      "zone": "WINDOW",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "WINDOW"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-23-1",
+      "source": "installation",
+      "page": 23,
+      "area": "BASEMENT",
+      "position": "BAR",
+      "model": "RRD-PRO-WH",
+      "zone": "COUNTER LIGHTS",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "COUNTER LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-23-2",
+      "source": "installation",
+      "page": 23,
+      "area": "BASEMENT",
+      "position": "BAR",
+      "model": "RRD-PRO-WH",
+      "zone": "BAR LIGHTS",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BAR LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-23-3",
+      "source": "installation",
+      "page": 23,
+      "area": "BASEMENT",
+      "position": "BAR",
+      "model": "RRD-PRO-WH",
+      "zone": "PENDANTS",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "PENDANTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-24-1",
+      "source": "installation",
+      "page": 24,
+      "area": "BASEMENT",
+      "position": "BASEMENT LAMP",
+      "model": "RRD-3LD-SW",
+      "zone": "BASEMENT LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BASEMENT LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-25-1",
+      "source": "installation",
+      "page": 25,
+      "area": "BASEMENT",
+      "position": "OFFICE LAMP",
+      "model": "RRD-3LD-SW",
+      "zone": "BASEMENT OFF LIGHT",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BASEMENT OFF LIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-26-1",
+      "source": "installation",
+      "page": 26,
+      "area": "BASEMENT BATHROOM",
+      "position": "BASEMENT BATHROOM",
+      "model": "RRD-8ANS-WH",
+      "zone": "BATHRROM",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "BATHRROM"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-26-2",
+      "source": "installation",
+      "page": 26,
+      "area": "BASEMENT BATHROOM",
+      "position": "BASEMENT BATHROOM",
+      "model": "RRD-8ANS-WH",
+      "zone": "SHOWER",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "SHOWER"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-27-1",
+      "source": "installation",
+      "page": 27,
+      "area": "BASEMENT BATHROOM",
+      "position": "BASEMENT BR OCC",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-28-1",
+      "source": "installation",
+      "page": 28,
+      "area": "MASTER BEDROOM",
+      "position": "BEDROOM MASTER",
+      "model": "RRD-10ND-WH",
+      "zone": "BEDROOM MASTER",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BEDROOM MASTER"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-28-2",
+      "source": "installation",
+      "page": 28,
+      "area": "MASTER BEDROOM",
+      "position": "BEDROOM MASTER",
+      "model": "RRD-2ANF-WH",
+      "zone": "MASTER FAN",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "MASTER FAN"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-29-1",
+      "source": "installation",
+      "page": 29,
+      "area": "MASTER BEDROOM",
+      "position": "MASTER BEDRM",
+      "model": "RRD-3LD-MN",
+      "zone": "BRIANS LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Midnight",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BRIANS LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-30-1",
+      "source": "installation",
+      "page": 30,
+      "area": "MASTER BEDROOM",
+      "position": "MASTER BEDRM 2",
+      "model": "RRD-3LD-MN",
+      "zone": "BRANDYS LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Midnight",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BRANDYS LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-31-1",
+      "source": "installation",
+      "page": 31,
+      "area": "MASTER BEDROOM",
+      "position": "MASTER BEDROOM",
+      "model": "RR-T5RL-MN",
+      "zone": "",
+      "description": "Tabletop seeTouch 5 Button Keypad with Raise/Lower",
+      "notes": "Device Name: CONTOLLER",
+      "wallplate": "N/A",
+      "color": "Midnight",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-32-1",
+      "source": "installation",
+      "page": 32,
+      "area": "MASTER BEDROOM",
+      "position": "MASTER BOOKCASE",
+      "model": "RRD-6D-WH",
+      "zone": "BOOKCASES",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BOOKCASES"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-33-1",
+      "source": "installation",
+      "page": 33,
+      "area": "MASTER CLOSET",
+      "position": "MASTER CLOSET COUNTER",
+      "model": "RRD-10ND-WH",
+      "zone": "UC LIGHTS CLOSET",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "UC LIGHTS CLOSET"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-34-1",
+      "source": "installation",
+      "page": 34,
+      "area": "MASTER CLOSET",
+      "position": "CLOSET 1",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-35-1",
+      "source": "installation",
+      "page": 35,
+      "area": "MASTER CLOSET",
+      "position": "CLOSET 2",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-36-1",
+      "source": "installation",
+      "page": 36,
+      "area": "MASTER BATHROOM",
+      "position": "MASTER BATH EAST WALL",
+      "model": "RRD-6D-WH",
+      "zone": "VANITY LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "VANITY LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-37-1",
+      "source": "installation",
+      "page": 37,
+      "area": "MASTER BATHROOM",
+      "position": "MASTER BATH BANK",
+      "model": "RRD-6D-WH",
+      "zone": "CLOSET LIGHT",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "CLOSET LIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-37-2",
+      "source": "installation",
+      "page": 37,
+      "area": "MASTER BATHROOM",
+      "position": "MASTER BATH BANK",
+      "model": "RRD-10ND-WH",
+      "zone": "MASTER BATH CAN LTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "MASTER BATH CAN LTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-37-3",
+      "source": "installation",
+      "page": 37,
+      "area": "MASTER BATHROOM",
+      "position": "MASTER BATH BANK",
+      "model": "RRD-8ANS-WH",
+      "zone": "SHOWER LIGHT",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "SHOWER LIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-38-1",
+      "source": "installation",
+      "page": 38,
+      "area": "MASTER BATHROOM",
+      "position": "MASTER BATHROOM",
+      "model": "LRF2-VCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Vacancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-39-1",
+      "source": "installation",
+      "page": 39,
+      "area": "OFFICE 1ST FLOOR",
+      "position": "OFFICE EAST WALL",
+      "model": "RD-RD-WH",
+      "zone": "*OFFICE",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nOFFICE 1ST FLOOR >\nLIVING ROOM SE WALL\n> OFFICE",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-39-2",
+      "source": "installation",
+      "page": 39,
+      "area": "OFFICE 1ST FLOOR",
+      "position": "OFFICE EAST WALL",
+      "model": "RD-RD-WH",
+      "zone": "*STAIRS",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nFOYER > HALLWAY\nUPSTAIRS > STAIRS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-40-1",
+      "source": "installation",
+      "page": 40,
+      "area": "OFFICE 1ST FLOOR",
+      "position": "LIVING ROOM SE WALL",
+      "model": "RRD-PRO-WH",
+      "zone": "OFFICE\n1 - PHPM-PA-120-WH",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "OFFICE"
+      ],
+      "accessories": [
+        "PHPM-PA-120-WH"
+      ]
+    },
+    {
+      "id": "install-40-2",
+      "source": "installation",
+      "page": 40,
+      "area": "OFFICE 1ST FLOOR",
+      "position": "LIVING ROOM SE WALL",
+      "model": "RRD-6D-WH",
+      "zone": "OFFICE BOOK SHELVES",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "OFFICE BOOK SHELVES"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-41-1",
+      "source": "installation",
+      "page": 41,
+      "area": "OFFICE 1ST FLOOR",
+      "position": "OFFICE 1ST FL",
+      "model": "RRD-3LD-SW",
+      "zone": "OFFICE LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "OFFICE LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-42-1",
+      "source": "installation",
+      "page": 42,
+      "area": "FOYER",
+      "position": "ENTRY",
+      "model": "QSSC-EDU-xxx",
+      "zone": "FOYER",
+      "description": "Roller Shade. Please use\nShade Configuration\nTool (SCT) to order all\nshades/blinds.",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "shade",
+      "reported_zones": [
+        "FOYER"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-43-1",
+      "source": "installation",
+      "page": 43,
+      "area": "FOYER",
+      "position": "FOYER",
+      "model": "PJ-2BRL-GWH-I02",
+      "zone": "",
+      "description": "Battery powered PICO 2-\nbutton keypad with\nraise/lower and \"Shade\"\nicon engraving",
+      "notes": "Device Name: SHADE",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-44-1",
+      "source": "installation",
+      "page": 44,
+      "area": "FOYER",
+      "position": "MAIN ENTRY",
+      "model": "RRD-10ND-WH",
+      "zone": "CHANDELIER\n1 - PHPM-PA-120-WH",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "CHANDELIER"
+      ],
+      "accessories": [
+        "PHPM-PA-120-WH"
+      ]
+    },
+    {
+      "id": "install-44-2",
+      "source": "installation",
+      "page": 44,
+      "area": "FOYER",
+      "position": "MAIN ENTRY",
+      "model": "RD-RD-WH",
+      "zone": "*OUTSIDE LIGHTS",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nGARAGE > GARAGE\nENTRY > OUTSIDE\nLIGHTS",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-44-3",
+      "source": "installation",
+      "page": 44,
+      "area": "FOYER",
+      "position": "MAIN ENTRY",
+      "model": "RRD-6D-WH",
+      "zone": "PORCH LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-3-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "PORCH LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-45-1",
+      "source": "installation",
+      "page": 45,
+      "area": "FOYER",
+      "position": "HALLWAY UPSTAIRS",
+      "model": "RRD-6D-WH",
+      "zone": "STAIRS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "STAIRS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-46-1",
+      "source": "installation",
+      "page": 46,
+      "area": "FOYER",
+      "position": "WALL",
+      "model": "RRD-6D-WH",
+      "zone": "CLOSET",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "CLOSET"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-47-1",
+      "source": "installation",
+      "page": 47,
+      "area": "FOYER",
+      "position": "CLOSET DOWNSTAIRS",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-48-1",
+      "source": "installation",
+      "page": 48,
+      "area": "DINING ROOM",
+      "position": "DINING ROOM",
+      "model": "RD-RD-WH",
+      "zone": "*DINING ROOM",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "*Zone attached:\nDINING ROOM >\nDINING ROOM SOUTH\nWALL > DINING ROOM",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-48-2",
+      "source": "installation",
+      "page": 48,
+      "area": "DINING ROOM",
+      "position": "DINING ROOM",
+      "model": "RD-RD-WH",
+      "zone": "N/A",
+      "description": "120 V Maestro Remote\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "remote dimmer",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-49-1",
+      "source": "installation",
+      "page": 49,
+      "area": "DINING ROOM",
+      "position": "DINING ROOM SOUTH WALL",
+      "model": "RRD-6D-WH",
+      "zone": "DINING ROOM",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "DINING ROOM"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-50-1",
+      "source": "installation",
+      "page": 50,
+      "area": "DINING ROOM",
+      "position": "DINING ROOM COVE",
+      "model": "RRD-PRO-WH",
+      "zone": "DINING RM COVE",
+      "description": "Maestro LED+ Dimmer\nfor LED/INC/MLV/ELV",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "DINING RM COVE"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-51-1",
+      "source": "installation",
+      "page": 51,
+      "area": "BATHROOM 1ST FLOOR",
+      "position": "BATHROOM DOWN",
+      "model": "RRD-6D-WH",
+      "zone": "DOWNSTAIRS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "DOWNSTAIRS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-52-1",
+      "source": "installation",
+      "page": 52,
+      "area": "BATHROOM 1ST FLOOR",
+      "position": "BATHROOM DOWNST",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-53-1",
+      "source": "installation",
+      "page": 53,
+      "area": "GARAGE",
+      "position": "GARAGE ENTRY",
+      "model": "RRD-6D-BL",
+      "zone": "OUTSIDE LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "Maestro Remote is\nattached.",
+      "wallplate": "CW-2-BL",
+      "color": "Black",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "OUTSIDE LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-53-2",
+      "source": "installation",
+      "page": 53,
+      "area": "GARAGE",
+      "position": "GARAGE ENTRY",
+      "model": "PJ2-2B-GBL-L01",
+      "zone": "N/A",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: GARAGE\nLIGHTS",
+      "wallplate": "CW-2-BL",
+      "color": "Black",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-54-1",
+      "source": "installation",
+      "page": 54,
+      "area": "GARAGE",
+      "position": "GARAGE LIGHTS",
+      "model": "LMJ-16R-DV-B",
+      "zone": "GARAGE LIGHT",
+      "description": "RF Softswitch Module mounted in an electrical junction box",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "GARAGE LIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-55-1",
+      "source": "installation",
+      "page": 55,
+      "area": "GARAGE",
+      "position": "GARAGE ATTIC",
+      "model": "RRD-8ANS-WH",
+      "zone": "ATTIC GARAGE",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "ATTIC GARAGE"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-56-1",
+      "source": "installation",
+      "page": 56,
+      "area": "GARAGE",
+      "position": "GARAGE N ENTRY",
+      "model": "PJ2-2B-GBL-L01",
+      "zone": "",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: GARAGE\nLIGHTS",
+      "wallplate": "CW-2-BL",
+      "color": "Black",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-56-2",
+      "source": "installation",
+      "page": 56,
+      "area": "GARAGE",
+      "position": "GARAGE N ENTRY",
+      "model": "PJ2-3BRL-GBL-A02",
+      "zone": "",
+      "description": "3 Button with Raise/\nLower and Audio Control\nIcons and \u201cAudio\u201d Text \u2013\nPico Keypad",
+      "notes": "Device Name: GARAGE\nMUSIC",
+      "wallplate": "CW-2-BL",
+      "color": "Black",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-57-1",
+      "source": "installation",
+      "page": 57,
+      "area": "GARAGE",
+      "position": "garage lights off",
+      "model": "LRF2-OKLB-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Corner Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-58-1",
+      "source": "installation",
+      "page": 58,
+      "area": "GUEST BATHROOM",
+      "position": "VANITY GUEST",
+      "model": "RRD-6D-WH",
+      "zone": "VANITY LT",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "VANITY LT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-58-2",
+      "source": "installation",
+      "page": 58,
+      "area": "GUEST BATHROOM",
+      "position": "VANITY GUEST",
+      "model": "RRD-6D-WH",
+      "zone": "VANITY CEILING",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "VANITY CEILING"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-59-1",
+      "source": "installation",
+      "page": 59,
+      "area": "GUEST BATHROOM",
+      "position": "GUEST BATHROOM",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-60-1",
+      "source": "installation",
+      "page": 60,
+      "area": "GUEST ROOM SE",
+      "position": "WALL",
+      "model": "RRD-2ANF-WH",
+      "zone": "CEILING FAN",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "CEILING FAN"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-60-2",
+      "source": "installation",
+      "page": 60,
+      "area": "GUEST ROOM SE",
+      "position": "WALL",
+      "model": "RRD-6D-WH",
+      "zone": "BEDROO LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BEDROO LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-61-1",
+      "source": "installation",
+      "page": 61,
+      "area": "GUEST ROOM SE",
+      "position": "GUEST ROOM SE RIGHT",
+      "model": "RRD-3LD-SW",
+      "zone": "GUEST ROOM SE RIGHT",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "GUEST ROOM SE RIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-62-1",
+      "source": "installation",
+      "page": 62,
+      "area": "GUEST ROOM SE",
+      "position": "GUEST ROOM SE LEFT",
+      "model": "RRD-3LD-SW",
+      "zone": "GUEST ROOM SE LEFT",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "GUEST ROOM SE LEFT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-63-1",
+      "source": "installation",
+      "page": 63,
+      "area": "GUEST ROOM SW",
+      "position": "WALL",
+      "model": "RRD-6D-WH",
+      "zone": "BEDROOM LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "BEDROOM LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-63-2",
+      "source": "installation",
+      "page": 63,
+      "area": "GUEST ROOM SW",
+      "position": "WALL",
+      "model": "RRD-2ANF-WH",
+      "zone": "CEILING FAN",
+      "description": "Maestro 2 A Fan Speed\nControl",
+      "notes": "",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "fan control",
+      "reported_zones": [
+        "CEILING FAN"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-64-1",
+      "source": "installation",
+      "page": 64,
+      "area": "GUEST ROOM SW",
+      "position": "GUEST ROOM SW RIGHT",
+      "model": "RRD-3LD-SW",
+      "zone": "LAMP RIGHT",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LAMP RIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-65-1",
+      "source": "installation",
+      "page": 65,
+      "area": "GUEST ROOM SW",
+      "position": "GUEST ROOM SW LEFT",
+      "model": "RRD-3LD-SW",
+      "zone": "LEFT LAMP",
+      "description": "Tabletop 100 W LED/CFL or 300 W INC Lamp Dimmer",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "LEFT LAMP"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-66-1",
+      "source": "installation",
+      "page": 66,
+      "area": "GUEST SHOWER ROOM",
+      "position": "GUEST BATHROOM",
+      "model": "RRD-6D-WH",
+      "zone": "SHOWER RM",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "SHOWER RM"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-67-1",
+      "source": "installation",
+      "page": 67,
+      "area": "GUEST SHOWER ROOM",
+      "position": "SHOWER ROOM",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-68-1",
+      "source": "installation",
+      "page": 68,
+      "area": "LAUNDRY ROOM",
+      "position": "LAUNDRY ROOM",
+      "model": "RRD-8ANS-WH",
+      "zone": "LAUNDRY LIGHTS",
+      "description": "Maestro 8 A Switch With\nNeutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "switch",
+      "reported_zones": [
+        "LAUNDRY LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-69-1",
+      "source": "installation",
+      "page": 69,
+      "area": "LAUNDRY ROOM",
+      "position": "LAUNDRY",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-70-1",
+      "source": "installation",
+      "page": 70,
+      "area": "LAUNDRY ROOM",
+      "position": "LAUNDRY UC",
+      "model": "RRD-10ND-WH",
+      "zone": "UC LIGHTS",
+      "description": "Maestro 1000 W Dimmer\nWith Neutral",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "UC LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-71-1",
+      "source": "installation",
+      "page": 71,
+      "area": "LAUNDRY ROOM",
+      "position": "NW WALL",
+      "model": "PJ2-2B-GWH-L01",
+      "zone": "",
+      "description": "2 Button with Light Icon\n- Pico Keypad",
+      "notes": "Device Name: PERGOLA\nLIGHTS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-71-2",
+      "source": "installation",
+      "page": 71,
+      "area": "LAUNDRY ROOM",
+      "position": "NW WALL",
+      "model": "PJ2-3BRL-GWH-L01",
+      "zone": "",
+      "description": "3 Button with Raise/\nLower and Light Icon -\nPico Keypad",
+      "notes": "Device Name: CEILING\nFANS",
+      "wallplate": "CW-2-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "keypad",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-72-1",
+      "source": "installation",
+      "page": 72,
+      "area": "MASTER TOILET ROOM",
+      "position": "TOILET ROOM",
+      "model": "RRD-6D-WH",
+      "zone": "TOILET LIGHTS",
+      "description": "Maestro 600 W 2-Wire\nDimmer",
+      "notes": "",
+      "wallplate": "CW-1-WH",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "dimmer",
+      "reported_zones": [
+        "TOILET LIGHTS"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-73-1",
+      "source": "installation",
+      "page": 73,
+      "area": "MASTER TOILET ROOM",
+      "position": "MASTER TOILET ROOM",
+      "model": "LRF2-OCR2B-P-WH",
+      "zone": "",
+      "description": "Radio Powr Savr Wireless Ceiling Occupancy Sensor",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "sensor",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-74-1",
+      "source": "installation",
+      "page": 74,
+      "area": "Equipment Room",
+      "position": "Main Repeater 001",
+      "model": "RR-MAIN-REP-WH",
+      "zone": "",
+      "description": "Main Repeater",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "N/A",
+      "status": "documented",
+      "verified": false,
+      "kind": "infrastructure",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-75-1",
+      "source": "installation",
+      "page": 75,
+      "area": "Equipment Room",
+      "position": "EQUIPTMENT ROOM",
+      "model": "CONNECT-BDG2-1",
+      "zone": "",
+      "description": "Lutron Connect Bridge with HomeKit",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "N/A",
+      "status": "documented",
+      "verified": false,
+      "kind": "infrastructure",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-76-1",
+      "source": "installation",
+      "page": 76,
+      "area": "Equipment Room",
+      "position": "BRIAN'S TRUCK",
+      "model": "LR-3B-H-SW",
+      "zone": "",
+      "description": "3-button car visor control",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "visor control",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-77-1",
+      "source": "installation",
+      "page": 77,
+      "area": "Equipment Room",
+      "position": "GARAGE",
+      "model": "RR-VCRX-WH",
+      "zone": "ENTRY LIGHT",
+      "description": "Car visor control receiver",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "visor control",
+      "reported_zones": [
+        "ENTRY LIGHT"
+      ],
+      "accessories": []
+    },
+    {
+      "id": "install-78-1",
+      "source": "installation",
+      "page": 78,
+      "area": "Equipment Room",
+      "position": "BEDROOM UPSTAIRS",
+      "model": "RR-AUX-REP-WH",
+      "zone": "",
+      "description": "Auxiliary Repeater",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "infrastructure",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-79-1",
+      "source": "installation",
+      "page": 79,
+      "area": "Equipment Room",
+      "position": "BRANDY SUV",
+      "model": "LR-3B-H-SW",
+      "zone": "",
+      "description": "3-button car visor control",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "Snow",
+      "status": "documented",
+      "verified": false,
+      "kind": "visor control",
+      "reported_zones": [],
+      "accessories": []
+    },
+    {
+      "id": "install-80-1",
+      "source": "installation",
+      "page": 80,
+      "area": "Equipment Room",
+      "position": "Kitchen",
+      "model": "RR-AUX-REP-WH",
+      "zone": "",
+      "description": "Auxiliary Repeater",
+      "notes": "",
+      "wallplate": "N/A",
+      "color": "White",
+      "status": "documented",
+      "verified": false,
+      "kind": "infrastructure",
+      "reported_zones": [],
+      "accessories": []
+    }
+  ],
+  "zones": [
+    {
+      "path": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKC\u2026",
+      "equipment_ids": [
+        "install-02-1"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false,
+      "candidate_paths": [
+        "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE"
+      ]
+    },
+    {
+      "path": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+      "equipment_ids": [
+        "install-03-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "LIVING ROOM 1ST FLOOR > LIVING ROOM FAN",
+      "equipment_ids": [
+        "install-03-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "LIVING ROOM 1ST FLOOR > LIVING UP LAMP",
+      "equipment_ids": [
+        "install-04-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > PANTRY",
+      "equipment_ids": [
+        "install-06-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > KITCHEN LIGHTS",
+      "equipment_ids": [
+        "install-07-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > GARAGE DOOR",
+      "equipment_ids": [
+        "install-08-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > UN LIGHTS",
+      "equipment_ids": [
+        "install-10-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > CAB UP LIGHTS",
+      "equipment_ids": [
+        "install-10-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "KITCHEN > KITCHEN PENDANTS",
+      "equipment_ids": [
+        "install-11-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > POOL PUMP",
+      "equipment_ids": [
+        "install-13-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-03",
+          "button_index": 0,
+          "page": 3
+        },
+        {
+          "keypad_id": "keypad-03",
+          "button_index": 1,
+          "page": 3
+        },
+        {
+          "keypad_id": "keypad-04",
+          "button_index": 0,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-04",
+          "button_index": 1,
+          "page": 4
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > PERGOLA LIGHTS",
+      "equipment_ids": [
+        "install-13-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-02",
+          "button_index": 0,
+          "page": 3
+        },
+        {
+          "keypad_id": "keypad-02",
+          "button_index": 1,
+          "page": 3
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-11",
+          "button_index": 0,
+          "page": 9
+        },
+        {
+          "keypad_id": "keypad-11",
+          "button_index": 1,
+          "page": 9
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > DECK LIGHTS",
+      "equipment_ids": [
+        "install-13-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > PATIO LIGHTS",
+      "equipment_ids": [
+        "install-13-4"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > SHED",
+      "equipment_ids": [
+        "install-14-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > POOL LIGHTS DECK",
+      "equipment_ids": [
+        "install-15-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > POOL LIGHTS",
+      "equipment_ids": [
+        "install-16-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > North Fan",
+      "equipment_ids": [
+        "install-17-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 0,
+          "page": 9
+        },
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 1,
+          "page": 9
+        },
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 2,
+          "page": 9
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "PATIO > South Fan",
+      "equipment_ids": [
+        "install-17-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 0,
+          "page": 9
+        },
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 1,
+          "page": 9
+        },
+        {
+          "keypad_id": "keypad-12",
+          "button_index": 2,
+          "page": 9
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > STAIR LIGHTS",
+      "equipment_ids": [
+        "install-18-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-05",
+          "button_index": 0,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-05",
+          "button_index": 1,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-05",
+          "button_index": 2,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-05",
+          "button_index": 3,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-05",
+          "button_index": 4,
+          "page": 4
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > LIVING ROOM REAR LI\u2026",
+      "equipment_ids": [
+        "install-20-1"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false,
+      "candidate_paths": [
+        "BASEMENT > LIVING ROOM REAR LIGHTS"
+      ]
+    },
+    {
+      "path": "BASEMENT > LIVING ROOM FRONT \u2026",
+      "equipment_ids": [
+        "install-20-2"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false,
+      "candidate_paths": [
+        "BASEMENT > LIVING ROOM FRONT LIGHTS"
+      ]
+    },
+    {
+      "path": "BASEMENT > OFFICE LIGHTS",
+      "equipment_ids": [
+        "install-21-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > IT CLOSET LIGHTS",
+      "equipment_ids": [
+        "install-22-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > WINDOW",
+      "equipment_ids": [
+        "install-22-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > COUNTER LIGHTS",
+      "equipment_ids": [
+        "install-23-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > BAR LIGHTS",
+      "equipment_ids": [
+        "install-23-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > PENDANTS",
+      "equipment_ids": [
+        "install-23-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > BASEMENT LAMP",
+      "equipment_ids": [
+        "install-24-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > BASEMENT OFF LIGHT",
+      "equipment_ids": [
+        "install-25-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT BATHROOM > BATHRROM",
+      "equipment_ids": [
+        "install-26-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT BATHROOM > SHOWER",
+      "equipment_ids": [
+        "install-26-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BEDROOM > BEDROOM MASTER",
+      "equipment_ids": [
+        "install-28-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 1,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BEDROOM > MASTER FAN",
+      "equipment_ids": [
+        "install-28-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 0,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BEDROOM > BRIANS LAMP",
+      "equipment_ids": [
+        "install-29-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BEDROOM > BRANDYS LAMP",
+      "equipment_ids": [
+        "install-30-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BEDROOM > BOOKCASES",
+      "equipment_ids": [
+        "install-32-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER CLOSET > UC LIGHTS CLOSET",
+      "equipment_ids": [
+        "install-33-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BATHROOM > VANITY LIGHTS",
+      "equipment_ids": [
+        "install-36-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 2,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BATHROOM > CLOSET LIGHT",
+      "equipment_ids": [
+        "install-37-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BATHROOM > MASTER BATH CAN LTS",
+      "equipment_ids": [
+        "install-37-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 2,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER BATHROOM > SHOWER LIGHT",
+      "equipment_ids": [
+        "install-37-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 2,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "OFFICE 1ST FLOOR > OFFICE",
+      "equipment_ids": [
+        "install-40-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+      "equipment_ids": [
+        "install-40-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "OFFICE 1ST FLOOR > OFFICE LAMP",
+      "equipment_ids": [
+        "install-41-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "FOYER > FOYER",
+      "equipment_ids": [
+        "install-42-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-07",
+          "button_index": 0,
+          "page": 7
+        },
+        {
+          "keypad_id": "keypad-07",
+          "button_index": 1,
+          "page": 7
+        },
+        {
+          "keypad_id": "keypad-07",
+          "button_index": 2,
+          "page": 7
+        },
+        {
+          "keypad_id": "keypad-07",
+          "button_index": 3,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "FOYER > CHANDELIER",
+      "equipment_ids": [
+        "install-44-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "FOYER > PORCH LIGHTS",
+      "equipment_ids": [
+        "install-44-3"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "FOYER > STAIRS",
+      "equipment_ids": [
+        "install-45-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "FOYER > CLOSET",
+      "equipment_ids": [
+        "install-46-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "DINING ROOM > DINING ROOM",
+      "equipment_ids": [
+        "install-49-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "DINING ROOM > DINING RM COVE",
+      "equipment_ids": [
+        "install-50-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BATHROOM 1ST FLOOR > DOWNSTAIRS",
+      "equipment_ids": [
+        "install-51-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GARAGE > OUTSIDE LIGHTS",
+      "equipment_ids": [
+        "install-53-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GARAGE > GARAGE LIGHT",
+      "equipment_ids": [
+        "install-54-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 4,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-08",
+          "button_index": 0,
+          "page": 8
+        },
+        {
+          "keypad_id": "keypad-08",
+          "button_index": 1,
+          "page": 8
+        },
+        {
+          "keypad_id": "keypad-09",
+          "button_index": 0,
+          "page": 8
+        },
+        {
+          "keypad_id": "keypad-09",
+          "button_index": 1,
+          "page": 8
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GARAGE > ATTIC GARAGE",
+      "equipment_ids": [
+        "install-55-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST BATHROOM > VANITY LT",
+      "equipment_ids": [
+        "install-58-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST BATHROOM > VANITY CEILING",
+      "equipment_ids": [
+        "install-58-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SE > CEILING FAN",
+      "equipment_ids": [
+        "install-60-1"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SE > BEDROO LIGHTS",
+      "equipment_ids": [
+        "install-60-2"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SE > GUEST ROOM SE RIGHT",
+      "equipment_ids": [
+        "install-61-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SE > GUEST ROOM SE LEFT",
+      "equipment_ids": [
+        "install-62-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SW > BEDROOM LIGHTS",
+      "equipment_ids": [
+        "install-63-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SW > CEILING FAN",
+      "equipment_ids": [
+        "install-63-2"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SW > LAMP RIGHT",
+      "equipment_ids": [
+        "install-64-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST ROOM SW > LEFT LAMP",
+      "equipment_ids": [
+        "install-65-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "GUEST SHOWER ROOM > SHOWER RM",
+      "equipment_ids": [
+        "install-66-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "LAUNDRY ROOM > LAUNDRY LIGHTS",
+      "equipment_ids": [
+        "install-68-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "LAUNDRY ROOM > UC LIGHTS",
+      "equipment_ids": [
+        "install-70-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "MASTER TOILET ROOM > TOILET LIGHTS",
+      "equipment_ids": [
+        "install-72-1"
+      ],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 2,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 5,
+          "page": 7
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "Equipment Room > ENTRY LIGHT",
+      "equipment_ids": [
+        "install-77-1"
+      ],
+      "button_refs": [],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE",
+      "equipment_ids": [],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 0,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 1,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 3,
+          "page": 2
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 5
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > LIVING ROOM REAR LIGHTS",
+      "equipment_ids": [],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-01",
+          "button_index": 2,
+          "page": 1
+        },
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "path": "BASEMENT > LIVING ROOM FRONT LIGHTS",
+      "equipment_ids": [],
+      "button_refs": [
+        {
+          "keypad_id": "keypad-06",
+          "button_index": 3,
+          "page": 6
+        }
+      ],
+      "status": "documented",
+      "verified": false
+    }
+  ],
+  "keypads": [
+    {
+      "id": "keypad-01",
+      "path": "LIVING ROOM 1ST FLOOR > MOVIE SCENES > SCENE CONTROLS",
+      "model": "PJ2-4B-GWH-L31",
+      "source": "keypads",
+      "page": 1,
+      "buttons": [
+        {
+          "label": "MOVIE UP",
+          "behavior": "Single/Multi-room scene",
+          "page": 1,
+          "actions": [
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > GARAGE DOOR",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN PENDANTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "MOVIE PATIO",
+          "behavior": "Single/Multi-room scene",
+          "page": 1,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > GARAGE DOOR",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > UN LIGHTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > CAB UP LIGHTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN PENDANTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "Off",
+              "page": 1
+            },
+            {
+              "target": "PATIO > SHED",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "PATIO > DECK LIGHTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "PATIO > PATIO LIGHTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "MOVIE BASE",
+          "behavior": "Single/Multi-room scene",
+          "page": 1,
+          "actions": [
+            {
+              "target": "BASEMENT > OFFICE LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > LIVING ROOM REAR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > BASEMENT LAMP",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > COUNTER LIGHTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > PENDANTS",
+              "command": "Level (25%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 25.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > BAR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > WINDOW",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT BATHROOM > SHOWER",
+              "command": "Off",
+              "page": 1
+            },
+            {
+              "target": "BASEMENT BATHROOM > BATHRROM",
+              "command": "Off",
+              "page": 1
+            },
+            {
+              "target": "BASEMENT > BASEMENT OFF LIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 1,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 1,
+          "actions": [
+            {
+              "target": "BATHROOM 1ST FLOOR > DOWNSTAIRS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "DINING ROOM > DINING ROOM",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "DINING ROOM > DINING RM COVE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > STAIRS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > CHANDELIER",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "Off",
+              "page": 2
+            },
+            {
+              "target": "GARAGE > ATTIC GARAGE",
+              "command": "Off",
+              "page": 2
+            },
+            {
+              "target": "GUEST BATHROOM > VANITY LT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST BATHROOM > VANITY CEILING",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > BEDROO LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE RIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE LEFT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > LAMP RIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > LEFT LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > BEDROOM LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST SHOWER ROOM > SHOWER RM",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > PANTRY",
+              "command": "Off",
+              "page": 2
+            },
+            {
+              "target": "KITCHEN > KITCHEN LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > GARAGE DOOR",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN PENDANTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > UN LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > CAB UP LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LAUNDRY ROOM > LAUNDRY LIGHTS",
+              "command": "Off",
+              "page": 2
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM FAN",
+              "command": "Fan Speed (High)",
+              "page": 2,
+              "fan_speed": "High"
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING UP LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > CLOSET LIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > MASTER BATH CAN LTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > SHOWER LIGHT",
+              "command": "Off",
+              "page": 2
+            },
+            {
+              "target": "MASTER BATHROOM > VANITY LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BRIANS LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BRANDYS LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BEDROOM MASTER",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BOOKCASES",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER CLOSET > UC LIGHTS CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER TOILET ROOM > TOILET LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 2,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-02",
+      "path": "KITCHEN > PERGOLA LIGHTS > PATIO LIGHTS",
+      "model": "PJ2-2B-GWH-L01",
+      "source": "keypads",
+      "page": 2,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 3,
+          "actions": [
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "On",
+              "page": 3
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 3,
+          "actions": [
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "Off",
+              "page": 3
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-03",
+      "path": "PATIO > FENCE > POOL PUMP",
+      "model": "PJ2-2B-GWH-L01",
+      "source": "keypads",
+      "page": 3,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 3,
+          "actions": [
+            {
+              "target": "PATIO > POOL PUMP",
+              "command": "On",
+              "page": 3
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 3,
+          "actions": [
+            {
+              "target": "PATIO > POOL PUMP",
+              "command": "Off",
+              "page": 3
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-04",
+      "path": "PATIO > FENCE > POOL PUMP DECK",
+      "model": "PJ2-2B-GWH-L01",
+      "source": "keypads",
+      "page": 3,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 4,
+          "actions": [
+            {
+              "target": "PATIO > POOL PUMP",
+              "command": "On",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 4,
+          "actions": [
+            {
+              "target": "PATIO > POOL PUMP",
+              "command": "Off",
+              "page": 4
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-05",
+      "path": "BASEMENT > STAIR BOTTOM > STAIR LIGHTS",
+      "model": "PJ2-3BRL-GWH-L01",
+      "source": "keypads",
+      "page": 4,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 4,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (100%) , Fade (2s)",
+              "page": 4,
+              "level_percent": 100.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "Favorite",
+          "behavior": "Single/Multi-room scene",
+          "page": 4,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (50%) , Fade (2s)",
+              "page": 4,
+              "level_percent": 50.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 4,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 4,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "Raise",
+          "behavior": "Raise programmed devices",
+          "page": 4,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Raise",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "label": "Lower",
+          "behavior": "Lower programmed devices",
+          "page": 4,
+          "actions": [
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Lower",
+              "page": 4
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-06",
+      "path": "MASTER BEDROOM > MASTER BEDROOM > CONTOLLER",
+      "model": "RR-T5RL-MN",
+      "source": "keypads",
+      "page": 4,
+      "buttons": [
+        {
+          "label": "FAN",
+          "behavior": "Toggle control / Room monitoring",
+          "page": 5,
+          "actions": [
+            {
+              "target": "MASTER BEDROOM > MASTER FAN",
+              "command": "Fan Speed (Medium-High)",
+              "page": 5,
+              "fan_speed": "Medium-High"
+            }
+          ]
+        },
+        {
+          "label": "LIGHTS",
+          "behavior": "Toggle control / Room monitoring",
+          "page": 5,
+          "actions": [
+            {
+              "target": "MASTER BEDROOM > BEDROOM MASTER",
+              "command": "Level (75%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 75.0,
+              "fade_seconds": 5.0
+            }
+          ]
+        },
+        {
+          "label": "BATHRM",
+          "behavior": "Path of light",
+          "page": 5,
+          "actions": [
+            {
+              "target": "MASTER BATHROOM > MASTER BATH CAN LTS",
+              "command": "Level (25%) , Fade (15s)",
+              "page": 5,
+              "level_percent": 25.0,
+              "fade_seconds": 15.0
+            },
+            {
+              "target": "MASTER BATHROOM > VANITY LIGHTS",
+              "command": "Level (40%) , Fade (15s)",
+              "page": 5,
+              "level_percent": 40.0,
+              "fade_seconds": 15.0
+            },
+            {
+              "target": "MASTER TOILET ROOM > TOILET LIGHTS",
+              "command": "Level (75%) , Fade (15s)",
+              "page": 5,
+              "level_percent": 75.0,
+              "fade_seconds": 15.0
+            },
+            {
+              "target": "MASTER BATHROOM > SHOWER LIGHT",
+              "command": "On",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "label": "ALL OFF",
+          "behavior": "Toggle control / Room monitoring",
+          "page": 5,
+          "actions": [
+            {
+              "target": "KITCHEN > GARAGE DOOR",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "PATIO > PATIO LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "DINING ROOM > DINING ROOM",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM BOOKCASE",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "FOYER > STAIRS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BEDROOM > BEDROOM MASTER",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "FOYER > CHANDELIER",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BEDROOM > BOOKCASES",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BATHROOM > MASTER BATH CAN LTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER TOILET ROOM > TOILET LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BATHROOM > VANITY LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BEDROOM > BRIANS LAMP",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "MASTER BATHROOM > CLOSET LIGHT",
+              "command": "Level (0%) , Fade (7s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 7.0
+            },
+            {
+              "target": "MASTER BATHROOM > SHOWER LIGHT",
+              "command": "Off",
+              "page": 5
+            },
+            {
+              "target": "BATHROOM 1ST FLOOR > DOWNSTAIRS",
+              "command": "Level (0%) , Fade (7s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 7.0
+            },
+            {
+              "target": "LAUNDRY ROOM > LAUNDRY LIGHTS",
+              "command": "Off",
+              "page": 5
+            },
+            {
+              "target": "BASEMENT > STAIR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "PATIO > DECK LIGHTS",
+              "command": "Level (0%) , Fade (6s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 6.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM FAN",
+              "command": "Fan Speed (Off)",
+              "page": 5,
+              "fan_speed": "Off"
+            },
+            {
+              "target": "FOYER > CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > BEDROO LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > BEDROOM LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER CLOSET > UC LIGHTS CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "Off",
+              "page": 5
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE LAMP",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "Off",
+              "page": 5
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE RIGHT",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 5,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "GUEST ROOM SW > LAMP RIGHT",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "GUEST ROOM SW > LEFT LAMP",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > UN LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > CAB UP LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN PENDANTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "GARAGE > OUTSIDE LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "FOYER > PORCH LIGHTS",
+              "command": "Level (0%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "GARAGE > ATTIC GARAGE",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "MASTER BEDROOM > BRANDYS LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "PATIO > POOL LIGHTS DECK",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "PATIO > SHED",
+              "command": "Level (0%) , Fade (0s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 0.0
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE LEFT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > LIVING ROOM REAR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > LIVING ROOM FRONT LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > OFFICE LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > COUNTER LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > BAR LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > PENDANTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > BASEMENT LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "BASEMENT > WINDOW",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LAUNDRY ROOM > UC LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "KITCHEN > PANTRY",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "PATIO > POOL LIGHTS",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "BASEMENT > IT CLOSET LIGHTS",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "BASEMENT > BASEMENT OFF LIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING UP LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "DINING ROOM > DINING RM COVE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "MORNING",
+          "behavior": "Path of light",
+          "page": 6,
+          "actions": [
+            {
+              "target": "FOYER > STAIRS",
+              "command": "Level (31%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 31.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN LIGHTS",
+              "command": "Level (50%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 50.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "On",
+              "page": 6
+            },
+            {
+              "target": "KITCHEN > GARAGE DOOR",
+              "command": "Level (100%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 100.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > UN LIGHTS",
+              "command": "Level (50%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 50.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > CAB UP LIGHTS",
+              "command": "Level (50%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 50.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "KITCHEN > KITCHEN PENDANTS",
+              "command": "Level (50%) , Fade (5s)",
+              "page": 6,
+              "level_percent": 50.0,
+              "fade_seconds": 5.0
+            },
+            {
+              "target": "PATIO > DECK LIGHTS",
+              "command": "Level (47%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 47.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING ROOM LIGHTS",
+              "command": "Level (27%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 27.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (75%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 75.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE LAMP",
+              "command": "Level (100%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 100.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+              "command": "Level (75%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 75.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "LIVING ROOM 1ST FLOOR > LIVING UP LAMP",
+              "command": "Level (75%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 75.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > CHANDELIER",
+              "command": "Level (100%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 100.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        },
+        {
+          "label": "BR OFF",
+          "behavior": "Path of light",
+          "page": 6,
+          "actions": [
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE BOOK SHELVES",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE LEFT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > CLOSET LIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > VANITY LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > STAIRS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BATHROOM > SHOWER LIGHT",
+              "command": "Off",
+              "page": 6
+            },
+            {
+              "target": "MASTER BATHROOM > MASTER BATH CAN LTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BRANDYS LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BEDROOM MASTER",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "FOYER > CHANDELIER",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "OFFICE 1ST FLOOR > OFFICE LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 6,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > LAMP RIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BOOKCASES",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SE > GUEST ROOM SE RIGHT",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER BEDROOM > BRIANS LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "GUEST ROOM SW > LEFT LAMP",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER TOILET ROOM > TOILET LIGHTS",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            },
+            {
+              "target": "MASTER CLOSET > UC LIGHTS CLOSET",
+              "command": "Level (0%) , Fade (2s)",
+              "page": 7,
+              "level_percent": 0.0,
+              "fade_seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-07",
+      "path": "FOYER > FOYER > SHADE",
+      "model": "PJ-2BRL-GWH-I02",
+      "source": "keypads",
+      "page": 7,
+      "buttons": [
+        {
+          "label": "Open",
+          "behavior": "Single/Multi-room scene",
+          "page": 7,
+          "actions": [
+            {
+              "target": "FOYER > FOYER",
+              "command": "Level (100.00%)",
+              "page": 7,
+              "level_percent": 100.0
+            }
+          ]
+        },
+        {
+          "label": "Close",
+          "behavior": "Single/Multi-room scene",
+          "page": 7,
+          "actions": [
+            {
+              "target": "FOYER > FOYER",
+              "command": "Level (0.00%)",
+              "page": 7,
+              "level_percent": 0.0
+            }
+          ]
+        },
+        {
+          "label": "Lower",
+          "behavior": "Lower programmed devices",
+          "page": 7,
+          "actions": [
+            {
+              "target": "FOYER > FOYER",
+              "command": "Lower",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "label": "Raise",
+          "behavior": "Raise programmed devices",
+          "page": 7,
+          "actions": [
+            {
+              "target": "FOYER > FOYER",
+              "command": "Raise",
+              "page": 7
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-08",
+      "path": "GARAGE > GARAGE ENTRY > GARAGE LIGHTS",
+      "model": "PJ2-2B-GBL-L01",
+      "source": "keypads",
+      "page": 7,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 8,
+          "actions": [
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "On",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 8,
+          "actions": [
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "Off",
+              "page": 8
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-09",
+      "path": "GARAGE > GARAGE N ENTRY > GARAGE LIGHTS",
+      "model": "PJ2-2B-GBL-L01",
+      "source": "keypads",
+      "page": 8,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 8,
+          "actions": [
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "On",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 8,
+          "actions": [
+            {
+              "target": "GARAGE > GARAGE LIGHT",
+              "command": "Off",
+              "page": 8
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-10",
+      "path": "GARAGE > GARAGE N ENTRY > GARAGE MUSIC",
+      "model": "PJ2-3BRL-GBL-A02",
+      "source": "keypads",
+      "page": 8,
+      "buttons": [],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-11",
+      "path": "LAUNDRY ROOM > NW WALL > PERGOLA LIGHTS",
+      "model": "PJ2-2B-GWH-L01",
+      "source": "keypads",
+      "page": 8,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 9,
+          "actions": [
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "On",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 9,
+          "actions": [
+            {
+              "target": "PATIO > PERGOLA LIGHTS",
+              "command": "Off",
+              "page": 9
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    },
+    {
+      "id": "keypad-12",
+      "path": "LAUNDRY ROOM > NW WALL > CEILING FANS",
+      "model": "PJ2-3BRL-GWH-L01",
+      "source": "keypads",
+      "page": 9,
+      "buttons": [
+        {
+          "label": "On",
+          "behavior": "Single/Multi-room scene",
+          "page": 9,
+          "actions": [
+            {
+              "target": "PATIO > South Fan",
+              "command": "Fan Speed (High)",
+              "page": 9,
+              "fan_speed": "High"
+            },
+            {
+              "target": "PATIO > North Fan",
+              "command": "Fan Speed (High)",
+              "page": 9,
+              "fan_speed": "High"
+            }
+          ]
+        },
+        {
+          "label": "Favorite",
+          "behavior": "Single/Multi-room scene",
+          "page": 9,
+          "actions": [
+            {
+              "target": "PATIO > South Fan",
+              "command": "Fan Speed (Medium)",
+              "page": 9,
+              "fan_speed": "Medium"
+            },
+            {
+              "target": "PATIO > North Fan",
+              "command": "Fan Speed (Medium)",
+              "page": 9,
+              "fan_speed": "Medium"
+            }
+          ]
+        },
+        {
+          "label": "Off",
+          "behavior": "Single/Multi-room scene",
+          "page": 9,
+          "actions": [
+            {
+              "target": "PATIO > South Fan",
+              "command": "Fan Speed (Off)",
+              "page": 9,
+              "fan_speed": "Off"
+            },
+            {
+              "target": "PATIO > North Fan",
+              "command": "Fan Speed (Off)",
+              "page": 9,
+              "fan_speed": "Off"
+            }
+          ]
+        }
+      ],
+      "save_on_hold": "Disabled",
+      "status": "documented",
+      "verified": false
+    }
+  ]
+}
