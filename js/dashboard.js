@@ -2,46 +2,6 @@
    HOME DASHBOARD
    ================================================================== */
 
-let neighbors = Store.read("wil-neighbors", null) || [
-  {id:"n1", names:"Jose & Lindsay", relation:"Across the street to the north", notes:"Met after moving in."}
-];
-function saveNeighbors(){ Store.write("wil-neighbors", neighbors); cloudSyncTasksSoon(); }
-function renderNeighbors(){
-  const host=$("#homeNeighbors");
-  if(!host) return;
-  const active=neighbors.filter(n=>!n.disabled);
-  host.innerHTML=active.length ? active.map(n=>`<button type="button" class="home-card" data-edit-neighbor="${n.id}">
-    <span class="home-card-icon">${icon("home")}</span>
-    <span><b>${esc(n.names)}</b><small>${esc(n.relation||"Neighbor")}${n.notes?" · "+esc(n.notes):""}</small></span>
-    <span class="home-arrow">›</span>
-  </button>`).join("") : `<div class="home-empty"><b>No neighbors saved yet.</b><span>Add names and where they live relative to you.</span></div>`;
-}
-function openNeighborForm(n){
-  const isNew=!n;
-  n=n||{id:Store.uid(),names:"",relation:"",notes:""};
-  openForm({
-    title:isNew?"Add neighbor":"Edit neighbor",
-    fields:[
-      {key:"names",label:"Name(s)",type:"text",value:n.names||""},
-      {key:"relation",label:"Where they live",type:"text",value:n.relation||""},
-      {key:"notes",label:"Notes",type:"textarea",value:n.notes||""}
-    ],
-    onSave(v){
-      if(!v.names.trim()) return;
-      n.names=v.names.trim();
-      n.relation=v.relation.trim();
-      n.notes=v.notes.trim();
-      n.disabled=false;
-      if(isNew) neighbors.push(n);
-      saveNeighbors(); renderNeighbors(); toast(isNew?"Neighbor added":"Neighbor updated");
-    },
-    onDelete:isNew?null:()=>{
-      n.disabled=true;
-      saveNeighbors(); renderNeighbors(); toast("Neighbor removed");
-    }
-  });
-}
-
 function renderHomeDashboard(){
   const taskRows = tasks.filter(t=>!t.disabled).sort((a,b)=>taskStatus(a).sortKey-taskStatus(b).sortKey);
   const urgentTasks = taskRows.filter(t=>taskStatus(t).bucket==="now");
@@ -74,7 +34,7 @@ function renderHomeDashboard(){
     }).join("") : `<div class="home-empty"><b>Nothing urgent right now.</b><span>${soonTasks.length ? soonTasks.length+" task"+(soonTasks.length===1?" is":"s are")+" coming up this month." : "Your recurring maintenance is caught up."}</span></div>`;
   }
 
-  renderNeighbors();
+
 
   const seasonal = $("#homeSeasonal");
   if(seasonal){
@@ -89,10 +49,6 @@ function renderHomeDashboard(){
 }
 
 $("#view-home").addEventListener("click", e=>{
-  const addNeighbor=e.target.closest("#addNeighborBtn");
-  if(addNeighbor){ openNeighborForm(null); return; }
-  const editNeighbor=e.target.closest("[data-edit-neighbor]");
-  if(editNeighbor){ openNeighborForm(neighbors.find(n=>n.id===editNeighbor.dataset.editNeighbor)); return; }
   const systemJump=e.target.closest("[data-home-system]");
   if(systemJump){
     switchTab("systems");

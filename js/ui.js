@@ -25,6 +25,22 @@ $("#formSave").addEventListener("click", ()=>{
   if(!formCtx) return;
   const values = {};
   formCtx.fields.forEach(f=>{ const el=$(`#formFields [data-field="${f.key}"]`); values[f.key] = f.type==="checkbox" ? el.checked : el.value; });
+  if(formCtx.asyncSave){
+    const context=formCtx;
+    const button=$("#formSave");
+    button.disabled=true;
+    Promise.resolve().then(()=>context.onSave(values)).then(()=>{
+      if(formCtx===context){ formDlg.close(); formCtx=null; }
+    }).catch(error=>{
+      if(formCtx===context){
+        let message=$("#formError");
+        if(!message){message=document.createElement("p");message.id="formError";message.setAttribute("role","alert");$("#formFields").appendChild(message);}
+        message.textContent=error.message||"Save failed. Please retry.";
+      }
+      toast(error.message||"Save failed. Please retry.");
+    }).finally(()=>{button.disabled=false;});
+    return;
+  }
   formCtx.onSave(values);
   formDlg.close();
   formCtx = null;
@@ -43,7 +59,7 @@ formDlg.addEventListener("click", e=>{
 /* ==================================================================
    Tab navigation
    ================================================================== */
-const TABS = ["home","systems","storage","tasks","seasonal","plants","decor"];
+const TABS = ["home","systems","storage","tasks","seasonal","plants","decor","contacts"];
 function closeTransientUI(){
   document.querySelectorAll("dialog[open]").forEach(d=>{
     try{ d.close(); }catch{}
@@ -53,7 +69,7 @@ function closeTransientUI(){
 function switchTab(name){
   if(!TABS.includes(name)) return;
   closeTransientUI();
-  const primaryTab = ["tasks","seasonal"].includes(name) ? "home" : name;
+  const primaryTab = ["tasks","seasonal","contacts"].includes(name) ? "home" : name;
   TABS.forEach(t=>{
     const view=$(`#view-${t}`);
     if(view) view.hidden = t!==name;
@@ -61,6 +77,7 @@ function switchTab(name){
   document.querySelectorAll(".tab-btn").forEach(b=>{
     b.setAttribute("aria-current", b.dataset.tab===primaryTab ? "true" : "false");
   });
+  if(name==="contacts") renderContacts();
   if(name==="home" && typeof renderHomeDashboard==="function") renderHomeDashboard();
   requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"auto"}));
 }
