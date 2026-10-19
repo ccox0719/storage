@@ -19,7 +19,13 @@ function loadContactRows(rows){
   contactsLoaded=true;
   renderContacts();
 }
-function clearContacts(){ contacts=[]; contactsLoaded=false; renderContacts(); }
+function clearContacts(){
+  contacts=[]; contactsLoaded=false;
+  if(typeof formCtx!=="undefined" && formCtx?.contactForm){
+    formDlg.close(); formCtx=null; $("#formFields").textContent="";
+  }
+  renderContacts();
+}
 function renderContacts(){
   const host=$("#contactsList");
   if(!host) return;
@@ -45,8 +51,10 @@ function renderContacts(){
 }
 async function saveContact(contact){
   if(!cloudReady || !contactsLoaded || !homeHouseholdId) throw new Error("Connect to your household before saving contacts.");
+  const savingHousehold=homeHouseholdId;
   const {error}=await withCloudTimeout(db.from("home_tasks").upsert(contactRow(contact),{onConflict:"household_id,external_id"}),20000,"Save contact");
   if(error) throw error;
+  if(!cloudReady || homeHouseholdId!==savingHousehold) return;
   const index=contacts.findIndex(c=>c.id===contact.id);
   if(index<0) contacts.push(contact); else contacts[index]=contact;
   renderContacts();
@@ -67,7 +75,7 @@ async function migrateLocalNeighbors(){
 function openContactForm(contact){
   if(!cloudReady || !contactsLoaded){toast("Connect to load your household contacts first.");return;}
   const original=contact||{id:"contact:"+Store.uid()};
-  openForm({title:contact?"Edit contact":"Add important contact",asyncSave:true,
+  openForm({title:contact?"Edit contact":"Add important contact",asyncSave:true,contactForm:true,
     fields:[
       {key:"name",label:"Name / company",type:"text",value:original.name},
       {key:"category",label:"Role / category (Neighbor, contractor, vendor, utility, support)",type:"text",value:original.category},
